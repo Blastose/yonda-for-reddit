@@ -3,6 +3,8 @@
 	import NProgress from 'nprogress';
 	import 'nprogress/nprogress.css';
 	import { navigating } from '$app/stores';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
 
 	let nprogressTimeoutId: ReturnType<typeof setTimeout>;
 
@@ -25,6 +27,16 @@
 			NProgress.done();
 		}
 	}
+
+	beforeNavigate((nav) => {
+		if (nav.type === 'popstate') {
+			navigationTypeStore.set('bfbutton');
+		}
+	});
+
+	afterNavigate(() => {
+		navigationTypeStore.set(null);
+	});
 </script>
 
 <div class="container mx-auto px-4 py-2">

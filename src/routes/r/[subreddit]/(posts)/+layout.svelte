@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import SubTestCont from '$lib/components/layout/SubTestCont.svelte';
 
 	export let data;
 
@@ -14,8 +15,7 @@
 {#await data.submissions}
 	<p>Loading....</p>
 {:then submissions}
-	{#each submissions as submission}
-		<p><a class="text-blue-500" href={submission.permalink.toLowerCase()}>{submission.title}</a></p>
-	{/each}
+	<SubTestCont {submissions} subreddit={$page.params.subreddit} />
 {/await}
+
 <slot />

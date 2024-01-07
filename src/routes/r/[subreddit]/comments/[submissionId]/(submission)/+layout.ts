@@ -2,9 +2,12 @@ import type { LayoutLoad } from './$types';
 import { jsrwrap } from '$lib/reddit/reddit';
 import { db } from '$lib/idb/idb';
 import { transformUrlForIDBKey } from '$lib/url/url';
+import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
+import { get } from 'svelte/store';
 
 export const load: LayoutLoad = async ({ params, url }) => {
 	const submissionId = params.submissionId;
+	console.log(get(navigationTypeStore));
 	const maybeSubmission = await db.get('subredditv2', transformUrlForIDBKey(url));
 	if (maybeSubmission) {
 		return {

@@ -6,7 +6,7 @@ export const load: LayoutLoad = async ({ params }) => {
 	const jsrwrapSubreddit = jsrwrap.getSubreddit(subreddit);
 
 	const about = await jsrwrapSubreddit.getAbout();
-	const sidebar = await jsrwrapSubreddit.getSidebar();
+	const sidebarPromise = jsrwrapSubreddit.getSidebar();
 
-	return { about, sidebar };
+	return { about, sidebarPromise };
 };
