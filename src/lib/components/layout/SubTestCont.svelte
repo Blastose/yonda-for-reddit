@@ -10,7 +10,7 @@
 	export let subreddit: string;
 	export let submissions: SubmissionData[];
 
-	let lastPostId = submissions.at(submissions.length - 1)?.id || null;
+	$: lastPostId = submissions.at(submissions.length - 1)?.id || null;
 
 	async function getMoreSubmissions() {
 		const jsrwrapSubreddit = jsrwrap.getSubreddit(subreddit);
@@ -21,7 +21,7 @@
 				t: 'day'
 			}
 		});
-		lastPostId = res.at(res.length - 1)?.id || null;
+		// lastPostId = res.at(res.length - 1)?.id || null;
 		return res;
 	}
 

@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import { openDB, type DBSchema } from 'idb';
 import type { Submission } from 'jsrwrap';
-import type { SubmissionData } from 'jsrwrap/types';
+import type { SubmissionData, SubredditData } from 'jsrwrap/types';
 
 interface MyDB extends DBSchema {
 	sub: {
@@ -28,6 +28,13 @@ interface MyDB extends DBSchema {
 		value: number;
 		key: string;
 	};
+	subredditAbout: {
+		value: {
+			cached: number;
+			value: SubredditData;
+		};
+		key: string;
+	};
 }
 
 // For some reason, browser is false, which means idb is undefined when it first loads or something
@@ -41,6 +48,7 @@ export const db = (browser
 				db.createObjectStore('subredditv2');
 				db.createObjectStore('submissionCommentCount');
 				db.createObjectStore('submissions');
+				db.createObjectStore('subredditAbout');
 			}
 		})
 	: null) as unknown as Awaited<ReturnType<typeof openDB<MyDB>>>;

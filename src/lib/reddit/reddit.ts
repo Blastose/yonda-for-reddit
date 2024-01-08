@@ -10,3 +10,7 @@ const jsrwrap = await Jsrwrap.fromApplicationOnlyAuth({
 });
 
 export { jsrwrap };
+
+// TODO export these from jsrwrap
+export type SubredditSort = 'top' | 'new' | 'controversial' | 'hot' | 'best' | 'rising';
+export type Time = 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';

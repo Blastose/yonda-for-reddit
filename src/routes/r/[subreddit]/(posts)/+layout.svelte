@@ -2,20 +2,18 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import SubTestCont from '$lib/components/layout/SubTestCont.svelte';
+	import { getFullUrl } from '$lib/url/url.js';
 
 	export let data;
-
-	onMount(async () => {
-		const a = await data.submissions;
-		console.log(a);
-		localStorage.setItem($page.url.pathname + $page.url.search, JSON.stringify(a));
-	});
 </script>
 
-{#await data.submissions}
-	<p>Loading....</p>
-{:then submissions}
-	<SubTestCont {submissions} subreddit={$page.params.subreddit} />
-{/await}
+{#key getFullUrl($page.url)}
+	{#await data.submissions}
+		<p>Loading....</p>
+	{:then submissions}
+		<SubTestCont {submissions} subreddit={$page.params.subreddit} />
+	{/await}
+{/key}
 
+<!-- This slot does not display any content, but is needed to silence a SK warning -->
 <slot />
