@@ -14,6 +14,7 @@
 			const submission = await data.submission;
 			setSubmissionStore(transformUrlForIDBKey($page.url), submission);
 			db.put('subredditv2', submission, transformUrlForIDBKey($page.url));
+			db.put('submissionCommentCount', submission.num_comments, submission.id);
 		})();
 	}
 </script>

@@ -1,16 +1,26 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
 	import RelativeTime from './RelativeTime.svelte';
-	import { removeTrailingBackslashFromUrl, transformUrlForIDBKey } from '$lib/url/url';
+	import { removeTrailingBackslashFromUrl } from '$lib/url/url';
 	import Flair from './Flair.svelte';
 	import Icon from '../icon/Icon.svelte';
 	import ClickableDivWrapper from '../layout/ClickableDivWrapper.svelte';
 	import UserFlair from './UserFlair.svelte';
 	import Embed from './embed/Embed.svelte';
+	import { db } from '$lib/idb/idb';
 	import { submissionStoreClick, setSubmissionStore } from '$lib/stores/submissionStore';
 
 	export let submission: SubmissionData;
 	$: href = removeTrailingBackslashFromUrl(submission.permalink.toLowerCase());
+
+	async function getCommentCount() {
+		return (await db.get('submissionCommentCount', submission.id)) ?? submission.num_comments;
+	}
+
+	let numNewComments: number = 0;
+	$: (async () => {
+		numNewComments = submission.num_comments - (await getCommentCount());
+	})();
 </script>
 
 <ClickableDivWrapper
@@ -53,7 +63,7 @@
 
 		<Embed {submission} />
 
-		<div class="mt-4 flex gap-2">
+		<div class="mt-4 flex items-center gap-2">
 			<div class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-2 py-1 text-sm">
 				<button><Icon name="arrowUpOutline" /></button>
 				<span class="">{submission.num_comments}</span>
@@ -63,10 +73,17 @@
 			<a
 				use:submissionStoreClick={{ url: href, submission }}
 				{href}
-				class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-3 py-1 text-sm"
+				class="flex h-full w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-3 py-1 text-sm"
 			>
-				<Icon name="comment" height="20" width="20" />
-				{submission.num_comments}
+				<div class="flex h-[24px] items-center">
+					<Icon name="comment" height="20" width="20" />
+				</div>
+				<span class="flex gap-2">
+					{submission.num_comments}
+					{#if numNewComments > 0}
+						<span class="text-red-400"> ({numNewComments} new)</span>
+					{/if}
+				</span>
 			</a>
 		</div>
 	</article>
