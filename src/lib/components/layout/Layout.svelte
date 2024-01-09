@@ -1,18 +1,14 @@
 <script lang="ts">
+	import Header from './Header.svelte';
+	import Sidebar from './Sidebar.svelte';
 </script>
 
 <div class="flex flex-col">
-	<header class="header fixed top-0 z-10 h-14 w-full border-b border-[#3a3a3a] bg-[#101010]">
-		Header
-	</header>
+	<Header />
 
 	<div class="mt-14 flex gap-4">
-		<aside
-			class="sidebar-wrapper sidebar-animation thin-scrollbar sticky top-14 h-[calc(100vh-3.5rem)] w-[256px] overflow-y-scroll border-r border-[#3a3a3a] p-4"
-		>
-			{#each { length: 100 } as _}
-				<p>Sidebar</p>
-			{/each}
+		<aside class="sidebar-wrapper sidebar-animation sticky top-14 border-r border-[#3a3a3a]">
+			<Sidebar type="sidebar" />
 		</aside>
 
 		<main class="container-doku">
@@ -22,14 +18,12 @@
 </div>
 
 <style>
-	.header {
-		view-transition-name: header;
-	}
-
 	.sidebar-wrapper {
 		view-transition-name: sidebar;
 		margin-left: -16rem;
 		visibility: hidden;
+		width: var(--sidebar-width);
+		height: calc(100dvh - var(--header-height));
 	}
 
 	.sidebar-animation {
