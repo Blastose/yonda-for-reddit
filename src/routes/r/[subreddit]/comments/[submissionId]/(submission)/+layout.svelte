@@ -1,5 +1,15 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { db } from '$lib/idb/idb.js';
+	import { transformUrlForIDBKey } from '$lib/url/url.js';
+	import { onMount } from 'svelte';
+
 	export let data;
+
+	onMount(async () => {
+		const submission = await data.submission;
+		db.put('subredditv2', submission, transformUrlForIDBKey($page.url));
+	});
 </script>
 
 {#await data.submission}

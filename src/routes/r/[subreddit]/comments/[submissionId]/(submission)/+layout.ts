@@ -24,14 +24,6 @@ export const load: LayoutLoad = async ({ params, url }) => {
 		submission = jsrwrap.getSubmission(submissionId).fetch();
 	}
 
-	console.log(db);
-	const res = await db.get('sub', 1);
-	console.log(res);
-	await db.put('sub', { name: 'pringles', price: 1, productCode: 'p' }, 1);
-	await db.add('subreddit', await submission);
-	await db.put('subredditv2', await submission, transformUrlForIDBKey(url));
-	console.log(await db.get('subreddit', 1));
-
 	return {
 		submission
 	};

@@ -6,6 +6,7 @@
 	<a href="/r/genshin_impact">/r/genshin_impact</a>
 	<a href="/r/games">/r/games</a>
 	<a href="/r/webdev">/r/webdev</a>
+	<a href="/">Home</a>
 </p>
 
 <div>

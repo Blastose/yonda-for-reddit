@@ -2,9 +2,15 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import SubTestCont from '$lib/components/layout/SubTestCont.svelte';
-	import { getFullUrl } from '$lib/url/url.js';
+	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
+	import { db } from '$lib/idb/idb.js';
 
 	export let data;
+
+	onMount(async () => {
+		const submissions = await data.submissions;
+		await db.put('submissions', submissions, transformUrlForIDBKey($page.url));
+	});
 </script>
 
 {#key getFullUrl($page.url)}
