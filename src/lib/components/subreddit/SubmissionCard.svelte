@@ -6,13 +6,14 @@
 	import Icon from '../icon/Icon.svelte';
 	import ClickableDivWrapper from '../layout/ClickableDivWrapper.svelte';
 	import UserFlair from './UserFlair.svelte';
+	import Embed from './embed/Embed.svelte';
 
 	export let submission: SubmissionData;
 	$: href = removeTrailingBackslashFromUrl(submission.permalink.toLowerCase());
 </script>
 
 <ClickableDivWrapper {href}>
-	<article>
+	<article class="flex flex-col gap-2">
 		<div class="flex flex-col gap-1">
 			{#if submission.link_flair_text}
 				<div class="w-fit">
@@ -41,6 +42,8 @@
 				</div>
 			</div>
 		</div>
+
+		<Embed {submission} />
 
 		<div class="mt-4 flex gap-2">
 			<div class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-2 py-1 text-sm">

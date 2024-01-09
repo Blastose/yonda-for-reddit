@@ -10,6 +10,7 @@
 		$page;
 		(async () => {
 			const submissions = await data.submissions;
+			console.log(submissions);
 			await db.put('submissions', submissions, transformUrlForIDBKey($page.url));
 		})();
 	}
