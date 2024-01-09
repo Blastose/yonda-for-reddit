@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Banner from '$lib/components/subreddit/Banner.svelte';
+	import SubredditSidebar from '$lib/components/subreddit/sidebar/SubredditSidebar.svelte';
 
 	export let data;
 
@@ -18,11 +19,17 @@
 </p>
 
 <Banner about={data.about} />
-<div>
-	{data.about.display_name_prefixed}
-	{#await data.sidebarPromise then sidebar}
-		{sidebar.at(0)?.id}
+
+<div class="grid grid-cols-[1fr_256px]">
+	<div>
+		<slot />
+	</div>
+
+	{#await data.sidebarPromise}
+		<p>Loading sidebar...</p>
+	{:then widgets}
+		<div class="thin-scrollbar sticky top-16 h-[calc(100dvh-56px)] overflow-y-auto">
+			<SubredditSidebar about={data.about} {widgets} />
+		</div>
 	{/await}
 </div>
-
-<slot />
