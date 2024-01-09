@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	:root {
+		--bg: #101010;
+		--header-height: 56px;
+		--sidebar-width: 225px;
+		--search-input-bg: #242424;
+		--divider-color: rgb(58 58 58);
+	}
+}
+
 html {
 	overflow-wrap: anywhere;
 }
@@ -12,4 +22,65 @@ html {
 	scrollbar-color: #ffffff50 transparent;
 	color: #e4e3df;
 	fill: #e4e3df;
+}
+
+.modal-bg {
+	position: fixed;
+	inset: 0;
+	z-index: 99999;
+	background-color: rgb(0 0 0 / 0.5);
+}
+
+.close-btn {
+	position: absolute;
+	right: 10px;
+	z-index: 999999;
+	top: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9999px;
+	height: 2rem;
+	width: 2rem;
+}
+
+@layer components {
+	.container-doku {
+		@apply container mx-auto px-4 pb-4 sm:px-6;
+		transition: max-width 450ms;
+	}
+}
+
+.thin-scrollbar {
+	scrollbar-gutter: stable;
+	scrollbar-width: thin;
+	scrollbar-color: #ffffff00 transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 1px;
+	border: transparent;
+	visibility: hidden;
+}
+
+.dark .thin-scrollbar::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.thin-scrollbar:hover {
+	scrollbar-color: #94949450 transparent;
+}
+
+.thin-scrollbar:hover::-webkit-scrollbar-thumb {
+	visibility: visible;
 }

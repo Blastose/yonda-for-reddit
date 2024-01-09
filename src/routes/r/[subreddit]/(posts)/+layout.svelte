@@ -1,21 +1,27 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import SubTestCont from '$lib/components/layout/SubTestCont.svelte';
+	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
+	import { db } from '$lib/idb/idb.js';
 
 	export let data;
 
-	onMount(async () => {
-		const a = await data.submissions;
-		console.log(a);
-		localStorage.setItem($page.url.pathname + $page.url.search, JSON.stringify(a));
-	});
+	$: {
+		$page;
+		(async () => {
+			const submissions = await data.submissions;
+			await db.put('submissions', submissions, transformUrlForIDBKey($page.url));
+		})();
+	}
 </script>
 
-{#await data.submissions}
-	<p>Loading....</p>
-{:then submissions}
-	{#each submissions as submission}
-		<p><a class="text-blue-500" href={submission.permalink.toLowerCase()}>{submission.title}</a></p>
-	{/each}
-{/await}
+{#key getFullUrl($page.url)}
+	{#await data.submissions}
+		<p>Loading....</p>
+	{:then submissions}
+		<SubTestCont {submissions} subreddit={$page.params.subreddit} />
+	{/await}
+{/key}
+
+<!-- This slot does not display any content, but is needed to silence a SK warning -->
 <slot />
