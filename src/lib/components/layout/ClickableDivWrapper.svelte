@@ -3,14 +3,14 @@
 
 	export let href: string;
 	export let fit: boolean = false;
-
-	let divWrapper: HTMLDivElement;
+	export let onClick: () => void = () => {};
 
 	function handleOnClick(e: MouseEvent) {
 		if (e.ctrlKey) return;
 		const target = e.target as HTMLElement | null;
 		if (target?.closest('a')) return;
 		if (target?.closest('button')) return;
+		onClick();
 		goto(href);
 	}
 </script>
@@ -23,7 +23,6 @@
 		e.preventDefault();
 		goto(href);
 	}}
-	bind:this={divWrapper}
 	role="link"
 	tabindex="0"
 	class="cursor-pointer {fit ? 'h-fit w-fit' : ''}"

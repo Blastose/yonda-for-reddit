@@ -1,18 +1,24 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
 	import RelativeTime from './RelativeTime.svelte';
-	import { removeTrailingBackslashFromUrl } from '$lib/url/url';
+	import { removeTrailingBackslashFromUrl, transformUrlForIDBKey } from '$lib/url/url';
 	import Flair from './Flair.svelte';
 	import Icon from '../icon/Icon.svelte';
 	import ClickableDivWrapper from '../layout/ClickableDivWrapper.svelte';
 	import UserFlair from './UserFlair.svelte';
 	import Embed from './embed/Embed.svelte';
+	import { submissionStoreClick, setSubmissionStore } from '$lib/stores/submissionStore';
 
 	export let submission: SubmissionData;
 	$: href = removeTrailingBackslashFromUrl(submission.permalink.toLowerCase());
 </script>
 
-<ClickableDivWrapper {href}>
+<ClickableDivWrapper
+	{href}
+	onClick={() => {
+		setSubmissionStore(href, submission);
+	}}
+>
 	<article class="flex flex-col gap-2">
 		<div class="flex flex-col gap-1">
 			{#if submission.link_flair_text}
@@ -22,7 +28,9 @@
 			{/if}
 
 			<h2 class="text-xl font-bold">
-				<a class="submission-title" {href}>{submission.title}</a>
+				<a use:submissionStoreClick={{ url: href, submission }} class="submission-title" {href}
+					>{submission.title}</a
+				>
 			</h2>
 
 			<div class="flex items-center gap-1">
@@ -52,7 +60,11 @@
 				<button><Icon name="arrowDownOutline" /></button>
 			</div>
 
-			<a {href} class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-2 py-1 text-sm">
+			<a
+				use:submissionStoreClick={{ url: href, submission }}
+				{href}
+				class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-3 py-1 text-sm"
+			>
 				<Icon name="comment" height="20" width="20" />
 				{submission.num_comments}
 			</a>
