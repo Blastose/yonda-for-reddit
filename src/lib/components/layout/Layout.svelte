@@ -11,7 +11,7 @@
 			<Sidebar type="sidebar" />
 		</aside>
 
-		<main class="container-doku">
+		<main class="container-doku pt-4">
 			<slot />
 		</main>
 	</div>

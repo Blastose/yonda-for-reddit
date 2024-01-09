@@ -11,16 +11,9 @@
 	);
 </script>
 
-<p>
-	<a href="/r/genshin_impact">/r/genshin_impact</a>
-	<a href="/r/games">/r/games</a>
-	<a href="/r/webdev">/r/webdev</a>
-	<a href="/">Home</a>
-</p>
-
 <Banner about={data.about} />
 
-<div class="grid grid-cols-[1fr_256px]">
+<div class="grid grid-cols-[1fr_312px] gap-4">
 	<div>
 		<slot />
 	</div>
@@ -28,8 +21,16 @@
 	{#await data.sidebarPromise}
 		<p>Loading sidebar...</p>
 	{:then widgets}
-		<div class="thin-scrollbar sticky top-16 h-[calc(100dvh-56px)] overflow-y-auto">
+		<div
+			class="subreddit-sidebar thin-scrollbar sticky top-16 h-[calc(100dvh-100px)] overflow-y-auto"
+		>
 			<SubredditSidebar about={data.about} {widgets} />
 		</div>
 	{/await}
 </div>
+
+<style>
+	.subreddit-sidebar {
+		view-transition-name: subreddit-sidebar;
+	}
+</style>
