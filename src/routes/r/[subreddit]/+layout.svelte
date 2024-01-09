@@ -13,7 +13,7 @@
 
 <Banner about={data.about} />
 
-<div class="grid grid-cols-[1fr_312px] gap-4">
+<div class="grid grid-cols-1 gap-4 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
 	<div>
 		<slot />
 	</div>
@@ -22,7 +22,7 @@
 		<p>Loading sidebar...</p>
 	{:then widgets}
 		<div
-			class="subreddit-sidebar thin-scrollbar sticky top-16 h-[calc(100dvh-100px)] overflow-y-auto"
+			class="subreddit-sidebar thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
 		>
 			<SubredditSidebar about={data.about} {widgets} />
 		</div>

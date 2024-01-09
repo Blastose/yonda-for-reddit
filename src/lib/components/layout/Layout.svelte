@@ -20,7 +20,7 @@
 <style>
 	.sidebar-wrapper {
 		view-transition-name: sidebar;
-		margin-left: -16rem;
+		margin-left: calc(var(--sidebar-width) * -1);
 		visibility: hidden;
 		width: var(--sidebar-width);
 		height: calc(100dvh - var(--header-height));
