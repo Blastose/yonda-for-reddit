@@ -42,7 +42,7 @@
 		display: inline-flex;
 		align-items: center;
 		padding: 0rem 0.375rem;
-		border-radius: 0.25rem;
+		border-radius: 1rem;
 		font-weight: 600;
 	}
 

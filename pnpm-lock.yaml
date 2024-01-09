@@ -9,8 +9,8 @@ dependencies:
     specifier: ^8.0.0
     version: 8.0.0
   jsrwrap:
-    specifier: 0.1.15-beta.1
-    version: 0.1.15-beta.1
+    specifier: 0.1.15-beta.2
+    version: 0.1.15-beta.2
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
@@ -1849,8 +1849,8 @@ packages:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
     dev: true
 
-  /jsrwrap@0.1.15-beta.1:
-    resolution: {integrity: sha512-YDsMAIoN2Y0UHIOh7+q64hy51A4RLeHL13DQTn4beVkAFIhyJDXmC6kpYK0wQqjvx3BH2O0Rp7NHyQVpRDMehQ==}
+  /jsrwrap@0.1.15-beta.2:
+    resolution: {integrity: sha512-WrmipOqbhv4oNMwoVY3ZGhMdqEmUFQ88/8sXnhQ/s2T8N1CCj2g3J7+FGx7wkV0g8UTsvVqzMKAWpPtUXjRqpA==}
     engines: {node: '>=14.16'}
     dev: false
 

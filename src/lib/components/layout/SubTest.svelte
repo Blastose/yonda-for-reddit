@@ -5,6 +5,9 @@
 	export let submissions: SubmissionData[];
 </script>
 
-{#each submissions as submission}
-	<SubmissionCard {submission} />
-{/each}
+<div class="flex flex-col gap-2">
+	{#each submissions as submission}
+		<SubmissionCard {submission} />
+		<hr class="border-[#2c2c2c]" />
+	{/each}
+</div>

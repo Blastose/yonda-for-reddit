@@ -41,7 +41,7 @@ interface MyDB extends DBSchema {
 // but, whenever we use db, it is always in the browser so we can assert that it
 // is not null
 export const db = (browser
-	? await openDB<MyDB>('a', 1, {
+	? await openDB<MyDB>('dokusha', 1, {
 			upgrade(db) {
 				db.createObjectStore('sub', { autoIncrement: true });
 				db.createObjectStore('subreddit', { autoIncrement: true });

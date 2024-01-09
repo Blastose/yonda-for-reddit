@@ -19,7 +19,9 @@
 	{#await data.submissions}
 		<p>Loading....</p>
 	{:then submissions}
-		<SubTestCont {submissions} subreddit={$page.params.subreddit} />
+		<div class="pt-4">
+			<SubTestCont {submissions} subreddit={$page.params.subreddit} />
+		</div>
 	{/await}
 {/key}
 

@@ -30,6 +30,6 @@
 	}
 </script>
 
-{lastPostId}
+<!-- {lastPostId}  -->
 <SubTest {submissions} />
 <InfiniteScrolling bind:results={submissions} fetchMoreResults={getMoreSubmissions} {onSuccess} />

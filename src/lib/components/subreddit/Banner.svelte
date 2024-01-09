@@ -20,7 +20,7 @@
 				src={icon}
 				alt="{about.display_name} icon"
 			/>
-			<h1 class="flex self-end pb-2 text-3xl font-bold">{about.display_name_prefixed}</h1>
+			<p class="flex self-end pb-2 text-3xl font-bold">{about.display_name_prefixed}</p>
 		</div>
 	</section>
 {/key}

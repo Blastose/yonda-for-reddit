@@ -45,7 +45,7 @@
 	"type": "module",
 	"dependencies": {
 		"idb": "^8.0.0",
-		"jsrwrap": "0.1.15-beta.1",
+		"jsrwrap": "0.1.15-beta.2",
 		"nprogress": "^0.2.0",
 		"reddit-md-to-html": "^0.1.72"
 	}
