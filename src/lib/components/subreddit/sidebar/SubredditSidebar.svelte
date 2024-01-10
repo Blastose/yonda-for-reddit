@@ -16,7 +16,7 @@
 	export let about: SubredditData;
 </script>
 
-<aside class="flex flex-col gap-2 inherit-text-size text-sm p-4 bg-neutral-800 rounded-md">
+<aside class="inherit-text-size flex flex-col gap-2 rounded-md bg-neutral-800 p-4 text-sm">
 	{#each widgets as widget, index}
 		{#if widget.kind === 'id-card'}
 			<WidgetIdCard {widget} {about} />

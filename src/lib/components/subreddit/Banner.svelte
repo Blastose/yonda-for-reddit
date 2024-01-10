@@ -20,7 +20,10 @@
 				src={icon}
 				alt="{about.display_name} icon"
 			/>
-			<p class="flex self-end pb-2 text-3xl font-bold">{about.display_name_prefixed}</p>
+			<a
+				href="/{about.display_name_prefixed.toLowerCase()}"
+				class="flex self-end pb-2 text-3xl font-bold">{about.display_name_prefixed}</a
+			>
 		</div>
 	</section>
 {/key}

@@ -11,22 +11,24 @@
 	);
 </script>
 
-<Banner about={data.about} />
+<div class="pt-2">
+	<Banner about={data.about} />
 
-<div class="grid grid-cols-1 gap-4 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
-	<div>
-		<slot />
-	</div>
-
-	{#await data.sidebarPromise}
-		<p>Loading sidebar...</p>
-	{:then widgets}
-		<div
-			class="subreddit-sidebar thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
-		>
-			<SubredditSidebar about={data.about} {widgets} />
+	<div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
+		<div>
+			<slot />
 		</div>
-	{/await}
+
+		{#await data.sidebarPromise}
+			<p>Loading sidebar...</p>
+		{:then widgets}
+			<div
+				class="subreddit-sidebar thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
+			>
+				<SubredditSidebar about={data.about} {widgets} />
+			</div>
+		{/await}
+	</div>
 </div>
 
 <style>

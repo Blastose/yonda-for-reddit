@@ -4,7 +4,7 @@
 
 @layer base {
 	:root {
-		--bg: #101010;
+		--bg: #1f1f20;
 		--header-height: 56px;
 		--sidebar-width: 312px;
 		--search-input-bg: #242424;
@@ -19,10 +19,10 @@ html {
 
 .dark {
 	color-scheme: dark;
-	background-color: #101010;
+	background-color: var(--bg);
 	scrollbar-color: #ffffff50 transparent;
-	color: #cfced4;
-	fill: #e4e3df;
+	color: #c5c4c9;
+	fill: #ededed;
 }
 
 .modal-bg {
@@ -45,10 +45,33 @@ html {
 	width: 2rem;
 }
 
-@layer components {
+.container-doku {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 1rem 1rem 1rem;
+	width: 100%;
+	transition: max-width 450ms;
+}
+@media (min-width: 640px) {
 	.container-doku {
-		@apply container mx-auto px-4 pb-4 sm:px-6;
-		transition: max-width 450ms;
+		max-width: 640px;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
+}
+@media (min-width: 768px) {
+	.container-doku {
+		max-width: 768px;
+	}
+}
+@media (min-width: 1024px) {
+	.container-doku {
+		max-width: 1024px;
+	}
+}
+@media (min-width: 1280px) {
+	.container-doku {
+		max-width: 1280px;
 	}
 }
 

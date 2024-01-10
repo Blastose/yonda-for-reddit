@@ -9,6 +9,7 @@
 	import Embed from './embed/Embed.svelte';
 	import { db } from '$lib/idb/idb';
 	import { submissionStoreClick, setSubmissionStore } from '$lib/stores/submissionStore';
+	import Hint from '../comment/Hint.svelte';
 
 	export let submission: SubmissionData;
 	$: href = removeTrailingBackslashFromUrl(submission.permalink.toLowerCase());
@@ -43,7 +44,7 @@
 				>
 			</h2>
 
-			<div class="flex items-center gap-1">
+			<div class="flex flex-wrap items-center gap-1">
 				<div class="flex flex-wrap gap-2 text-sm">
 					<a class="font-semibold text-[#a1a5d8]" href="/user/{submission.author}"
 						>u/{submission.author}</a
@@ -58,6 +59,7 @@
 						editedTimeSeconds={submission.edited}
 					/>
 				</div>
+				<Hint hint={submission} type="submission" />
 			</div>
 		</div>
 
@@ -66,7 +68,7 @@
 		<div class="mt-4 flex items-center gap-2">
 			<div class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-2 py-1 text-sm">
 				<button><Icon name="arrowUpOutline" /></button>
-				<span class="">{submission.num_comments}</span>
+				<span class="">{submission.score}</span>
 				<button><Icon name="arrowDownOutline" /></button>
 			</div>
 

@@ -25,7 +25,7 @@
 				{#if richtext.e === 'text' && richtext.t}
 					<span class="text-xs">{richtext.t}</span>
 				{:else if richtext.e === 'emoji'}
-					<img width="16" height="16" src={richtext.u} alt="emoji{richtext.a}" />
+					<img width="16" height="16" src={richtext.u} alt="emoji{richtext.a}" title={richtext.a} />
 				{/if}
 			{/each}
 		{/if}
