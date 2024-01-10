@@ -1,7 +1,5 @@
-<script lang="ts">
-	import type { SubmissionData } from 'jsrwrap/types';
-
-	type AuthorFlair = Pick<
+<script context="module" lang="ts">
+	export type AuthorFlair = Pick<
 		SubmissionData,
 		| 'author_flair_background_color'
 		| 'author'
@@ -12,6 +10,10 @@
 		| 'author_flair_text_color'
 		| 'author_flair_template_id'
 	>;
+</script>
+
+<script lang="ts">
+	import type { SubmissionData } from 'jsrwrap/types';
 
 	export let author: AuthorFlair;
 </script>

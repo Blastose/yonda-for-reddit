@@ -1,13 +1,17 @@
-<script lang="ts">
-	import Icon from '../icon/Icon.svelte';
-
-	export let hint: {
+<script context="module" lang="ts">
+	export type HintType = {
 		distinguished: 'moderator' | 'admin' | null;
 		stickied: boolean;
 		locked: boolean;
 		pinned?: boolean;
 		is_submitter?: boolean;
 	};
+</script>
+
+<script lang="ts">
+	import Icon from '../icon/Icon.svelte';
+
+	export let hint: HintType;
 
 	export let type: 'submission' | 'comment';
 </script>

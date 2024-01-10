@@ -11,6 +11,8 @@
 	);
 </script>
 
+<svelte:head><title>{data.about.title}</title></svelte:head>
+
 <div class="pt-2">
 	<Banner about={data.about} />
 

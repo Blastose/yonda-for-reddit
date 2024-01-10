@@ -3,11 +3,9 @@
 	import type { CommentFull } from 'jsrwrap/types';
 	import CommentBar from './CommentBar.svelte';
 	import { tick } from 'svelte';
-	import RelativeTime from '../subreddit/RelativeTime.svelte';
 	import Icon from '../icon/Icon.svelte';
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
-	import UserFlair from '../subreddit/UserFlair.svelte';
-	import Hint from './Hint.svelte';
+	import Submitter from '../subreddit/Submitter.svelte';
 
 	export let comment: CommentFull;
 
@@ -37,26 +35,8 @@
 		<CommentBar commentHidden={comment.collapsed} {toggleCommentVisibility} />
 		<div class="flex flex-col gap-4">
 			<div class="flex flex-col">
-				<div class="flex flex-wrap items-center gap-1">
-					{#if comment.author !== '[deleted]'}
-						<a href="/user/{comment.author}" class="text-sm font-semibold text-[#a1a5d8]"
-							>{comment.author}</a
-						>
-					{:else}
-						<p class="text-sm font-semibold text-[#a1a5d8]">{comment.author}</p>
-					{/if}
+				<Submitter submitter={comment} type="comment" />
 
-					<UserFlair author={comment} />
-					<Hint hint={comment} type={'comment'} />
-
-					<span class="text-xs text-[var(visited-link-color)]"
-						>•
-						<RelativeTime
-							postedTimeSeconds={comment.created_utc}
-							editedTimeSeconds={comment.edited}
-						/></span
-					>
-				</div>
 				{#if !comment.collapsed}
 					<div class="flex flex-col">
 						<div class="grid grid-cols-1">
