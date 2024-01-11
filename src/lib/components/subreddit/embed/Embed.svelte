@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
 	import RedditImage from './RedditImage.svelte';
-	import RedditVideo from './RedditVideo.svelte';
+	import RedditVideo from './video/RedditVideo.svelte';
 
 	export let submission: SubmissionData;
 </script>

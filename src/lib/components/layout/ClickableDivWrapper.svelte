@@ -11,6 +11,7 @@
 		if (target?.closest('a')) return;
 		if (target?.closest('button')) return;
 		if (target?.closest('video')) return;
+		if (target?.closest('div.video-player')) return;
 		onClick();
 		goto(href);
 	}
