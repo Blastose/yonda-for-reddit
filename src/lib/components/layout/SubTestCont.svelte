@@ -21,7 +21,7 @@
 				t: 'day'
 			}
 		});
-		// lastPostId = res.at(res.length - 1)?.id || null;
+		lastPostId = res.at(res.length - 1)?.id || null;
 		return res;
 	}
 

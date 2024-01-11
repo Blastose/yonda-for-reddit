@@ -25,6 +25,10 @@ html {
 	fill: #ededed;
 }
 
+.skeleton {
+	background-color: rgb(189, 189, 201);
+}
+
 .modal-bg {
 	position: fixed;
 	inset: 0;

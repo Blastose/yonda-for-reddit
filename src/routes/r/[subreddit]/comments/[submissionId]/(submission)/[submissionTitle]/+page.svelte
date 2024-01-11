@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Comment from '$lib/components/comment/Comment.svelte';
+	import CommentSkeleton from '$lib/components/comment/CommentSkeleton.svelte';
 	import CommentSort from '$lib/components/comment/CommentSort.svelte';
 
 	export let data;
@@ -7,7 +8,11 @@
 
 <div>
 	{#await data.submission}
-		<p>Loading...</p>
+		<div class="flex flex-col gap-8">
+			{#each { length: 5 } as _}
+				<CommentSkeleton />
+			{/each}
+		</div>
 	{:then submission}
 		<div class="flex flex-col gap-8">
 			<div class="flex flex-col gap-2">
