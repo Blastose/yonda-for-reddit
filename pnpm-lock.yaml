@@ -5,12 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  hls.js:
+    specifier: ^1.5.1
+    version: 1.5.1
   idb:
     specifier: ^8.0.0
     version: 8.0.0
   jsrwrap:
-    specifier: 0.1.15-beta.2
-    version: 0.1.15-beta.2
+    specifier: 0.1.16-beta.0
+    version: 0.1.16-beta.0
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
@@ -1711,6 +1714,10 @@ packages:
       function-bind: 1.1.2
     dev: true
 
+  /hls.js@1.5.1:
+    resolution: {integrity: sha512-SsUSlpyjOGnwBhVrVEG6vRFPU2SAJ0gUqrFdGeo7YPbOC0vuWK0TDMyp7n3QiaBC/Wkic771uqPnnVdT8/x+3Q==}
+    dev: false
+
   /human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
@@ -1849,8 +1856,8 @@ packages:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
     dev: true
 
-  /jsrwrap@0.1.15-beta.2:
-    resolution: {integrity: sha512-WrmipOqbhv4oNMwoVY3ZGhMdqEmUFQ88/8sXnhQ/s2T8N1CCj2g3J7+FGx7wkV0g8UTsvVqzMKAWpPtUXjRqpA==}
+  /jsrwrap@0.1.16-beta.0:
+    resolution: {integrity: sha512-6bO+mtOYC9A2YWlZTu/Yf/fVdCAy3ujObiQZPErddCTwiZhg1bLvWU74/pJ0PDy+cUnd0pwYjp2gGXFJb+krqg==}
     engines: {node: '>=14.16'}
     dev: false
 

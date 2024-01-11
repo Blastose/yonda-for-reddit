@@ -10,6 +10,7 @@
 		const target = e.target as HTMLElement | null;
 		if (target?.closest('a')) return;
 		if (target?.closest('button')) return;
+		if (target?.closest('video')) return;
 		onClick();
 		goto(href);
 	}
