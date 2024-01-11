@@ -20,7 +20,7 @@
 	{#await data.submissions}
 		<p>Loading....</p>
 	{:then submissions}
-		<div class="pt-4">
+		<div>
 			<SubTestCont {submissions} subreddit={$page.params.subreddit} />
 		</div>
 	{/await}

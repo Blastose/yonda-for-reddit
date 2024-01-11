@@ -16,3 +16,10 @@ export function transformUrlForIDBKey(url: URL) {
 export function stripSearchParams(url: string) {
 	return url.split('?').at(0) ?? url;
 }
+
+export function addSearchParamToUrl(url: URL, newSearchParam: string, newSearchParamValue: string) {
+	const urlClone = new URL(url);
+	urlClone.searchParams.set(newSearchParam, newSearchParamValue);
+
+	return urlClone.toString();
+}

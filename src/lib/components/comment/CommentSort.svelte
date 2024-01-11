@@ -4,6 +4,7 @@
 	import type { Sort, SubmissionData } from 'jsrwrap/types';
 	import { page } from '$app/stores';
 	import Icon from '../icon/Icon.svelte';
+	import { addSearchParamToUrl } from '$lib/url/url';
 
 	const {
 		elements: { trigger, menu, item },
@@ -80,13 +81,6 @@
 	function isActive(currentOption: string) {
 		return currentOption === currentSort;
 	}
-
-	function createLinkUrl(url: URL, newSearchParamValue: string) {
-		const urlClone = new URL(url);
-		urlClone.searchParams.set('sort', newSearchParamValue);
-
-		return urlClone.toString();
-	}
 </script>
 
 <button type="button" class="flex w-fit items-center gap-1 text-sm" use:melt={$trigger}>
@@ -108,7 +102,7 @@
 				use:melt={$item}
 				class="px-8 py-2 hover:bg-neutral-600
         {isActive(sortOption.value) ? 'bg-neutral-600' : ''} "
-				href={createLinkUrl($page.url, sortOption.value)}>{sortOption.display}</a
+				href={addSearchParamToUrl($page.url, 'sort', sortOption.value)}>{sortOption.display}</a
 			>
 		{/each}
 	</div>
