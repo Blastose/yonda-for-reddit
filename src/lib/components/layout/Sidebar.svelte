@@ -16,6 +16,9 @@
 		<a href="/r/WebdeV">/r/WebdeV</a>
 	</p>
 	<p>
+		<a href="/r/genshin_impact_leaks">/r/genshin_impact_leaks</a>
+	</p>
+	<p>
 		<a href="/">Home</a>
 	</p>
 
