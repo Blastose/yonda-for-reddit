@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Comment from '$lib/components/comment/Comment.svelte';
+	import CommentSort from '$lib/components/comment/CommentSort.svelte';
 
 	export let data;
 </script>
@@ -10,7 +11,8 @@
 	{:then submission}
 		<div class="flex flex-col gap-8">
 			<div class="flex flex-col gap-2">
-				<p class="text-sm">Sort By: {submission.suggested_sort}</p>
+				<CommentSort {submission} />
+
 				<input
 					class="w-full rounded-3xl bg-[var(--search-input-bg)] px-4 py-2"
 					type="text"
@@ -18,11 +20,13 @@
 				/>
 			</div>
 
-			{#each submission.comments as comment}
+			{#each submission.comments as comment, index}
 				<Comment {comment} />
-				<div class="flex justify-center">
-					<hr class="w-2/3 border-[#3a3a3a]" />
-				</div>
+				{#if index < submission.comments.length - 1}
+					<div class="flex justify-center">
+						<hr class="w-2/3 border-[#3a3a3a]" />
+					</div>
+				{/if}
 			{/each}
 		</div>
 	{/await}

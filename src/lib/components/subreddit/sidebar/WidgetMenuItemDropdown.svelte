@@ -7,21 +7,16 @@
 	export let menuItem: WidgetMenu['data'][number];
 
 	const {
-		elements: { trigger, menu, item, separator, arrow },
+		elements: { trigger, menu, item },
 		states: { open }
 	} = createDropdownMenu({
 		loop: true
 	});
 </script>
 
-<!-- 
-	TODO re-add
-	use:melt={$trigger}
-	to button below
-	Removed because it was auto focusing for some reason, need to find out why
- -->
 <button
 	type="button"
+	use:melt={$trigger}
 	class="flex items-center justify-center rounded-2xl bg-gray-600 px-2 py-1 text-center"
 >
 	{menuItem.text}

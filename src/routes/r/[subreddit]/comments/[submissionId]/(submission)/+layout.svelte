@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { db } from '$lib/idb/idb.js';
-	import { transformUrlForIDBKey } from '$lib/url/url.js';
+	import { stripSearchParams, transformUrlForIDBKey } from '$lib/url/url.js';
 	import { setSubmissionStore, submissionStore } from '$lib/stores/submissionStore.js';
 	import SubmissionInfo from '$lib/components/subreddit/SubmissionInfo.svelte';
 
@@ -19,7 +19,7 @@
 </script>
 
 <div class="flex flex-col gap-4">
-	{#if $submissionStore && $submissionStore.url === transformUrlForIDBKey($page.url)}
+	{#if $submissionStore && stripSearchParams($submissionStore?.url) === stripSearchParams(transformUrlForIDBKey($page.url))}
 		{@const submission = $submissionStore.submission}
 		<SubmissionInfo {submission} type="submission" numNewComments={0} />
 	{:else}

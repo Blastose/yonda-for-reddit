@@ -12,3 +12,7 @@ export function removeTrailingBackslashFromUrl(url: string) {
 export function transformUrlForIDBKey(url: URL) {
 	return removeTrailingBackslashFromUrl(getFullUrl(url)).toLowerCase();
 }
+
+export function stripSearchParams(url: string) {
+	return url.split('?').at(0) ?? url;
+}
