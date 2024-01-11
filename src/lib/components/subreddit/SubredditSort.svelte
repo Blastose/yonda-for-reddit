@@ -18,11 +18,16 @@
 	const sortOptions = ['hot', 'new', 'top', 'rising', 'controversial'];
 </script>
 
-<button type="button" class="flex w-fit items-center gap-1 text-sm" use:melt={$trigger}>
+<button
+	type="button"
+	class="flex w-fit items-center gap-1 rounded-3xl px-4 py-1 text-sm hover:bg-neutral-700"
+	use:melt={$trigger}
+>
 	<span class="capitalize">{currentSort}</span>
 	<Icon name="chevronDown" />
 </button>
 
+<!-- TODO refactor styles with other dropdown -->
 {#if $open}
 	<div
 		class="flex flex-col overflow-hidden rounded-md bg-neutral-700 text-sm"

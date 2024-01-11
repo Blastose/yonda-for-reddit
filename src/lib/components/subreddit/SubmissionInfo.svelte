@@ -8,6 +8,7 @@
 	import SubmissionActions from './SubmissionActions.svelte';
 	import Submitter from './Submitter.svelte';
 	import Tag from './Tag.svelte';
+	import Embed from './embed/Embed.svelte';
 
 	export let submission: SubmissionData;
 	export let type: 'subreddit' | 'submission';
@@ -33,6 +34,10 @@
 		<Tag postTag={submission} />
 	</div>
 	<Submitter submitter={submission} type="submission" />
+
+	{#if type === 'submission'}
+		<Embed {submission} />
+	{/if}
 
 	{#if type === 'submission'}
 		<div>

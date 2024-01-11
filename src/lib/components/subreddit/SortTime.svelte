@@ -61,7 +61,11 @@
 </script>
 
 {#if currentSort === 'top' || currentSort === 'controversial'}
-	<button type="button" class="flex w-fit items-center gap-1 text-sm" use:melt={$trigger}>
+	<button
+		type="button"
+		class="flex w-fit items-center gap-1 rounded-3xl px-4 py-1 text-sm hover:bg-neutral-700"
+		use:melt={$trigger}
+	>
 		<span>{display}</span>
 		<Icon name="chevronDown" />
 	</button>
