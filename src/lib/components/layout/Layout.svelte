@@ -11,7 +11,7 @@
 			<Sidebar type="sidebar" />
 		</aside>
 
-		<main class="container-doku">
+		<main class="container-doku pt-4">
 			<slot />
 		</main>
 	</div>
@@ -20,7 +20,7 @@
 <style>
 	.sidebar-wrapper {
 		view-transition-name: sidebar;
-		margin-left: -16rem;
+		margin-left: calc(var(--sidebar-width) * -1);
 		visibility: hidden;
 		width: var(--sidebar-width);
 		height: calc(100dvh - var(--header-height));

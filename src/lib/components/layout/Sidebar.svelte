@@ -3,7 +3,26 @@
 </script>
 
 <div class="thin-scrollbar {type === 'sidebar' ? 'sidebar' : 'drawer'} ">
-	{#each { length: 50 } as _}
+	<p>
+		<a href="/r/genshin_impact">/r/genshin_impact</a>
+	</p>
+	<p>
+		<a href="/r/games">/r/games</a>
+	</p>
+	<p>
+		<a href="/r/webdev">/r/webdev</a>
+	</p>
+	<p>
+		<a href="/r/WebdeV">/r/WebdeV</a>
+	</p>
+	<p>
+		<a href="/r/genshin_impact_leaks">/r/genshin_impact_leaks</a>
+	</p>
+	<p>
+		<a href="/">Home</a>
+	</p>
+
+	{#each { length: 47 } as _}
 		<p>Sidebar</p>
 	{/each}
 </div>

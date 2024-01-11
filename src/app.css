@@ -4,11 +4,12 @@
 
 @layer base {
 	:root {
-		--bg: #101010;
+		--bg: #1f1f20;
 		--header-height: 56px;
-		--sidebar-width: 225px;
+		--sidebar-width: 312px;
 		--search-input-bg: #242424;
 		--divider-color: rgb(58 58 58);
+		--visited-link-color: #888888;
 	}
 }
 
@@ -18,10 +19,14 @@ html {
 
 .dark {
 	color-scheme: dark;
-	background-color: #101010;
+	background-color: var(--bg);
 	scrollbar-color: #ffffff50 transparent;
-	color: #e4e3df;
-	fill: #e4e3df;
+	color: #c5c4c9;
+	fill: #ededed;
+}
+
+.skeleton {
+	background-color: rgb(76, 76, 82);
 }
 
 .modal-bg {
@@ -44,10 +49,33 @@ html {
 	width: 2rem;
 }
 
-@layer components {
+.container-doku {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 1rem 1rem 1rem;
+	width: 100%;
+	transition: max-width 450ms;
+}
+@media (min-width: 640px) {
 	.container-doku {
-		@apply container mx-auto px-4 pb-4 sm:px-6;
-		transition: max-width 450ms;
+		max-width: 640px;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
+}
+@media (min-width: 768px) {
+	.container-doku {
+		max-width: 768px;
+	}
+}
+@media (min-width: 1024px) {
+	.container-doku {
+		max-width: 1024px;
+	}
+}
+@media (min-width: 1280px) {
+	.container-doku {
+		max-width: 1280px;
 	}
 }
 
@@ -83,4 +111,289 @@ html {
 
 .thin-scrollbar:hover::-webkit-scrollbar-thumb {
 	visibility: visible;
+}
+
+/* Style Reddit MD which mostly uses default css values
+   See https://www.w3schools.com/cssref/css_default_values.asp */
+
+.reddit-md {
+	overflow-wrap: anywhere;
+}
+
+.reddit-md a {
+	color: #0079d3;
+	fill: #0079d3;
+}
+
+.reddit-md a:hover {
+	text-decoration: underline;
+}
+
+.reddit-md .spoiler > a {
+	pointer-events: none;
+}
+
+.reddit-md .spoiler.revealed > a {
+	pointer-events: auto;
+}
+
+.dark .reddit-md a {
+	color: #5aade0;
+	fill: #5aade0;
+}
+
+.reddit-md strong {
+	font-weight: bold;
+}
+
+.reddit-md del,
+strike {
+	text-decoration: line-through;
+}
+
+.reddit-md em {
+	font-style: italic;
+}
+
+.reddit-md p {
+	margin-top: 0.33em;
+	margin-bottom: 0.33em;
+}
+
+/* .reddit-md p + p {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	} */
+
+.inherit-text-size .reddit-md h1,
+.inherit-text-size .reddit-md h2,
+.inherit-text-size .reddit-md h3,
+.inherit-text-size .reddit-md h4,
+.inherit-text-size .reddit-md h5,
+.inherit-text-size .reddit-md h6 {
+	font-size: inherit;
+	font-weight: inherit;
+}
+
+.reddit-md h1 {
+	font-size: larger;
+	font-weight: bold;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+}
+
+.reddit-md h2 {
+	font-size: large;
+	font-weight: bold;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+}
+
+.reddit-md h3 {
+	font-size: 1.17em;
+	font-weight: bold;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+}
+
+.reddit-md h4 {
+	font-size: 1rem;
+	font-weight: bold;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+}
+
+.reddit-md h5 {
+	font-size: 0.83em;
+	font-weight: bold;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+}
+
+.reddit-md h6 {
+	font-size: 0.67em;
+	font-weight: bold;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+}
+
+.reddit-md hr {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin-left: auto;
+	margin-right: auto;
+	border-style: inset;
+	border-color: rgba(97, 97, 97, 0.096);
+}
+
+.dark .reddit-md hr {
+	border-color: rgb(201 201 201 / 66%);
+}
+
+.reddit-md li {
+	display: list-item;
+	margin: 0.5rem 1rem;
+}
+
+.reddit-md ol,
+.reddit-md ul {
+	list-style-type: disc;
+	margin: 0.25rem 0 0.25rem 0.5rem;
+}
+
+.reddit-md li > ul {
+	list-style-type: circle;
+}
+
+.reddit-md ol {
+	list-style-type: decimal;
+}
+
+.reddit-md li > ol {
+	list-style-type: lower-alpha;
+}
+
+.reddit-md blockquote {
+	border-left: 4px solid gray;
+	color: rgb(99, 99, 99);
+	padding-left: 0.5rem;
+	margin-left: 0.5rem;
+}
+
+.dark .reddit-md blockquote {
+	color: rgb(190, 190, 190);
+}
+
+.reddit-md .spoiler {
+	background: #595a61;
+	border-radius: 2px;
+	cursor: pointer;
+	color: transparent;
+}
+
+.reddit-md .spoiler:not(.revealed) > * {
+	opacity: 0;
+}
+
+.dark .reddit-md .spoiler {
+	background: rgb(190, 190, 190);
+}
+
+.reddit-md a[href='/spoiler'],
+.reddit-md a[href='/s'] {
+	text-decoration: none;
+	color: white;
+	background: #434449;
+	padding: 0 0 0 0.25rem;
+	cursor: text;
+}
+
+.dark .reddit-md a[href='/spoiler'],
+.dark .reddit-md a[href='/s'] {
+	color: white;
+}
+
+.reddit-md a[href='/spoiler']::after,
+.reddit-md a[href='/s']::after {
+	content: attr(title);
+	background: #434449;
+	color: #434449;
+	padding: 0 0.25rem;
+}
+
+.reddit-md a[href='/spoiler']:hover::after,
+.reddit-md a[href='/s']:hover::after {
+	color: white;
+}
+
+.reddit-md pre {
+	overflow-x: auto;
+	background-color: #eef1f7;
+	border-radius: 0.25rem;
+	padding: 0.25rem 0.5rem;
+	margin: 0.25rem 0rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+}
+
+.dark .reddit-md pre {
+	background-color: rgb(66, 66, 66);
+}
+
+.reddit-md .spoiler.revealed {
+	transition: background 450ms;
+	background: rgba(79, 79, 79, 0.1);
+	border-radius: 2px;
+	cursor: text;
+	color: #3a3a3a;
+}
+
+.dark .reddit-md .spoiler.revealed {
+	color: #e2e2e2;
+	background: rgba(121, 121, 121, 0.315);
+}
+
+.reddit-md code:not(pre code) {
+	border: solid 1px #d3d3d3;
+	padding: 0rem 0.25rem;
+	border-radius: 0.125rem;
+	background-color: #f0f1f5;
+}
+
+.dark .reddit-md code:not(pre code) {
+	border: solid 1px #5a5a5f;
+	background-color: #3f4242;
+}
+
+.reddit-md img {
+	display: inline;
+	margin: 0 0.25rem;
+}
+
+.reddit-md table {
+	display: block;
+	overflow-x: auto;
+	margin: 1rem 0;
+	overflow-wrap: normal;
+}
+
+.reddit-md th,
+.reddit-md td {
+	border: 1px solid #e5e3da;
+	padding: 4px 9px;
+}
+
+.dark .reddit-md th,
+.dark .reddit-md td {
+	border: 1px solid #505153;
+	padding: 4px 9px;
+}
+
+.reddit-md .reddit-image-container {
+	display: flex;
+	justify-content: center;
+	margin: 24px 0 0 0;
+}
+
+.reddit-md.image-left .reddit-image-container {
+	justify-content: flex-start;
+}
+
+.reddit-md .reddit-image {
+	max-height: 1400px;
+	width: auto;
+}
+
+.comment-body-container .reddit-md .reddit-image {
+	max-width: 512px;
+}
+
+.reddit-md .image-caption {
+	text-align: center;
+	font-size: 0.8rem;
+	margin-bottom: 24px;
+}
+
+.reddit-md div > a > img {
+	margin: 8px 0;
 }

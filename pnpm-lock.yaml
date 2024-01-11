@@ -9,8 +9,8 @@ dependencies:
     specifier: ^8.0.0
     version: 8.0.0
   jsrwrap:
-    specifier: 0.1.15-beta.1
-    version: 0.1.15-beta.1
+    specifier: 0.1.15-beta.2
+    version: 0.1.15-beta.2
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
@@ -21,10 +21,10 @@ dependencies:
 devDependencies:
   '@melt-ui/pp':
     specifier: ^0.3.0
-    version: 0.3.0(@melt-ui/svelte@0.67.0)(svelte@4.2.8)
+    version: 0.3.0(@melt-ui/svelte@0.68.0)(svelte@4.2.8)
   '@melt-ui/svelte':
-    specifier: ^0.67.0
-    version: 0.67.0(react@18.2.0)(svelte@4.2.8)
+    specifier: ^0.68.0
+    version: 0.68.0(react@18.2.0)(svelte@4.2.8)
   '@playwright/test':
     specifier: ^1.28.1
     version: 1.40.1
@@ -462,21 +462,21 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@melt-ui/pp@0.3.0(@melt-ui/svelte@0.67.0)(svelte@4.2.8):
+  /@melt-ui/pp@0.3.0(@melt-ui/svelte@0.68.0)(svelte@4.2.8):
     resolution: {integrity: sha512-b07Bdh8l2KcwKVCXOY+SoBw1dk9eWvQfMSi6SoacpRVyVmmfpi0kV4oGt3HYF0tUCB3sEmVicxse50ZzZxEzEA==}
     engines: {pnpm: '>=8.6.3'}
     peerDependencies:
       '@melt-ui/svelte': '>= 0.29.0'
       svelte: ^3.55.0 || ^4.0.0 || ^5.0.0-next.1
     dependencies:
-      '@melt-ui/svelte': 0.67.0(react@18.2.0)(svelte@4.2.8)
+      '@melt-ui/svelte': 0.68.0(react@18.2.0)(svelte@4.2.8)
       estree-walker: 3.0.3
       magic-string: 0.30.5
       svelte: 4.2.8
     dev: true
 
-  /@melt-ui/svelte@0.67.0(react@18.2.0)(svelte@4.2.8):
-    resolution: {integrity: sha512-fd9PsDE6sKbeyExagqH0nOpZEnDqyr2efbkjfmCRRYXVW5vlDEOPaSB+mg4Tjch121102sFH1Od+MlXwmeHy3A==}
+  /@melt-ui/svelte@0.68.0(react@18.2.0)(svelte@4.2.8):
+    resolution: {integrity: sha512-/QvA98hnYEodZtHJ71+ocum/WWp30hVNt3F8uiZKnNYwZDaiQYjlyR9AaGKYcZLCe6R68op1mfCzc0kTzJilyA==}
     peerDependencies:
       svelte: '>=3 <5'
     dependencies:
@@ -485,7 +485,7 @@ packages:
       '@internationalized/date': 3.5.1
       dequal: 2.0.3
       focus-trap: 7.5.4
-      nanoid: 4.0.2
+      nanoid: 5.0.4
       svelte: 4.2.8
     transitivePeerDependencies:
       - react
@@ -1849,8 +1849,8 @@ packages:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
     dev: true
 
-  /jsrwrap@0.1.15-beta.1:
-    resolution: {integrity: sha512-YDsMAIoN2Y0UHIOh7+q64hy51A4RLeHL13DQTn4beVkAFIhyJDXmC6kpYK0wQqjvx3BH2O0Rp7NHyQVpRDMehQ==}
+  /jsrwrap@0.1.15-beta.2:
+    resolution: {integrity: sha512-WrmipOqbhv4oNMwoVY3ZGhMdqEmUFQ88/8sXnhQ/s2T8N1CCj2g3J7+FGx7wkV0g8UTsvVqzMKAWpPtUXjRqpA==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -2043,9 +2043,9 @@ packages:
     hasBin: true
     dev: true
 
-  /nanoid@4.0.2:
-    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
-    engines: {node: ^14 || ^16 || >=18}
+  /nanoid@5.0.4:
+    resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==}
+    engines: {node: ^18 || >=20}
     hasBin: true
     dev: true
 

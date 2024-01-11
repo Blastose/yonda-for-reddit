@@ -1,9 +1,14 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
+	import SubmissionCard from '../subreddit/SubmissionCard.svelte';
 
 	export let submissions: SubmissionData[];
 </script>
 
-{#each submissions as submission}
-	<p><a class="text-blue-500" href={submission.permalink.toLowerCase()}>{submission.title}</a></p>
-{/each}
+<!-- TODO rename file -->
+<div class="flex flex-col gap-2">
+	{#each submissions as submission}
+		<SubmissionCard {submission} />
+		<hr class="border-[#2c2c2c]" />
+	{/each}
+</div>
