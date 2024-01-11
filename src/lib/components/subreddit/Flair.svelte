@@ -11,7 +11,6 @@
 	>;
 
 	export let linkFlair: LinkFlair;
-	console.log(linkFlair);
 
 	$: styleTag = `background-color: ${
 		linkFlair.link_flair_background_color || 'rgb(168, 220, 232);color: black'
