@@ -6,6 +6,7 @@
 	import Icon from '../icon/Icon.svelte';
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import Submitter from '../subreddit/Submitter.svelte';
+	import { formatter } from '$lib/reddit/number';
 
 	export let comment: CommentFull;
 
@@ -48,7 +49,7 @@
 								class="-ml-2 flex w-fit items-center gap-1 rounded-2xl px-2 py-1 hover:bg-[#2c2c2c]"
 							>
 								<button><Icon name="arrowUpOutline" /></button>
-								<span class="">{comment.score}</span>
+								<span title={comment.score.toString()}>{formatter.format(comment.score)}</span>
 								<button><Icon name="arrowDownOutline" /></button>
 							</div>
 
