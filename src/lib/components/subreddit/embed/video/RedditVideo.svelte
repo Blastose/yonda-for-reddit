@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
-	import { getRedditVideoLinks } from '../video';
 	import Hls from 'hls.js';
 	import { fade } from 'svelte/transition';
 	import Icon from '$lib/components/icon/Icon.svelte';
+	import Controls from './Controls.svelte';
 
 	export let submission: SubmissionData;
 	let hls: Hls;
@@ -45,7 +45,13 @@
 
 	let hoveringVideoPlayer = false;
 	let videoStarted = false;
+	let videoContainer: HTMLElement;
 	let videoNode: HTMLVideoElement;
+	let currentTime: number;
+	let duration: number;
+	let paused: boolean;
+	let ended: boolean;
+	let volume: number = 0.33; // TODO load from somewhere
 
 	function videoControls(node: HTMLElement) {
 		function a() {
@@ -67,6 +73,7 @@
 
 <div
 	use:videoControls
+	bind:this={videoContainer}
 	class="video-player group relative flex max-h-[512px] justify-center overflow-hidden rounded-2xl border border-[#303030] bg-black"
 >
 	{#if !videoStarted}
@@ -86,48 +93,23 @@
 			/>
 		</button>
 	{/if}
-	{#if videoStarted && hoveringVideoPlayer}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div
-			transition:fade={{ duration: 250 }}
-			class="controls-container absolute bottom-0 w-full gap-2 bg-gradient-to-b from-transparent from-10% via-[#000000ff] to-black px-4 py-2"
-			on:click={() => {
-				if (videoNode.paused) videoNode.play();
-				else videoNode.pause();
-			}}
-		>
-			<button>
-				<Icon name="play" />
-			</button>
-			<div class="h-2 w-full bg-white"></div>
-			<button>
-				<Icon name="play" />
-			</button>
-			<button>
-				<Icon name="volumeHigh" />
-			</button>
-		</div>
+	{#if (videoStarted && hoveringVideoPlayer) || paused}
+		<Controls {videoContainer} {videoNode} {currentTime} {duration} {paused} {ended} bind:volume />
 	{/if}
 
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
-		on:click={() => {
-			console.log('asldkjsldj');
-		}}
 		bind:this={videoNode}
+		bind:currentTime
+		bind:duration
+		bind:paused
+		bind:ended
+		bind:volume
+		use:useHls
 		style:aspect-ratio={(redditVideo?.width ?? 0) / (redditVideo?.height ?? 0)}
 		class="pointer-events-none object-contain"
-		use:useHls
 		controls={false}
 		height={redditVideo?.height}
 		width={redditVideo?.width}
 	/>
 </div>
-
-<style>
-	.controls-container {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
-	}
-</style>
