@@ -2,6 +2,7 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import { fade } from 'svelte/transition';
 	import { formatVideoTime } from '../video';
+	import Volume from './Volume.svelte';
 
 	export let videoContainer: HTMLElement;
 	export let videoNode: HTMLVideoElement;
@@ -12,8 +13,6 @@
 	export let volume: number;
 
 	let fullscreen = false;
-	let muted = false;
-	let lastVolumeValue = volume;
 
 	$: progress = currentTime / duration;
 
@@ -30,30 +29,19 @@
 		}
 		fullscreen = !fullscreen;
 	}
-
-	function toggleMute() {
-		if (muted) {
-			volume = lastVolumeValue;
-		} else {
-			lastVolumeValue = volume;
-			volume = 0;
-		}
-		muted = !muted;
-	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-	class="absolute left-0 top-0 h-full w-full"
+	class="absolute left-0 top-0 flex h-full w-full items-end"
 	on:click={(e) => {
 		if (e.currentTarget !== e.target) return;
 		togglePlayStatus();
 	}}
 >
 	<div
-		transition:fade={{ duration: 250 }}
-		class="controls-container absolute bottom-0 w-full gap-2 bg-gradient-to-b from-transparent from-10% via-[#000000ff] to-black px-4 py-4"
+		class="controls-container flex w-full gap-2 bg-gradient-to-b from-transparent from-10% via-[#000000ff] to-black pb-4 pl-4 pt-4"
 	>
 		<button class="control-button" on:click={togglePlayStatus}>
 			{#if !paused && !ended}
@@ -66,7 +54,14 @@
 		</button>
 
 		<div class="flex h-full w-full items-center">
-			<div class="h-1 w-full bg-white"></div>
+			<button
+				on:click={() => {
+					videoNode.currentTime = 4;
+				}}
+				class="h-1 w-full bg-gray-700"
+			>
+				<div style:width="{progress * 100}%" class="h-full bg-white"></div>
+			</button>
 		</div>
 
 		<div class="whitespace-nowrap">
@@ -74,28 +69,22 @@
 		</div>
 
 		<button class="control-button" on:click={toggleFullscreen}>
-			<Icon name="fullscreen" />
-		</button>
-
-		<button on:click={toggleMute} class="control-button">
-			{#if muted}
-				<Icon name="volumeMute" />
-			{:else if volume > 0.5}
-				<Icon name="volumeHigh" />
-			{:else if volume > 0.3}
-				<Icon name="volumeMedium" />
+			{#if !fullscreen}
+				<Icon name="fullscreen" />
 			{:else}
-				<Icon name="volumeLow" />
+				<Icon name="fullscreenExit" />
 			{/if}
 		</button>
 	</div>
+
+	<Volume bind:volume />
 </div>
 
 <style>
 	.controls-container {
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: 24px 1fr min-content 24px 24px;
+		grid-template-columns: 24px 1fr min-content 24px;
 	}
 
 	.control-button:hover {

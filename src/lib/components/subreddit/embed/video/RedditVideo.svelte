@@ -6,6 +6,7 @@
 	import Controls from './Controls.svelte';
 
 	export let submission: SubmissionData;
+	console.log(submission);
 	let hls: Hls;
 
 	function getBaseUrl(url: string) {
@@ -18,7 +19,7 @@
 
 	function useHls(node: HTMLVideoElement) {
 		const source = submission.media?.reddit_video?.hls_url ?? '';
-		hls = new Hls();
+		hls = new Hls({ autoStartLoad: false });
 		hls.loadSource(source);
 		hls.attachMedia(node);
 
@@ -39,6 +40,9 @@
 	}
 
 	$: console.log(submission.media);
+	$: poster =
+		submission.preview.images.at(0)?.resolutions.at(3)?.url ??
+		submission.preview.images.at(0)?.resolutions.at(0)?.url;
 	$: redditVideo = submission.media?.reddit_video;
 	$: baseUrl = getBaseUrl(submission.media?.reddit_video?.fallback_url ?? '');
 	// $: console.log(getRedditVideoLinks(baseUrl));
@@ -74,7 +78,7 @@
 <div
 	use:videoControls
 	bind:this={videoContainer}
-	class="video-player group relative flex max-h-[512px] justify-center overflow-hidden rounded-2xl border border-[#303030] bg-black"
+	class="stop-click-func video-player group relative flex max-h-[512px] w-full justify-center overflow-hidden rounded-2xl border border-[#303030] bg-black"
 >
 	{#if !videoStarted}
 		<button
@@ -93,9 +97,13 @@
 			/>
 		</button>
 	{/if}
-	{#if (videoStarted && hoveringVideoPlayer) || paused}
+	<div
+		class="duration-300 {(videoStarted && hoveringVideoPlayer) || paused
+			? 'opacity-100'
+			: 'pointer-events-none opacity-0'}"
+	>
 		<Controls {videoContainer} {videoNode} {currentTime} {duration} {paused} {ended} bind:volume />
-	{/if}
+	</div>
 
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
@@ -106,9 +114,13 @@
 		bind:ended
 		bind:volume
 		use:useHls
+		on:play|once={() => {
+			hls.startLoad();
+		}}
 		style:aspect-ratio={(redditVideo?.width ?? 0) / (redditVideo?.height ?? 0)}
-		class="pointer-events-none object-contain"
+		class="pointer-events-none w-full object-contain"
 		controls={false}
+		{poster}
 		height={redditVideo?.height}
 		width={redditVideo?.width}
 	/>
