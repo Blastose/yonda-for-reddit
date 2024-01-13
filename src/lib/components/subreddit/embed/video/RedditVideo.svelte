@@ -120,7 +120,7 @@
 		<Controls
 			{videoContainer}
 			{videoNode}
-			{currentTime}
+			bind:currentTime
 			{duration}
 			{paused}
 			{ended}

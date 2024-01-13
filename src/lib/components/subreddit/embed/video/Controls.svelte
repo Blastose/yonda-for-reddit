@@ -2,6 +2,7 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import { formatVideoTime } from '../video';
 	import Volume from './Volume.svelte';
+	import Scrubber from './Scrubber.svelte';
 
 	export let videoContainer: HTMLElement;
 	export let videoNode: HTMLVideoElement;
@@ -35,14 +36,17 @@
 	class="absolute bottom-0 left-0 flex w-full flex-col gap-4 bg-gradient-to-b
 from-transparent from-10% via-[#000000ff] to-[#000000be] p-4"
 >
-	<button
-		on:click={() => {
-			videoNode.currentTime = 4;
-		}}
-		class="h-1 w-full bg-gray-700"
-	>
-		<div style:width="{progress * 100}%" class="h-1 bg-white"></div>
-	</button>
+	<div class="flex flex-col gap-2">
+		<Scrubber {videoNode} bind:current={currentTime} max={duration} onChange={() => {}} />
+		<!-- <button
+			on:click={() => {
+				videoNode.currentTime = 4;
+			}}
+			class="h-1 w-full bg-gray-700"
+		>
+			<div style:width="{progress * 100}%" class="h-1 bg-white"></div>
+		</button> -->
+	</div>
 
 	<div class="flex justify-between">
 		<div class="flex items-center gap-2">
