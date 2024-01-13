@@ -12,6 +12,7 @@
 	export let volume: number;
 
 	let fullscreen = false;
+	export let setInputValue: (v: number) => void;
 
 	$: progress = currentTime / duration;
 
@@ -55,7 +56,7 @@ from-transparent from-10% via-[#000000ff] to-[#000000be] p-4"
 				{/if}
 			</button>
 
-			<Volume bind:volume />
+			<Volume bind:volume bind:setInputValue />
 
 			<div class="whitespace-nowrap">
 				{formatVideoTime(Math.floor(currentTime))} / {formatVideoTime(Math.floor(duration))}

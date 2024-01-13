@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
 	import Hls from 'hls.js';
-	import { fade } from 'svelte/transition';
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Controls from './Controls.svelte';
+	import { lsdb } from '$lib/idb/ls';
 
 	export let submission: SubmissionData;
 	console.log(submission);
@@ -22,21 +22,6 @@
 		hls = new Hls({ autoStartLoad: false });
 		hls.loadSource(source);
 		hls.attachMedia(node);
-
-		// const interval = setInterval(function () {
-		// 	if (hls) {
-		// 		console.log(hls.currentLevel);
-		// 		console.log(hls.levels);
-		// 	} else {
-		// 		console.log('askldjsjl');
-		// 	}
-		// }, 1000);
-
-		// return {
-		// 	destroy() {
-		// 		clearInterval(interval);
-		// 	}
-		// };
 	}
 
 	$: console.log(submission.media);
@@ -55,7 +40,8 @@
 	let duration: number;
 	let paused: boolean;
 	let ended: boolean;
-	let volume: number = 0.33; // TODO load from somewhere
+	let volume: number = Number(lsdb.get('videoVolume')) || 0;
+	let setInputValue: (v: number) => void;
 
 	function videoControls(node: HTMLElement) {
 		function a() {
@@ -106,7 +92,9 @@
 		bind:ended
 		bind:volume
 		use:useHls
-		on:play|once={() => {
+		on:play|once={async () => {
+			volume = Number(lsdb.get('videoVolume')) || 0;
+			setInputValue(volume);
 			hls.startLoad();
 		}}
 		on:click={() => {
@@ -129,6 +117,15 @@
 			? 'opacity-100'
 			: 'pointer-events-none opacity-0'}"
 	>
-		<Controls {videoContainer} {videoNode} {currentTime} {duration} {paused} {ended} bind:volume />
+		<Controls
+			{videoContainer}
+			{videoNode}
+			{currentTime}
+			{duration}
+			{paused}
+			{ended}
+			bind:volume
+			bind:setInputValue
+		/>
 	</div>
 </div>

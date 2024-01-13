@@ -7,7 +7,7 @@
 	let lastVolumeValue = volume;
 
 	let muteInput: () => void;
-	let setInputValue: (v: number) => void;
+	export let setInputValue: (v: number) => void;
 
 	function toggleMute() {
 		if (muted) {

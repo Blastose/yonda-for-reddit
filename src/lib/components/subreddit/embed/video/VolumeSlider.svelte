@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { lsdb } from '$lib/idb/ls';
+
 	export let volume: number;
 	export let lastVolumeValue: number;
 	export let muted: boolean;
@@ -21,6 +23,7 @@
 
 	function handleInput(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
 		volume = parseNewInputValue(e.currentTarget.value);
+		lsdb.set('videoVolume', volume.toString());
 		if (volume === 0) {
 			muted = true;
 		} else {
