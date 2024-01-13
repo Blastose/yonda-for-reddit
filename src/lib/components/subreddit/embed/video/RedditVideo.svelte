@@ -97,14 +97,6 @@
 			/>
 		</button>
 	{/if}
-	<div
-		class="duration-300 {(videoStarted && hoveringVideoPlayer) || paused
-			? 'opacity-100'
-			: 'pointer-events-none opacity-0'}"
-	>
-		<Controls {videoContainer} {videoNode} {currentTime} {duration} {paused} {ended} bind:volume />
-	</div>
-
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
 		bind:this={videoNode}
@@ -117,11 +109,26 @@
 		on:play|once={() => {
 			hls.startLoad();
 		}}
+		on:click={() => {
+			if (paused || ended || !videoStarted) {
+				videoStarted = true;
+				videoNode.play();
+				console.log('plays');
+			} else videoNode.pause();
+		}}
 		style:aspect-ratio={(redditVideo?.width ?? 0) / (redditVideo?.height ?? 0)}
-		class="pointer-events-none w-full object-contain"
+		class="w-full object-contain"
 		controls={false}
 		{poster}
 		height={redditVideo?.height}
 		width={redditVideo?.width}
 	/>
+
+	<div
+		class="duration-300 {(videoStarted && hoveringVideoPlayer) || paused
+			? 'opacity-100'
+			: 'pointer-events-none opacity-0'}"
+	>
+		<Controls {videoContainer} {videoNode} {currentTime} {duration} {paused} {ended} bind:volume />
+	</div>
 </div>

@@ -1,33 +1,62 @@
 <script lang="ts">
-	import { createSlider, melt } from '@melt-ui/svelte';
-	import type { Writable } from 'svelte/store';
-
 	export let volume: number;
-	export let volumeStore: Writable<number[]>;
 
-	const {
-		elements: { root, range, thumb }
-	} = createSlider({
-		defaultValue: [50],
-		max: 100,
-		orientation: 'vertical',
-		value: volumeStore
-	});
-
-	$: volume = ($volumeStore[0] ?? 50) / 100;
+	function handleInput(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+		volume = Number(e.currentTarget.value) / 100;
+	}
 </script>
 
-<button
-	on:click={() => {
-		volumeStore.set([100]);
-	}}>asdf</button
->
-<span use:melt={$root} class="relative flex h-[100px] w-[4px] flex-col items-center">
-	<span class="h-[200px] w-full bg-gray-700">
-		<span use:melt={$range} class="w-full bg-white" />
-	</span>
-	<span
-		use:melt={$thumb()}
-		class="h-5 w-5 rounded-full bg-white focus:ring-4 focus:!ring-black/40"
-	/>
-</span>
+<div class="relative h-1 bg-gray-800">
+	<div style:width="{volume * 100 ?? 0}%" class="absolute h-1 bg-white"></div>
+	<input on:input={handleInput} type="range" min="0" max="100" name="" id="" />
+</div>
+
+<style>
+	input[type='range'] {
+		position: relative;
+		top: -14px;
+		-webkit-appearance: none;
+		appearance: none;
+		background: transparent;
+		cursor: pointer;
+		width: 6rem;
+	}
+
+	@supports (-moz-appearance: none) {
+		input[type='range'] {
+			top: -8px;
+		}
+	}
+
+	input[type='range']::-webkit-slider-runnable-track {
+		padding: 1rem 0rem;
+		background-color: transparent;
+		height: 4px;
+	}
+
+	input[type='range']::-moz-range-track {
+		padding: 1rem 0rem;
+		background-color: transparent;
+		height: 4px;
+	}
+
+	input[type='range']::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		margin-top: -8px;
+		background-color: #ffffff;
+		height: 1rem;
+		width: 1rem;
+		border-radius: 9999px;
+	}
+
+	input[type='range']::-moz-range-thumb {
+		border: none;
+		border-radius: 0;
+		margin-top: 0px;
+		background-color: #ffffff;
+		height: 1rem;
+		width: 1rem;
+		border-radius: 9999px;
+	}
+</style>
