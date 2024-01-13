@@ -12,9 +12,24 @@ export function formatVideoTime(seconds: number) {
 		return '0:00';
 	}
 
-	const h = Math.floor(seconds / 3600);
-	const m = Math.floor((seconds % 3600) / 60);
-	const s = Math.round(seconds % 60);
-	const t = [h, m > 9 ? m : h ? '0' + m : m || '0', s > 9 ? s : '0' + s].filter(Boolean).join(':');
-	return s < 0 && seconds ? `-${t}` : t;
+	let hours: string | number = Math.floor(seconds / 3600);
+	let minutes: string | number = Math.floor((seconds % 3600) / 60);
+	let newSeconds: string | number = seconds - hours * 3600 - minutes * 60;
+	let time = '';
+
+	if (hours > 0 && minutes < 10) {
+		minutes = '0' + minutes;
+	}
+	if (hours > 0) {
+		if (hours < 10) {
+			hours = '0' + hours;
+		}
+		time += hours;
+		time += ':';
+	}
+	time += minutes;
+	time += ':';
+	newSeconds = '0' + newSeconds;
+	time += newSeconds;
+	return time;
 }

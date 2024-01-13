@@ -55,13 +55,13 @@
 	}
 
 	function pointerUp(e: PointerEvent) {
-		mousePressed = false;
 		const target = e.target as HTMLElement;
-		if (!track.contains(target)) return;
+		if (!track.contains(target) && !mousePressed) return;
 		if (continuePlayingVideoAfterPointerUp) {
 			videoNode.play();
 		}
 		continuePlayingVideoAfterPointerUp = !videoNode.paused;
+		mousePressed = false;
 	}
 
 	function pointerMove(e: PointerEvent) {
