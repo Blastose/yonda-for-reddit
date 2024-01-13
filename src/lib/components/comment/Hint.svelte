@@ -20,7 +20,8 @@
 	<span class="mod author"><Icon height={'16'} width={'16'} name="shield" /></span>
 {:else if hint.distinguished === 'admin'}
 	<span class="admin" aria-label="admin"><Icon height={'16'} width={'16'} name="reddit" /></span>
-{:else if hint.is_submitter}
+{/if}
+{#if hint.is_submitter}
 	<span class="submitter author">OP</span>
 {/if}
 

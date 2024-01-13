@@ -10,7 +10,8 @@
 		elements: { trigger, menu, item },
 		states: { open }
 	} = createDropdownMenu({
-		loop: true
+		loop: true,
+		preventScroll: false
 	});
 </script>
 
