@@ -6,7 +6,6 @@
 	export let current: number;
 	export let max: number;
 	export let videoNode: HTMLVideoElement;
-	export let onChange: (page: number) => void;
 
 	$: left = (current / max) * 100;
 	$: thumbLeft = left;
@@ -20,7 +19,7 @@
 	let tooltipLeft: number;
 	let mousePressed = false;
 	let thumb: HTMLSpanElement;
-	$: cursor = mousePressed ? 'grabbing' : 'grab';
+	let continuePlayingVideoAfterPointerUp = !videoNode?.paused;
 
 	function getCurrentFromPercentage(percentage: number) {
 		if (percentage >= 0 && percentage <= 1) {
@@ -44,22 +43,25 @@
 		const target = e.target as HTMLElement;
 		if (!track.contains(target)) return;
 
-		console.log('ajlsdjlskdjs');
+		if (!videoNode.paused) {
+			continuePlayingVideoAfterPointerUp = true;
+		} else {
+			continuePlayingVideoAfterPointerUp = false;
+		}
 		videoNode.pause();
+
 		e.preventDefault();
 		mousePressed = true;
-		thumb.focus();
-		const rect = track.getBoundingClientRect();
-		const relPosX = e.clientX - rect.left;
-		const percentage = relPosX / track.offsetWidth;
-		console.log(percentage);
-		console.log(getCurrentFromPercentage(percentage));
-		updateCurrent(percentage);
 	}
 
-	function pointerUp() {
+	function pointerUp(e: PointerEvent) {
 		mousePressed = false;
-		// videoNode.play();
+		const target = e.target as HTMLElement;
+		if (!track.contains(target)) return;
+		if (continuePlayingVideoAfterPointerUp) {
+			videoNode.play();
+		}
+		continuePlayingVideoAfterPointerUp = !videoNode.paused;
 	}
 
 	function pointerMove(e: PointerEvent) {
@@ -93,8 +95,14 @@
 			</span>
 		</div>
 	{/if}
-	<span
+	<button
 		bind:this={track}
+		on:click={(e) => {
+			const rect = track.getBoundingClientRect();
+			const relPosX = e.clientX - rect.left;
+			const percentage = relPosX / track.offsetWidth;
+			updateCurrent(percentage);
+		}}
 		on:pointerleave={() => {
 			showTooltip = false;
 		}}
@@ -113,9 +121,7 @@
 			}
 			tooltipText = formatVideoTime(Math.floor(getCurrentFromPercentage(percentage)));
 		}}
-		style:--cursor={cursor}
-		class="{mousePressed ? 'hover:cursor-[var(--cursor)]' : ''} 
-		relative flex h-[40px] w-full select-none items-center"
+		class="relative flex h-[40px] w-full select-none items-center"
 	>
 		<span class="block h-[4px] w-full bg-white/40">
 			<span
@@ -125,20 +131,18 @@
 				class="primary-bg-color h-[4px]"
 			/>
 		</span>
-		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<span
-			tabindex="0"
 			bind:this={thumb}
 			style:position="absolute"
 			style:translate="-50%"
 			style:left="{thumbLeft}%"
-			class="primary-bg-color block h-4 w-4 rounded-full hover:cursor-[var(--cursor)] focus:outline-none focus:ring-4 focus:ring-[var(--primary-color-outline)]"
+			class="primary-bg-color block h-4 w-4 rounded-full"
 		/>
-	</span>
+	</button>
 </div>
 
 <style>
 	.primary-bg-color {
-		background-color: red;
+		background-color: white;
 	}
 </style>

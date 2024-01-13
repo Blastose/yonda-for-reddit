@@ -15,8 +15,6 @@
 	let fullscreen = false;
 	export let setInputValue: (v: number) => void;
 
-	$: progress = currentTime / duration;
-
 	function togglePlayStatus() {
 		if (paused || ended) videoNode.play();
 		else videoNode.pause();
@@ -33,20 +31,10 @@
 </script>
 
 <div
-	class="absolute bottom-0 left-0 flex w-full flex-col gap-4 bg-gradient-to-b
-from-transparent from-10% via-[#000000ff] to-[#000000be] p-4"
+	class="absolute bottom-0 left-0 flex w-full flex-col bg-gradient-to-b
+from-transparent from-10% via-[#000000a1] to-[#000000] p-4"
 >
-	<div class="flex flex-col gap-2">
-		<Scrubber {videoNode} bind:current={currentTime} max={duration} onChange={() => {}} />
-		<!-- <button
-			on:click={() => {
-				videoNode.currentTime = 4;
-			}}
-			class="h-1 w-full bg-gray-700"
-		>
-			<div style:width="{progress * 100}%" class="h-1 bg-white"></div>
-		</button> -->
-	</div>
+	<Scrubber {videoNode} bind:current={currentTime} max={duration} />
 
 	<div class="flex justify-between">
 		<div class="flex items-center gap-2">

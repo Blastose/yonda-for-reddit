@@ -8,6 +8,10 @@ export function isRedditVideo(submission: SubmissionData) {
 }
 
 export function formatVideoTime(seconds: number) {
+	if (typeof seconds !== 'number') {
+		return '0:00';
+	}
+
 	const h = Math.floor(seconds / 3600);
 	const m = Math.floor((seconds % 3600) / 60);
 	const s = Math.round(seconds % 60);

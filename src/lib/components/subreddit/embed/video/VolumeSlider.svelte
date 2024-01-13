@@ -39,7 +39,7 @@
 	}
 </script>
 
-<div class="relative h-1 bg-gray-800">
+<div class="relative h-1 bg-white/40">
 	<div style:width="{volume * 100 ?? 0}%" class="absolute h-1 bg-white"></div>
 	<input
 		on:input={handleInput}
