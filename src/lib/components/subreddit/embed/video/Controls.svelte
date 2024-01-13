@@ -28,6 +28,18 @@
 		}
 		fullscreen = !fullscreen;
 	}
+
+	function getPlayButtonLabel() {
+		if (!paused && !ended) {
+			return 'pause';
+		} else if (ended) {
+			return 'replay';
+		} else {
+			return 'play';
+		}
+	}
+
+	$: playButtonLabel = getPlayButtonLabel();
 </script>
 
 <div
@@ -38,7 +50,7 @@ from-transparent from-10% via-[#000000a1] to-[#000000] p-4"
 
 	<div class="flex justify-between">
 		<div class="flex items-center gap-2">
-			<button class="control-button" on:click={togglePlayStatus}>
+			<button class="control-button" on:click={togglePlayStatus} aria-label={playButtonLabel}>
 				{#if !paused && !ended}
 					<Icon name="pause" />
 				{:else if ended}
@@ -56,11 +68,15 @@ from-transparent from-10% via-[#000000a1] to-[#000000] p-4"
 		</div>
 
 		<div class="flex items-center gap-2">
-			<button>
+			<button aria-label="settings">
 				<Icon name="settings" />
 			</button>
 
-			<button class="control-button" on:click={toggleFullscreen}>
+			<button
+				class="control-button"
+				on:click={toggleFullscreen}
+				aria-label={fullscreen ? 'exit fullscreen' : 'fullscreen'}
+			>
 				{#if !fullscreen}
 					<Icon name="fullscreen" />
 				{:else}

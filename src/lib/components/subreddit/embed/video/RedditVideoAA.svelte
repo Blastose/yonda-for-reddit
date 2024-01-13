@@ -77,6 +77,7 @@
 				videoStarted = true;
 				videoNode.play();
 			}}
+			aria-label="Play video {submission.title}"
 		>
 			<Icon
 				class="text-white duration-200 group-hover:scale-125"

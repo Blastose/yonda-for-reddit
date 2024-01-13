@@ -23,7 +23,7 @@
 </script>
 
 <div class="flex items-center gap-2">
-	<button on:click={toggleMute} class="control-button">
+	<button on:click={toggleMute} class="control-button" aria-label={muted ? 'unmute' : 'mute'}>
 		{#if muted || volume === 0}
 			<Icon name="volumeMute" />
 		{:else if volume > 0.5}
