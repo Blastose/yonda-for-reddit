@@ -29,7 +29,9 @@ export function formatVideoTime(seconds: number) {
 	}
 	time += minutes;
 	time += ':';
-	newSeconds = '0' + newSeconds;
+	if (newSeconds < 10) {
+		newSeconds = '0' + newSeconds;
+	}
 	time += newSeconds;
 	return time;
 }

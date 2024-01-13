@@ -27,7 +27,9 @@ describe('url', () => {
 describe('time', () => {
 	it('formats seconds', () => {
 		expect(formatVideoTime(8)).toBe('0:08');
+		expect(formatVideoTime(57)).toBe('0:57');
 		expect(formatVideoTime(60)).toBe('1:00');
+		expect(formatVideoTime(720)).toBe('12:00');
 		expect(formatVideoTime(720)).toBe('12:00');
 		expect(formatVideoTime(72000)).toBe('20:00:00');
 	});
