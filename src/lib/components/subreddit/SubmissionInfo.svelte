@@ -36,7 +36,9 @@
 	<Submitter submitter={submission} type="submission" />
 
 	{#if type === 'submission'}
-		<Embed {submission} />
+		<div class="pt-2">
+			<Embed {submission} />
+		</div>
 	{/if}
 
 	{#if type === 'submission'}
