@@ -6,15 +6,16 @@
 	let muted = false;
 	let lastVolumeValue = volume;
 
-	let hovering = false;
-
-	$: console.log(volume);
+	let muteInput: () => void;
+	let setInputValue: (v: number) => void;
 
 	function toggleMute() {
 		if (muted) {
 			volume = lastVolumeValue;
+			setInputValue(volume);
 		} else {
 			lastVolumeValue = volume;
+			muteInput();
 			volume = 0;
 		}
 		muted = !muted;
@@ -31,6 +32,5 @@
 			<Icon name="volumeMedium" />
 		{/if}
 	</button>
-	<VolumeSlider bind:volume />
-	{volume}
+	<VolumeSlider bind:volume bind:lastVolumeValue bind:muted bind:muteInput bind:setInputValue />
 </div>

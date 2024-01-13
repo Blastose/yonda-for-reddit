@@ -1,14 +1,54 @@
 <script lang="ts">
 	export let volume: number;
+	export let lastVolumeValue: number;
+	export let muted: boolean;
+	export const muteInput = () => {
+		volumeNode.value = '0';
+	};
+	export const setInputValue = (v: number) => {
+		volumeNode.value = (v * 100).toString();
+	};
+
+	let volumeNode: HTMLInputElement;
+
+	function parseNewInputValue(value: string) {
+		return Number(value) / 100;
+	}
+
+	function setInitialValue(node: HTMLInputElement) {
+		node.value = String(volume * 100);
+	}
 
 	function handleInput(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
-		volume = Number(e.currentTarget.value) / 100;
+		volume = parseNewInputValue(e.currentTarget.value);
+		if (volume === 0) {
+			muted = true;
+		} else {
+			muted = false;
+		}
+	}
+
+	function handleOnChange(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+		const newValue = parseNewInputValue(e.currentTarget.value);
+		if (newValue !== 0) {
+			lastVolumeValue = newValue;
+		}
 	}
 </script>
 
 <div class="relative h-1 bg-gray-800">
 	<div style:width="{volume * 100 ?? 0}%" class="absolute h-1 bg-white"></div>
-	<input on:input={handleInput} type="range" min="0" max="100" name="" id="" />
+	<input
+		on:input={handleInput}
+		on:change={handleOnChange}
+		use:setInitialValue
+		bind:this={volumeNode}
+		type="range"
+		min="0"
+		max="100"
+		name=""
+		id=""
+	/>
 </div>
 
 <style>
