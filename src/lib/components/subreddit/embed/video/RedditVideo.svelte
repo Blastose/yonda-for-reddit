@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
-	import Hls from 'hls.js';
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Controls from './Controls.svelte';
 	import { lsdb } from '$lib/idb/ls';
+	import { MediaPlayer } from 'dashjs';
 
 	export let submission: SubmissionData;
+	let dashPlayer: dashjs.MediaPlayerClass;
+
 	console.log(submission);
-	let hls: Hls;
 
 	function getBaseUrl(url: string) {
 		const match = url.match(/https:\/\/v.redd.it\/.*?\//);
@@ -17,11 +18,11 @@
 		return url;
 	}
 
-	function useHls(node: HTMLVideoElement) {
-		const source = submission.media?.reddit_video?.hls_url ?? '';
-		hls = new Hls({ autoStartLoad: false });
-		hls.loadSource(source);
-		hls.attachMedia(node);
+	function dash(node: HTMLVideoElement) {
+		dashPlayer = MediaPlayer().create();
+		dashPlayer.initialize();
+		dashPlayer.setAutoPlay(false);
+		dashPlayer.attachView(node);
 	}
 
 	$: console.log(submission.media);
@@ -30,6 +31,8 @@
 		submission.preview.images.at(0)?.resolutions.at(0)?.url;
 	$: redditVideo = submission.media?.reddit_video;
 	$: baseUrl = getBaseUrl(submission.media?.reddit_video?.fallback_url ?? '');
+	$: source = submission.media?.reddit_video?.dash_url ?? '';
+
 	// $: console.log(getRedditVideoLinks(baseUrl));
 
 	let hoveringVideoPlayer = false;
@@ -74,6 +77,7 @@
 				videoStarted = true;
 				videoNode.play();
 			}}
+			aria-label="Play video {submission.title}"
 		>
 			<Icon
 				class="text-white duration-200 group-hover:scale-125"
@@ -91,11 +95,11 @@
 		bind:paused
 		bind:ended
 		bind:volume
-		use:useHls
-		on:play|once={async () => {
+		use:dash
+		on:play|once={() => {
+			dashPlayer.attachSource(source);
 			volume = Number(lsdb.get('videoVolume')) || 0;
 			setInputValue(volume);
-			hls.startLoad();
 		}}
 		on:click={() => {
 			if (paused || ended || !videoStarted) {
