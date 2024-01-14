@@ -1,7 +1,9 @@
 import type { SubmissionData } from 'jsrwrap/types';
 
-export function getSrcsetAndSizes(submission: SubmissionData) {
-	const image = submission.preview.images.at(0);
+export type RedditImageData = Omit<SubmissionData['preview']['images'][0], 'variants'>;
+
+export function getSrcsetAndSizes(redditImageData: RedditImageData) {
+	const image = redditImageData;
 	if (!image) return null;
 	const resolutions = image.resolutions;
 	const srcsetWidths = [320, 640, 1080];
@@ -31,4 +33,65 @@ export function getSrcsetAndSizes(submission: SubmissionData) {
 
 	const sizes = '(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw';
 	return { srcset, sizes };
+}
+
+export function getGalleryData(submission: SubmissionData) {
+	if (!submission.is_gallery || !submission.gallery_data || !submission.media_metadata) {
+		return [];
+	}
+	if (!submission.media_metadata) return [];
+
+	const res: (RedditImageData & { outboundUrl?: string; caption?: string })[] = [];
+
+	for (const item of submission.gallery_data.items) {
+		const galleryItem = submission.media_metadata[item.media_id];
+		if (galleryItem.status === 'unprocessed') {
+			break;
+		}
+		if (galleryItem.e === 'Image') {
+			const resolutions =
+				galleryItem.p?.map((p) => {
+					return {
+						height: p.y,
+						width: p.x,
+						url: p.u
+					};
+				}) ?? [];
+			const source = {
+				height: galleryItem.s.x,
+				width: galleryItem.s.y,
+				url: galleryItem.s.u
+			};
+			res.push({
+				source,
+				resolutions,
+				id: galleryItem.id,
+				caption: item.caption,
+				outboundUrl: item.outbound_url
+			});
+		} else if (galleryItem.e === 'AnimatedImage') {
+			const resolutions =
+				galleryItem.p?.map((p) => {
+					return {
+						height: p.y,
+						width: p.x,
+						url: p.u
+					};
+				}) ?? [];
+			const source = {
+				height: galleryItem.s.x,
+				width: galleryItem.s.y,
+				url: galleryItem.s.gif
+			};
+			res.push({
+				source,
+				resolutions,
+				id: galleryItem.id,
+				caption: item.caption,
+				outboundUrl: item.outbound_url
+			});
+		}
+	}
+
+	return res;
 }

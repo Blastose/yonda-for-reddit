@@ -36,7 +36,18 @@
 		<CommentBar commentHidden={comment.collapsed} {toggleCommentVisibility} />
 		<div class="flex flex-col gap-4">
 			<div class="flex flex-col">
-				<Submitter submitter={comment} type="comment" />
+				<div class="flex items-center gap-2">
+					<Submitter submitter={comment} type="comment" />
+					{#if comment.collapsed}
+						<button
+							class="flex items-center text-sm"
+							on:click={toggleCommentVisibility}
+							aria-label="open comment"
+						>
+							[ + ]
+						</button>
+					{/if}
+				</div>
 
 				{#if !comment.collapsed}
 					<div class="flex flex-col">
