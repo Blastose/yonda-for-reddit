@@ -22,7 +22,7 @@
 		<Flair linkFlair={submission} />
 	</div>
 	{#if type === 'subreddit'}
-		<h2 class="text-xl font-bold">
+		<h2 class="text-lg font-bold">
 			<a use:submissionStoreClick={{ url: href, submission }} class="submission-title" {href}
 				>{submission.title}</a
 			>
@@ -34,9 +34,13 @@
 		<Tag postTag={submission} />
 	</div>
 	<Submitter submitter={submission} type="submission" />
-
+	{#if !submission.is_self}
+		<div class="reddit-md">
+			<a href={submission.url} target="_blank" rel="noreferrer">{submission.url}</a>
+		</div>
+	{/if}
 	{#if type === 'submission'}
-		<div class="pt-2">
+		<div class="">
 			<Embed {submission} />
 		</div>
 	{/if}

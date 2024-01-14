@@ -36,6 +36,11 @@
 	$: console.log(gallery?.map((g) => g.source.width));
 	$: console.log(gallery?.map((g) => g.source.height));
 	$: console.log(gallery);
+
+	// TODO
+	// http://localhost:5173/r/genshin_impact_leaks/comments/18y7vj7/43_phase_2_character_and_weapon_banners
+	// Width and height are swapped in the api response for source, but correct on some resolutions
+	// that aren't the source resolution
 </script>
 
 <div class="w-fit rounded-2xl bg-neutral-600 px-2 py-1 text-xs">

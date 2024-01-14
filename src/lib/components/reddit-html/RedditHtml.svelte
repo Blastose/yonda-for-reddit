@@ -24,11 +24,13 @@
 </script>
 
 {#key rawHTML}
-	<div
-		class="reddit-md {fixedSize ? 'max-w-4xl' : ''}"
-		class:image-left={!centerImage}
-		use:addEventListeners
-	>
-		{@html rawHTML}
+	<div class="grid">
+		<div
+			class="reddit-md {fixedSize ? 'max-w-4xl' : ''}"
+			class:image-left={!centerImage}
+			use:addEventListeners
+		>
+			{@html rawHTML}
+		</div>
 	</div>
 {/key}
