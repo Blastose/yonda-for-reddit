@@ -15,6 +15,7 @@
 
 html {
 	overflow-wrap: anywhere;
+	overflow-x: hidden;
 }
 
 .dark {

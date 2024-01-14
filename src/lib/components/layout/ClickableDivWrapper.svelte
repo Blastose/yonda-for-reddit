@@ -21,6 +21,7 @@
 	}
 
 	function handlePointerUp(e: PointerEvent) {
+		if (e.button !== 0) return;
 		if (!validPointerDownTarget) return;
 		validPointerDownTarget = false;
 		const target = e.target as HTMLElement | null;
