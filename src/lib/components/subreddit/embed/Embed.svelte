@@ -3,6 +3,7 @@
 	import RedditImage from './RedditImage.svelte';
 	import RedditVideo from './video/RedditVideo.svelte';
 	import RedditGallery from './RedditGallery.svelte';
+	import Youtube from './Youtube.svelte';
 
 	export let submission: SubmissionData;
 </script>
@@ -13,4 +14,6 @@
 	<RedditGallery {submission} />
 {:else if submission.is_video || submission.url.match(/https?:\/\/v.redd.it\/.*/)}
 	<RedditVideo {submission} />
+{:else if !submission.is_self && (submission.url.startsWith('https://www.youtube') || submission.url.startsWith('https://youtu.be'))}
+	<Youtube {submission} />
 {/if}
