@@ -25,6 +25,7 @@ export const load: LayoutLoad = async ({ params, url }) => {
 	}
 
 	return {
-		submission
+		submission,
+		sort
 	};
 };
