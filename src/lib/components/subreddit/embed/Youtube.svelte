@@ -6,10 +6,13 @@
 
 	function getYoutubeEmbed(url: string) {
 		if (url.startsWith('https://youtu.be/')) {
-			const id = url.replace('https://youtu.be/', '');
+			const match = url.match(/https:\/\/youtu\.be\/([^\/]+).*/);
+			const id = match?.at(1) ?? '';
 			return `https://www.youtube.com/embed/${id}`;
 		}
-		return url.replace('/watch?v=', '/embed/');
+		const match = url.match(/https:\/\/www\.youtube\.com\/watch\?v=([^\/&]+).*/);
+		const id = match?.at(1) ?? '';
+		return `https://www.youtube.com/embed/${id}`;
 	}
 
 	$: youtubeEmbed = getYoutubeEmbed(submission.url);
