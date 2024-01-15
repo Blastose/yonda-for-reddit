@@ -56,9 +56,7 @@
 						</div>
 
 						<div class="flex flex-wrap gap-1 text-sm font-semibold">
-							<div
-								class="-ml-2 flex w-fit items-center gap-1 rounded-2xl px-2 py-1 hover:bg-[#2c2c2c]"
-							>
+							<div class="flex w-fit items-center gap-1 rounded-2xl px-2 py-1 hover:bg-[#2c2c2c]">
 								<button><Icon name="arrowUpOutline" /></button>
 								<span title={comment.score.toString()}>{formatter.format(comment.score)}</span>
 								<button><Icon name="arrowDownOutline" /></button>
