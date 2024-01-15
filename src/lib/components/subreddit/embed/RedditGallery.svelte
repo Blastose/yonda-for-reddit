@@ -32,7 +32,15 @@
 	}
 
 	$: translateX = gridContainerWidth * currentGalleryIndex;
-	$: maxAspectRatio = Math.max(...gallery.map((g) => g.source.width / g.source.height));
+	// Width and height are swapped in the api response for source, but correct on some resolutions
+	// that aren't the source resolution
+	$: maxAspectRatio = Math.max(
+		...gallery.map(
+			(g) =>
+				(g.resolutions.at(-2)?.width ?? g.source.width) /
+				(g.resolutions.at(-2)?.height ?? g.source.height)
+		)
+	);
 	$: console.log(gallery?.map((g) => g.source.width));
 	$: console.log(gallery?.map((g) => g.source.height));
 	$: console.log(gallery);

@@ -15,7 +15,6 @@
 
 html {
 	overflow-wrap: anywhere;
-	overflow-x: hidden;
 }
 
 .dark {
@@ -119,6 +118,7 @@ html {
 
 .reddit-md {
 	overflow-wrap: anywhere;
+	overflow-x: hidden;
 }
 
 .reddit-md a {

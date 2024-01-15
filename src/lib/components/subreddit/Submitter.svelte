@@ -25,7 +25,11 @@
 		<UserFlair author={submitter} />
 	</div>
 
-	<div class="text-xs text-[var(--visited-link-color)]">
+	<div
+		class="{type === 'submission'
+			? 'text-sm font-semibold'
+			: 'text-xs'} text-[var(--visited-link-color)]"
+	>
 		•
 		<RelativeTime postedTimeSeconds={submitter.created_utc} editedTimeSeconds={submitter.edited} />
 	</div>
