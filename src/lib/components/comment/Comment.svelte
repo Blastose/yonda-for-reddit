@@ -35,6 +35,7 @@
 				}
 			}
 		}
+		persistSubmission();
 	}
 
 	async function getMoreChildren() {
@@ -74,6 +75,7 @@
 							on:click={toggleCommentVisibility}
 							aria-label="open comment"
 						>
+							<span class="text-xs">{comment.score} points</span>
 							[ + ]
 						</button>
 					{/if}
