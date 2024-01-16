@@ -7,9 +7,12 @@
 
 	export let data;
 
+	$: singleCommentThread = Boolean($page.params.commentId);
+
 	$: {
 		$page;
 		(async () => {
+			if (singleCommentThread) return;
 			const submission = await data.submission;
 			setSubmissionStore(transformUrlForIDBKey($page.url), submission);
 			db.put('subredditv2', submission, transformUrlForIDBKey($page.url));
@@ -19,7 +22,7 @@
 </script>
 
 <div class="flex flex-col gap-8">
-	{#if $submissionStore && stripSearchParams($submissionStore?.url) === stripSearchParams(transformUrlForIDBKey($page.url))}
+	{#if $submissionStore && stripSearchParams($submissionStore?.url).startsWith(stripSearchParams(transformUrlForIDBKey($page.url)))}
 		{@const submission = $submissionStore.submission}
 		<SubmissionInfo {submission} type="submission" numNewComments={0} />
 	{:else}

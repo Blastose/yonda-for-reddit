@@ -8,6 +8,8 @@
 	import Submitter from '../subreddit/Submitter.svelte';
 	import { formatter } from '$lib/reddit/number';
 	import { jsrwrap } from '$lib/reddit/reddit';
+	import { buildCommentThreadPermalink } from '$lib/url/url';
+	import { page } from '$app/stores';
 
 	export let comment: CommentFull;
 	export let pageSort: Sort | undefined;
@@ -125,7 +127,11 @@
 	</div>
 {:else if comment.type === 'more'}
 	{#if comment.id === '_'}
-		<a class="load-more-comments" href={'TODO'} rel="noreferrer">Continue this thread</a>
+		<a
+			class="load-more-comments"
+			href={buildCommentThreadPermalink(comment.parent_id, $page.url.pathname)}
+			rel="noreferrer">Continue this thread</a
+		>
 	{:else}
 		<button
 			class="load-more-comments text-left text-sm"

@@ -8,9 +8,11 @@
 	import { page } from '$app/stores';
 	import { db } from '$lib/idb/idb';
 	import CommentRefresh from '../comment/CommentRefresh.svelte';
+	import SingleCommentThread from '../comment/SingleCommentThread.svelte';
 
 	export let submission: SubmissionFull;
 	export let sort: Sort | undefined;
+	export let singleCommentThread: boolean = false;
 
 	const persistSubmission = () => {
 		setSubmissionStore(transformUrlForIDBKey($page.url), submission);
@@ -22,7 +24,11 @@
 	<div class="flex flex-col gap-2">
 		<CommentSort {submission} />
 
-		<CommentRefresh bind:submission submissionId={submission.id} {sort} {persistSubmission} />
+		{#if !singleCommentThread}
+			<CommentRefresh bind:submission submissionId={submission.id} {sort} {persistSubmission} />
+		{:else}
+			<SingleCommentThread />
+		{/if}
 
 		<input
 			class="w-full rounded-3xl bg-[var(--search-input-bg)] px-4 py-2"

@@ -54,31 +54,29 @@
 	}
 </script>
 
-{#if true}
-	<div class="flex items-center justify-between gap-2 text-nowrap text-sm">
-		<div class="flex gap-2">
-			<button class="w-fit" on:click={refreshComments} disabled={loading}>Refresh comments</button>
-			{#if loading && !autoRefresh}
-				<Icon class="animate-spin" height="20" width="20" name="loading" />
-			{/if}
-		</div>
-		<hr class="w-full border-[#58585a]" />
-		<div class="flex gap-1">
-			<input
-				class="hidden accent-[#747CB8]"
-				id="refresh-comments"
-				type="checkbox"
-				bind:checked={autoRefresh}
-			/>
-			<label for="refresh-comments" class="cursor-pointer">
-				<span class="select-none">Auto refresh comments</span>
-			</label>
-			{#if autoRefresh}
-				{autoRefreshTimeLeft}
-			{/if}
-			{#if loading && autoRefresh}
-				<Icon class="animate-spin" height="20" width="20" name="loading" />
-			{/if}
-		</div>
+<div class="flex items-center justify-between gap-2 whitespace-nowrap text-sm">
+	<div class="flex gap-2">
+		<button class="w-fit" on:click={refreshComments} disabled={loading}>Refresh comments</button>
+		{#if loading && !autoRefresh}
+			<Icon class="animate-spin" height="20" width="20" name="loading" />
+		{/if}
 	</div>
-{/if}
+	<hr class="w-full border-[#58585a]" />
+	<div class="flex gap-1">
+		<input
+			class="hidden accent-[#747CB8]"
+			id="refresh-comments"
+			type="checkbox"
+			bind:checked={autoRefresh}
+		/>
+		<label for="refresh-comments" class="cursor-pointer">
+			<span class="select-none">Auto refresh comments</span>
+		</label>
+		{#if autoRefresh}
+			{autoRefreshTimeLeft}
+		{/if}
+		{#if loading && autoRefresh}
+			<Icon class="animate-spin" height="20" width="20" name="loading" />
+		{/if}
+	</div>
+</div>
