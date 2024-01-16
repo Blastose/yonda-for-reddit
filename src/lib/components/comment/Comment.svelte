@@ -22,6 +22,7 @@
 	$: commentBody = comment.type === 'comment' ? comment.body : '';
 	$: commentMediaMetadata = comment.type === 'comment' ? comment.media_metadata : undefined;
 	$: commentHtml = markdownToHtml(commentBody, { media_metadata: commentMediaMetadata });
+	$: highlightCommentId = $page.params.commentId;
 	let loadingMoreComments = false;
 
 	async function toggleCommentVisibility() {
@@ -68,7 +69,7 @@
 	<div class="comment-container" bind:this={commentContainer}>
 		<CommentBar commentHidden={comment.collapsed} {toggleCommentVisibility} />
 		<div class="flex flex-col gap-4">
-			<div class="flex flex-col">
+			<div class="flex flex-col" class:highlight={highlightCommentId === comment.id}>
 				<div class="flex items-center gap-2">
 					<Submitter submitter={comment} type="comment" />
 					{#if comment.collapsed}
@@ -152,5 +153,11 @@
 
 	.load-more-comments {
 		color: rgb(140, 179, 253);
+	}
+
+	.highlight {
+		background-color: rgba(84, 85, 88, 0.267);
+		border-radius: 0.375rem;
+		padding: 0.125rem 0.5rem;
 	}
 </style>
