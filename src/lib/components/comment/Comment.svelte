@@ -1,19 +1,29 @@
 <script lang="ts">
 	import { markdownToHtml } from '$lib/reddit/markdownToHtml';
-	import type { CommentFull } from 'jsrwrap/types';
+	import type { CommentFull, Sort } from 'jsrwrap/types';
 	import CommentBar from './CommentBar.svelte';
 	import { tick } from 'svelte';
 	import Icon from '../icon/Icon.svelte';
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import Submitter from '../subreddit/Submitter.svelte';
 	import { formatter } from '$lib/reddit/number';
+	import { jsrwrap } from '$lib/reddit/reddit';
+	import { buildCommentThreadPermalink } from '$lib/url/url';
+	import { page } from '$app/stores';
 
 	export let comment: CommentFull;
+	export let pageSort: Sort | undefined;
+	export let suggestedSort: Sort | null;
+	export let submissionId: string;
+	export let updateReplies: ((moreId: string, children: CommentFull[]) => void) | null = null;
+	export let persistSubmission: () => void;
 
 	let commentContainer: HTMLDivElement;
 	$: commentBody = comment.type === 'comment' ? comment.body : '';
 	$: commentMediaMetadata = comment.type === 'comment' ? comment.media_metadata : undefined;
 	$: commentHtml = markdownToHtml(commentBody, { media_metadata: commentMediaMetadata });
+	$: highlightCommentId = $page.params.commentId;
+	let loadingMoreComments = false;
 
 	async function toggleCommentVisibility() {
 		if (comment.type === 'comment') {
@@ -28,6 +38,30 @@
 				}
 			}
 		}
+		persistSubmission();
+	}
+
+	async function getMoreChildren() {
+		if (comment.type === 'more' && comment.id !== '_') {
+			loadingMoreComments = true;
+			const sort = pageSort ?? suggestedSort ?? 'confidence';
+			const children = await jsrwrap.getSubmission(submissionId).getMoreChildren({
+				children: comment.children,
+				limit_children: false,
+				sort
+			});
+			if (updateReplies) updateReplies(comment.id, children);
+			loadingMoreComments = false;
+		}
+	}
+
+	function addReplies(moreId: string, children: CommentFull[]) {
+		if (comment.type === 'comment') {
+			const moreIndex = comment.replies.findIndex((value) => value.id === moreId);
+			comment.replies.splice(moreIndex, 1);
+			comment.replies = comment.replies.concat(children);
+			persistSubmission();
+		}
 	}
 </script>
 
@@ -35,7 +69,7 @@
 	<div class="comment-container" bind:this={commentContainer}>
 		<CommentBar commentHidden={comment.collapsed} {toggleCommentVisibility} />
 		<div class="flex flex-col gap-4">
-			<div class="flex flex-col">
+			<div class="flex flex-col" class:highlight={highlightCommentId === comment.id}>
 				<div class="flex items-center gap-2">
 					<Submitter submitter={comment} type="comment" />
 					{#if comment.collapsed}
@@ -44,6 +78,7 @@
 							on:click={toggleCommentVisibility}
 							aria-label="open comment"
 						>
+							<span class="text-xs">{comment.score} points</span>
 							[ + ]
 						</button>
 					{/if}
@@ -78,7 +113,14 @@
 			{#if comment.replies.length > 0}
 				<div class="flex flex-col gap-4" class:hidden={comment.collapsed}>
 					{#each comment.replies as reply (reply.id)}
-						<svelte:self comment={reply} />
+						<svelte:self
+							comment={reply}
+							{pageSort}
+							{suggestedSort}
+							{submissionId}
+							updateReplies={addReplies}
+							{persistSubmission}
+						/>
 					{/each}
 				</div>
 			{/if}
@@ -86,10 +128,18 @@
 	</div>
 {:else if comment.type === 'more'}
 	{#if comment.id === '_'}
-		<a class="load-more-comments" href={'TODO'} rel="noreferrer">Continue this thread</a>
+		<a
+			class="load-more-comments"
+			href={buildCommentThreadPermalink(comment.parent_id, $page.url.pathname)}
+			rel="noreferrer">Continue this thread</a
+		>
 	{:else}
-		<button class="load-more-comments text-left text-sm" disabled={true} on:click={async () => {}}>
-			{false ? 'Loading...' : `Load ${comment.count} more comments`}
+		<button
+			class="load-more-comments text-left text-sm"
+			on:click={getMoreChildren}
+			disabled={loadingMoreComments}
+		>
+			{loadingMoreComments ? 'Loading...' : `Load ${comment.count} more comments`}
 		</button>
 	{/if}
 {/if}
@@ -103,5 +153,11 @@
 
 	.load-more-comments {
 		color: rgb(140, 179, 253);
+	}
+
+	.highlight {
+		background-color: rgba(84, 85, 88, 0.267);
+		border-radius: 0.375rem;
+		padding: 0.125rem 0.5rem;
 	}
 </style>

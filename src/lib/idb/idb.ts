@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
+import type { SubmissionFull } from '$lib/reddit/reddit';
 import { openDB, type DBSchema } from 'idb';
-import type { Submission } from 'jsrwrap';
 import type { SubmissionData, SubredditData } from 'jsrwrap/types';
 
 interface MyDB extends DBSchema {
@@ -13,11 +13,11 @@ interface MyDB extends DBSchema {
 		key: number;
 	};
 	subreddit: {
-		value: Awaited<ReturnType<Submission['fetch']>>;
+		value: SubmissionFull;
 		key: number;
 	};
 	subredditv2: {
-		value: Awaited<ReturnType<Submission['fetch']>>;
+		value: SubmissionFull;
 		key: string;
 	};
 	submissions: {
