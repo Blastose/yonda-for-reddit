@@ -20,8 +20,10 @@
 	.post-tags {
 		padding: 0rem 0.375rem;
 		border-radius: 1rem;
-		font-size: 0.875rem;
-		line-height: 1.25rem;
+		/* font-size: 0.875rem; */
+		/* line-height: 1.25rem; */
+		font-size: 0.75rem;
+		line-height: 1rem;
 		font-weight: 600;
 		border: 1px solid;
 	}

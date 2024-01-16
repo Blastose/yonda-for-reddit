@@ -2,14 +2,14 @@
 	import type { SubmissionData } from 'jsrwrap/types';
 	import Icon from '../icon/Icon.svelte';
 	import { submissionStoreClick } from '$lib/stores/submissionStore';
-	import { removeTrailingBackslashFromUrl } from '$lib/url/url';
+	import { formatSubmissionPermalink } from '$lib/url/url';
 	import { formatter } from '$lib/reddit/number';
 
 	export let submission: SubmissionData;
 	export let numNewComments: number;
 	export let type: 'subreddit' | 'submission';
 
-	$: href = removeTrailingBackslashFromUrl(submission.permalink.toLowerCase());
+	$: href = formatSubmissionPermalink(submission.permalink);
 </script>
 
 <div class="mt-4 flex items-center gap-2">

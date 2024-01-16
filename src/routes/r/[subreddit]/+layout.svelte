@@ -19,7 +19,7 @@
 	<Banner about={data.about} />
 
 	<div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
-		<div class="flex flex-col gap-2">
+		<div class="flex max-w-[750px] flex-col gap-2">
 			{#if showSubredditOptions}
 				<div class="flex">
 					<SubredditSort />

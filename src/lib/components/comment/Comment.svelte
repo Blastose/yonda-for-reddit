@@ -70,11 +70,11 @@
 		<CommentBar commentHidden={comment.collapsed} {toggleCommentVisibility} />
 		<div class="flex flex-col gap-4">
 			<div class="flex flex-col" class:highlight={highlightCommentId === comment.id}>
-				<div class="flex items-center gap-2">
+				<div class="flex items-start gap-2">
 					<Submitter submitter={comment} type="comment" />
 					{#if comment.collapsed}
 						<button
-							class="flex items-center text-sm"
+							class="flex items-center whitespace-nowrap text-sm"
 							on:click={toggleCommentVisibility}
 							aria-label="open comment"
 						>
