@@ -14,7 +14,8 @@ export const load: LayoutLoad = async ({ params, url }) => {
 	const maybeSubmission = await db.get('subredditv2', transformUrlForIDBKey(url));
 	if (maybeSubmission) {
 		return {
-			submission: maybeSubmission
+			submission: maybeSubmission,
+			sort
 		};
 	}
 	let submission;

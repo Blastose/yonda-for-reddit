@@ -18,7 +18,7 @@
 	}
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-8">
 	{#if $submissionStore && stripSearchParams($submissionStore?.url) === stripSearchParams(transformUrlForIDBKey($page.url))}
 		{@const submission = $submissionStore.submission}
 		<SubmissionInfo {submission} type="submission" numNewComments={0} />
@@ -30,7 +30,8 @@
 		{/await}
 	{/if}
 
-	<hr class="border-[#313131]" />
+	<!-- TODO remove -->
+	<!-- <hr class="border-[#313131]" /> -->
 
 	<slot />
 </div>

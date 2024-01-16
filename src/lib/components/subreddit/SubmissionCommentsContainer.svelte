@@ -7,6 +7,7 @@
 	import { transformUrlForIDBKey } from '$lib/url/url';
 	import { page } from '$app/stores';
 	import { db } from '$lib/idb/idb';
+	import CommentRefresh from '../comment/CommentRefresh.svelte';
 
 	export let submission: SubmissionFull;
 	export let sort: Sort | undefined;
@@ -20,6 +21,8 @@
 <div class="flex flex-col gap-8">
 	<div class="flex flex-col gap-2">
 		<CommentSort {submission} />
+
+		<CommentRefresh bind:submission submissionId={submission.id} {sort} {persistSubmission} />
 
 		<input
 			class="w-full rounded-3xl bg-[var(--search-input-bg)] px-4 py-2"
