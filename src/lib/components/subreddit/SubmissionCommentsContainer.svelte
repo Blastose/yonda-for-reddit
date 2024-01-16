@@ -27,7 +27,7 @@
 		{#if !singleCommentThread}
 			<CommentRefresh bind:submission submissionId={submission.id} {sort} {persistSubmission} />
 		{:else}
-			<SingleCommentThread />
+			<SingleCommentThread {submission} />
 		{/if}
 
 		<input
