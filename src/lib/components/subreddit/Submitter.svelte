@@ -15,8 +15,8 @@
 <div class="flex flex-wrap items-center gap-1">
 	<div class="flex flex-wrap gap-2 text-sm">
 		{#if submitter.author !== '[deleted]'}
-			<a href="/user/{submitter.author}" class="text-sm font-semibold text-[#a1a5d8]"
-				>u/{submitter.author}</a
+			<a href="/user/{submitter.author}" class="text-sm font-semibold text-[#99aef1]"
+				>{submitter.author}</a
 			>
 		{:else}
 			<p class="text-sm font-semibold text-[#a1a5d8]">{submitter.author}</p>

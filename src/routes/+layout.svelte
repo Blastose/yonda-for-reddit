@@ -6,6 +6,7 @@
 	import { afterNavigate, beforeNavigate, onNavigate } from '$app/navigation';
 	import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
 	import Layout from '$lib/components/layout/Layout.svelte';
+	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
 
 	let nprogressTimeoutId: ReturnType<typeof setTimeout>;
 
@@ -59,7 +60,19 @@
 			}
 		});
 	});
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === 't') {
+			if ($submissionDisplayStore === 'classic') {
+				$submissionDisplayStore = 'card';
+			} else {
+				$submissionDisplayStore = 'classic';
+			}
+		}
+	}
 </script>
+
+<svelte:document on:keydown={handleKeydown} />
 
 <Layout>
 	<slot />

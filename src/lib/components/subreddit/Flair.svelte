@@ -19,7 +19,7 @@
 
 {#if linkFlair.link_flair_text}
 	<div
-		class="flair text-sm"
+		class="flair text-xs"
 		class:text-black={linkFlair.link_flair_text_color === 'dark'}
 		class:text-white={linkFlair.link_flair_text_color === 'light'}
 		style={styleTag}
@@ -43,9 +43,8 @@
 	.flair {
 		display: inline-flex;
 		align-items: center;
-		padding: 0rem 0.375rem;
+		padding: 0rem 0.5rem;
 		border-radius: 1rem;
-		font-weight: 600;
 	}
 
 	.flair-text {

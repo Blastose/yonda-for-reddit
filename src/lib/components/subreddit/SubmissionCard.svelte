@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
-	import { removeTrailingBackslashFromUrl } from '$lib/url/url';
+	import { formatSubmissionPermalink } from '$lib/url/url';
 	import ClickableDivWrapper from '../layout/ClickableDivWrapper.svelte';
 	import Embed from './embed/Embed.svelte';
 	import { db } from '$lib/idb/idb';
@@ -11,7 +11,7 @@
 	import { markdownToHtml } from '$lib/reddit/markdownToHtml';
 
 	export let submission: SubmissionData;
-	$: href = removeTrailingBackslashFromUrl(submission.permalink.toLowerCase());
+	$: href = formatSubmissionPermalink(submission.permalink);
 
 	async function getCommentCount() {
 		return (await db.get('submissionCommentCount', submission.id)) ?? submission.num_comments;

@@ -45,3 +45,7 @@ export function buildShowParentCommentsLink(id: string, pathname: string) {
 	const newUrl = `${baseUrl}/${id}?context=8&depth=9`;
 	return newUrl;
 }
+
+export function formatSubmissionPermalink(permalink: string) {
+	return removeTrailingBackslashFromUrl(permalink.toLowerCase());
+}

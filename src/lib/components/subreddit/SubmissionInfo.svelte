@@ -4,7 +4,7 @@
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import { markdownToHtml } from '$lib/reddit/markdownToHtml';
 	import { submissionStoreClick } from '$lib/stores/submissionStore';
-	import { removeTrailingBackslashFromUrl } from '$lib/url/url';
+	import { formatSubmissionPermalink } from '$lib/url/url';
 	import SubmissionActions from './SubmissionActions.svelte';
 	import Submitter from './Submitter.svelte';
 	import Tag from './Tag.svelte';
@@ -14,13 +14,10 @@
 	export let type: 'subreddit' | 'submission';
 	export let numNewComments: number = submission.num_comments;
 
-	$: href = removeTrailingBackslashFromUrl(submission.permalink.toLowerCase());
+	$: href = formatSubmissionPermalink(submission.permalink);
 </script>
 
 <div class="flex flex-col gap-1">
-	<div class="w-fit">
-		<Flair linkFlair={submission} />
-	</div>
 	{#if type === 'subreddit'}
 		<h2 class="text-lg font-bold">
 			<a use:submissionStoreClick={{ url: href, submission }} class="submission-title" {href}
@@ -31,6 +28,7 @@
 		<h1 class="text-2xl font-bold">{submission.title}</h1>
 	{/if}
 	<div class="flex w-fit flex-wrap gap-2">
+		<Flair linkFlair={submission} />
 		<Tag postTag={submission} />
 	</div>
 	<Submitter submitter={submission} type="submission" />
