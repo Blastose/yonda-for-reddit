@@ -40,6 +40,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		background-color: rgb(53, 52, 56);
+		border-radius: 0.5rem;
 	}
 
 	.thumbnail-background {

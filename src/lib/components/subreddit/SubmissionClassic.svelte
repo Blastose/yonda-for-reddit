@@ -32,10 +32,12 @@
 	}}
 >
 	<article class="flex flex-col gap-4">
-		<div class="grid grid-cols-[86px_1fr] gap-2">
-			<div>
-				<ClassicThumbnail {submission} {hasThumbnail} handleClick={toggleOpen} />
-			</div>
+		<div class="grid {submission.thumbnail !== '' ? 'grid-cols-[86px_1fr]' : ''} gap-2 sm:gap-4">
+			{#if submission.thumbnail !== ''}
+				<div>
+					<ClassicThumbnail {submission} {hasThumbnail} handleClick={toggleOpen} />
+				</div>
+			{/if}
 
 			<div class="flex flex-col gap-1">
 				<div class="gap-1">
@@ -45,6 +47,7 @@
 					</div>
 					<h2 class="font-bold">
 						{submission.title}
+						<span class="text-sm font-normal text-neutral-500">({submission.domain})</span>
 					</h2>
 				</div>
 				<Submitter submitter={submission} type="submission" />
@@ -53,12 +56,14 @@
 			</div>
 		</div>
 		{#if open}
-			<div>
-				<Embed {submission} />
-			</div>
-			<RedditHtml
-				rawHTML={markdownToHtml(submission.selftext, { media_metadata: submission.media_metadata })}
-			/>
+			<Embed {submission} />
+			{#if submission.selftext}
+				<RedditHtml
+					rawHTML={markdownToHtml(submission.selftext, {
+						media_metadata: submission.media_metadata
+					})}
+				/>
+			{/if}
 		{/if}
 	</article>
 </ClickableDivWrapper>
