@@ -100,9 +100,9 @@
 							<button
 								class="flex h-full w-fit items-center gap-1 rounded-2xl px-2 py-1 hover:bg-[#2c2c2c]"
 							>
-								<div class="flex h-[24px] items-center">
+								<span class="flex h-[24px] items-center">
 									<Icon name="comment" height="20" width="20" />
-								</div>
+								</span>
 								<span class="flex gap-2 text-xs">Reply</span>
 							</button>
 						</div>

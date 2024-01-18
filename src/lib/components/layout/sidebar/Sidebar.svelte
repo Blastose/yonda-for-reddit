@@ -1,8 +1,10 @@
 <script lang="ts">
+	import SidebarSub from './SidebarSub.svelte';
+
 	export let type: 'sidebar' | 'drawer';
 </script>
 
-<div class="thin-scrollbar {type === 'sidebar' ? 'sidebar' : 'drawer'} ">
+<div class="thin-scrollbar flex flex-col {type === 'sidebar' ? 'sidebar' : 'drawer'} ">
 	<p>
 		<a href="/r/genshin_impact">/r/genshin_impact</a>
 	</p>
@@ -22,8 +24,9 @@
 		<a href="/">Home</a>
 	</p>
 
+	<hr />
 	{#each { length: 47 } as _}
-		<p>Sidebar</p>
+		<SidebarSub sub={'arknights'} />
 	{/each}
 </div>
 

@@ -4,7 +4,7 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import { writable } from 'svelte/store';
 	import { quintOut } from 'svelte/easing';
-	import Sidebar from './Sidebar.svelte';
+	import Sidebar from './sidebar/Sidebar.svelte';
 
 	const customOpen = writable(false);
 

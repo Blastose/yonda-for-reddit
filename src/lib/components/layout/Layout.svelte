@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Header from './Header.svelte';
-	import Sidebar from './Sidebar.svelte';
+	import Sidebar from './sidebar/Sidebar.svelte';
 </script>
 
 <div class="flex flex-col">
