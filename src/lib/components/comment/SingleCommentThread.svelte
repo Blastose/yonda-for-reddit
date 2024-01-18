@@ -6,7 +6,7 @@
 	export let submission: SubmissionFull;
 </script>
 
-<div class="reddit-md flex items-center justify-between gap-2 text-nowrap text-sm">
+<div class="reddit-md flex items-center justify-between gap-2 whitespace-nowrap text-sm">
 	{#if submission.comments.length > 0 && submission.comments[0].parent_id.slice(0, 3) !== 't3_'}
 		<a href={buildShowParentCommentsLink(submission.comments[0].id, $page.url.pathname)}
 			>Show parent comments</a

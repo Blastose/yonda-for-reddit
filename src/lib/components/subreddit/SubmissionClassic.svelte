@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
 	import ClickableDivWrapper from '../layout/ClickableDivWrapper.svelte';
-	import { setSubmissionStore } from '$lib/stores/submissionStore';
+	import { setSubmissionStore, submissionStoreClick } from '$lib/stores/submissionStore';
 	import { formatSubmissionPermalink } from '$lib/url/url';
 	import SubmissionActions from './SubmissionActions.svelte';
 	import Flair from './Flair.svelte';
@@ -23,6 +23,20 @@
 	function toggleOpen() {
 		open = !open;
 	}
+
+	function handleKeydown(node: HTMLElement) {
+		function hk(e: KeyboardEvent) {
+			if (e.key==="k") {
+					toggleOpen();
+			}
+		}
+		node.addEventListener('keydown', hk);
+		return {
+			destroy() {
+				node.removeEventListener('keydown', hk)
+			}
+		}
+	}
 </script>
 
 <ClickableDivWrapper
@@ -31,7 +45,7 @@
 		setSubmissionStore(href, submission);
 	}}
 >
-	<article class="flex flex-col gap-4">
+	<article use:handleKeydown class="flex flex-col gap-4">
 		<div class="grid {submission.thumbnail !== '' ? 'grid-cols-[86px_1fr]' : ''} gap-2 sm:gap-4">
 			{#if submission.thumbnail !== ''}
 				<div>
@@ -45,10 +59,14 @@
 						<Flair linkFlair={submission} />
 						<Tag postTag={submission} />
 					</div>
-					<h2 class="font-bold">
+					<a
+						use:submissionStoreClick={{ url: href, submission }}
+						{href}
+						class="submission-title font-bold"
+					>
 						{submission.title}
 						<span class="text-sm font-normal text-neutral-500">({submission.domain})</span>
-					</h2>
+					</a>
 				</div>
 				<Submitter submitter={submission} type="submission" />
 
@@ -69,6 +87,10 @@
 </ClickableDivWrapper>
 
 <style>
+	a.submission-title:visited {
+		color: var(--visited-link-color);
+	}
+
 	article {
 		padding: 0.5rem 1rem;
 		border-radius: 0.375rem;

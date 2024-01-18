@@ -5,6 +5,13 @@ import { db } from '$lib/idb/idb';
 export const load: LayoutLoad = async ({ params }) => {
 	const subreddit = params.subreddit;
 	const jsrwrapSubreddit = jsrwrap.getSubreddit(subreddit);
+	if (subreddit === 'all' || subreddit === 'popular') {
+		// TODO
+		// return {
+		// 	about: null,
+		// 	sidebarPromise: []
+		// };
+	}
 
 	const now = new Date().getTime();
 	const sidebarPromise = jsrwrapSubreddit.getSidebar();
