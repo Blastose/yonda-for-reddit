@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Drawer from './Drawer.svelte';
+	import YondaIcon from './YondaIcon.svelte';
 </script>
 
 <header class="header">
@@ -8,11 +9,13 @@
 		<div class="block lg:hidden">
 			<Drawer />
 		</div>
-		<div class="block lg:hidden">
-			<a class="block text-2xl font-bold" aria-label="Dokusha homepage" href="/">D</a>
+		<div class="flex items-center lg:hidden">
+			<a class="block text-2xl font-bold" aria-label="Yonda homepage" href="/"><YondaIcon /></a>
 		</div>
-		<div class="hidden lg:block">
-			<a class="block text-2xl font-bold" aria-label="Dokusha homepage" href="/">Dokusha</a>
+		<div class="hidden lg:flex">
+			<a class="flex items-center gap-2 text-2xl font-bold" aria-label="Yonda homepage" href="/">
+				<YondaIcon />Yonda</a
+			>
 		</div>
 	</div>
 
