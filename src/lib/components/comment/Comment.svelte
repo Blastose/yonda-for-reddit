@@ -74,11 +74,11 @@
 					<Submitter submitter={comment} type="comment" />
 					{#if comment.collapsed}
 						<button
-							class="flex items-center whitespace-nowrap text-sm"
+							class="flex items-center gap-2 whitespace-nowrap text-sm"
 							on:click={toggleCommentVisibility}
 							aria-label="open comment"
 						>
-							<span class="text-xs">{comment.score} points</span>
+							<span class="text-xs">{comment.score_hidden ? '•' : `${comment.score} points`}</span>
 							[ + ]
 						</button>
 					{/if}
@@ -93,7 +93,9 @@
 						<div class="flex flex-wrap gap-1 text-sm font-semibold">
 							<div class="flex w-fit items-center gap-1 rounded-2xl px-2 py-1 hover:bg-[#2c2c2c]">
 								<button><Icon name="arrowUpOutline" /></button>
-								<span title={comment.score.toString()}>{formatter.format(comment.score)}</span>
+								<span title={comment.score.toString()}
+									>{comment.score_hidden ? '•' : formatter.format(comment.score)}</span
+								>
 								<button><Icon name="arrowDownOutline" /></button>
 							</div>
 
