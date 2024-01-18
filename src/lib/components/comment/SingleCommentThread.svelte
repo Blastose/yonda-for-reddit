@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import type { SubmissionFull } from '$lib/reddit/reddit';
 	import { buildShowParentCommentsLink, removeTrailingBackslashFromUrl } from '$lib/url/url';
+	import Hr from '../layout/Hr.svelte';
 
 	export let submission: SubmissionFull;
 </script>
@@ -14,6 +15,6 @@
 	{:else}
 		<p class="cursor-not-allowed text-neutral-600">Show parent comments</p>
 	{/if}
-	<hr class="w-full border-[#58585a]" />
+	<Hr class="w-full" />
 	<a href={removeTrailingBackslashFromUrl(submission.permalink.toLowerCase())}>View all comments</a>
 </div>

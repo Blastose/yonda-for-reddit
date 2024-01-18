@@ -3,6 +3,7 @@
 	import SubmissionCard from '../subreddit/SubmissionCard.svelte';
 	import SubmissionClassic from '../subreddit/SubmissionClassic.svelte';
 	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
+	import Hr from './Hr.svelte';
 
 	export let submissions: SubmissionData[];
 </script>
@@ -15,6 +16,6 @@
 		{:else}
 			<SubmissionClassic {submission} />
 		{/if}
-		<hr class="border-[#2c2c2c]" />
+		<Hr />
 	{/each}
 </div>

@@ -9,6 +9,7 @@
 	import { db } from '$lib/idb/idb';
 	import CommentRefresh from '../comment/CommentRefresh.svelte';
 	import SingleCommentThread from '../comment/SingleCommentThread.svelte';
+	import Hr from '../layout/Hr.svelte';
 
 	export let submission: SubmissionFull;
 	export let sort: Sort | undefined;
@@ -53,7 +54,7 @@
 		/>
 		{#if index < submission.comments.length - 1}
 			<div class="flex justify-center">
-				<hr class="w-2/3 border-[#3a3a3a]" />
+				<Hr class="w-2/3"></Hr>
 			</div>
 		{/if}
 	{/each}

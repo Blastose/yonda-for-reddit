@@ -33,8 +33,5 @@
 		{/await}
 	{/if}
 
-	<!-- TODO remove -->
-	<!-- <hr class="border-[#313131]" /> -->
-
 	<slot />
 </div>

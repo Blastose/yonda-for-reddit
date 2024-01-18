@@ -11,6 +11,7 @@
 	import WidgetButton from './WidgetButton.svelte';
 	import WidgetCalendar from './WidgetCalendar.svelte';
 	import WidgetCustom from './WidgetCustom.svelte';
+	import Hr from '$lib/components/layout/Hr.svelte';
 
 	export let widgets: Widget[];
 	export let about: SubredditData;
@@ -42,7 +43,7 @@
 			<WidgetCustom {widget} />
 		{/if}
 		{#if index !== widgets.length - 1}
-			<hr class="opacity-10" />
+			<Hr />
 		{/if}
 	{/each}
 </aside>
