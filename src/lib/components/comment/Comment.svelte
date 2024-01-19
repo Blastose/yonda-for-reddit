@@ -86,7 +86,7 @@
 
 				{#if !comment.collapsed}
 					<div class="flex flex-col">
-						<div class="grid grid-cols-1">
+						<div class="comment-body-container grid grid-cols-1">
 							<RedditHtml rawHTML={commentHtml} />
 						</div>
 

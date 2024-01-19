@@ -26,16 +26,16 @@
 
 	function handleKeydown(node: HTMLElement) {
 		function hk(e: KeyboardEvent) {
-			if (e.key==="k") {
-					toggleOpen();
+			if (e.key === 'k') {
+				toggleOpen();
 			}
 		}
 		node.addEventListener('keydown', hk);
 		return {
 			destroy() {
-				node.removeEventListener('keydown', hk)
+				node.removeEventListener('keydown', hk);
 			}
-		}
+		};
 	}
 </script>
 
@@ -65,7 +65,9 @@
 						class="submission-title font-bold"
 					>
 						{submission.title}
-						<span class="text-sm font-normal text-neutral-500">({submission.domain})</span>
+						<span class="text-sm font-normal text-[var(--visited-link-color)]"
+							>({submission.domain})</span
+						>
 					</a>
 				</div>
 				<Submitter submitter={submission} type="submission" />
@@ -97,6 +99,6 @@
 	}
 
 	article:hover {
-		background-color: rgb(36, 36, 36);
+		background-color: var(--bg-hover);
 	}
 </style>

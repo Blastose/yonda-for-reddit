@@ -64,12 +64,7 @@
 	</div>
 	<Hr class="w-full" />
 	<div class="flex gap-1">
-		<input
-			class="hidden accent-[#747CB8]"
-			id="refresh-comments"
-			type="checkbox"
-			bind:checked={autoRefresh}
-		/>
+		<input class="hidden" id="refresh-comments" type="checkbox" bind:checked={autoRefresh} />
 		<label for="refresh-comments" class="cursor-pointer">
 			<span class="select-none">Auto refresh comments</span>
 		</label>

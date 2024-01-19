@@ -13,7 +13,7 @@
 			>Show parent comments</a
 		>
 	{:else}
-		<p class="cursor-not-allowed text-neutral-600">Show parent comments</p>
+		<p class="cursor-not-allowed text-[var(--visited-link-color)]">Show parent comments</p>
 	{/if}
 	<Hr class="w-full" />
 	<a href={removeTrailingBackslashFromUrl(submission.permalink.toLowerCase())}>View all comments</a>

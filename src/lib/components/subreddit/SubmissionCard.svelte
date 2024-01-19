@@ -50,7 +50,7 @@
 	}
 
 	article:hover {
-		background-color: rgb(36, 36, 36);
+		background-color: var(--bg-hover);
 	}
 
 	.selftext {
@@ -69,6 +69,6 @@
 	}
 
 	article:hover .selftext::after {
-		background-image: linear-gradient(to bottom, #ffffff00, rgb(36, 36, 36));
+		background-image: linear-gradient(to bottom, #ffffff00, var(--bg-hover));
 	}
 </style>
