@@ -6,11 +6,10 @@ export const load: LayoutLoad = async ({ params }) => {
 	const subreddit = params.subreddit;
 	const jsrwrapSubreddit = jsrwrap.getSubreddit(subreddit);
 	if (subreddit === 'all' || subreddit === 'popular') {
-		// TODO
-		// return {
-		// 	about: null,
-		// 	sidebarPromise: []
-		// };
+		return {
+			about: null,
+			sidebarPromise: null
+		};
 	}
 
 	const now = new Date().getTime();

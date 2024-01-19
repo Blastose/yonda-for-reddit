@@ -11,12 +11,14 @@
 	$: showSubredditOptions = !/^https?:\/\/[A-z0-9:.-]+\/r\/[A-z_0-9]+\/comments\/.*?$/.test(
 		$page.url.toString()
 	);
+
+	$: subreddit = $page.params.subreddit;
 </script>
 
-<svelte:head><title>{data.about.title}</title></svelte:head>
+<svelte:head><title>{data.about?.title ?? subreddit}</title></svelte:head>
 
 <div class="flex flex-col gap-4 pt-2">
-	<Banner about={data.about} />
+	<Banner about={data.about} fallbackSubreddit="r/{subreddit}" />
 
 	<div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
 		<div class="flex max-w-[750px] flex-col gap-2">
@@ -30,15 +32,19 @@
 			<slot />
 		</div>
 
-		{#await data.sidebarPromise}
-			<p>Loading sidebar...</p>
-		{:then widgets}
-			<div
-				class="subreddit-sidebar thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
-			>
-				<SubredditSidebar about={data.about} {widgets} />
-			</div>
-		{/await}
+		{#if data.sidebarPromise}
+			{#await data.sidebarPromise}
+				<p>Loading sidebar...</p>
+			{:then widgets}
+				<div
+					class="subreddit-sidebar thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
+				>
+					<SubredditSidebar about={data.about} {widgets} />
+				</div>
+			{/await}
+		{:else}
+			<div></div>
+		{/if}
 	</div>
 </div>
 
