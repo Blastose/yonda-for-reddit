@@ -86,7 +86,7 @@
 
 				{#if !comment.collapsed}
 					<div class="flex flex-col">
-						<div class="comment-body-container grid grid-cols-1">
+						<div class="comment-body-container image-left grid grid-cols-1">
 							<RedditHtml rawHTML={commentHtml} />
 						</div>
 
@@ -154,7 +154,7 @@
 	}
 
 	.load-more-comments {
-		color: rgb(140, 179, 253);
+		color: var(--link-color);
 	}
 
 	.highlight {

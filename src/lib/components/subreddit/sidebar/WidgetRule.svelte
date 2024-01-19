@@ -10,7 +10,7 @@
 	let open = false;
 </script>
 
-<div class="text-neutral-400">
+<div class="text-[var(--text-color-sub)]">
 	<button
 		on:click={() => {
 			if (!rule.descriptionHtml) return;
@@ -42,6 +42,6 @@
 	}
 
 	.summary:hover {
-		background-color: #ffffff20;
+		background-color: var(--accent-l1);
 	}
 </style>

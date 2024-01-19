@@ -15,7 +15,7 @@
 				<a
 					target="_blank"
 					rel="noreferrer"
-					class="w-full rounded-2xl bg-gray-600 px-2 py-1 text-center"
+					class="w-full rounded-2xl bg-[var(--accent-l1)] px-2 py-1 text-center"
 					href={button.url}>{button.text}</a
 				>
 			{:else if button.kind === 'image'}

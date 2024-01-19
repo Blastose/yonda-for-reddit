@@ -11,7 +11,7 @@
 	<div class="flex flex-col gap-2">
 		{#if widget.showWiki}
 			<a
-				class="w-full text-center px-2 py-1 rounded-2xl bg-gray-600"
+				class="w-full rounded-2xl bg-[var(--accent-l1)] px-2 py-1 text-center"
 				target="_blank"
 				rel="noreferrer"
 				href="/{about.display_name_prefixed}/wiki/index">Wiki</a
@@ -20,7 +20,7 @@
 			{#each widget.data as menuItem}
 				{#if menuItem.url}
 					<a
-						class="w-full text-center px-2 py-1 rounded-2xl bg-gray-600"
+						class="w-full rounded-2xl bg-[var(--accent-l1)] px-2 py-1 text-center"
 						target="_blank"
 						rel="noreferrer"
 						href={menuItem.url}>{menuItem.text}</a

@@ -5,16 +5,19 @@
 @layer base {
 	:root {
 		--bg: #1f1f20;
-		--bg-hover: #27272b;
+		--bg-hover: #242425;
 		--accent-l1: rgb(57, 57, 59);
 		--accent-l1-hover: rgb(74, 75, 82);
+		--accent-l2: rgb(39, 39, 41);
 		--header-height: 56px;
 		--sidebar-width: 312px;
 		--search-input-bg: #242424;
 		--divider-color: rgb(58 58 58);
 		--visited-link-color: #7c7c88;
 		--text-color: #d1d0d3;
+		--text-color-sub: rgb(163 163 163);
 		--reddit-username-color: rgb(168, 177, 255);
+		--link-color: #5aade0;
 	}
 }
 
@@ -143,7 +146,7 @@ html {
 }
 
 .dark .reddit-md a {
-	color: #5aade0;
+	color: var(--link-color);
 	fill: #5aade0;
 }
 
@@ -380,7 +383,7 @@ strike {
 	margin: 24px 0 0 0;
 }
 
-.reddit-md.image-left .reddit-image-container {
+.image-left .reddit-md .reddit-image-container {
 	justify-content: flex-start;
 }
 
