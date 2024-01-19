@@ -8,7 +8,6 @@
 	export let submissions: SubmissionData[];
 </script>
 
-<!-- TODO rename file -->
 <div class="flex flex-col gap-2">
 	{#each submissions as submission}
 		{#if $submissionDisplayStore === 'card'}

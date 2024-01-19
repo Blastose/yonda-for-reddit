@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
-	import SubTest from './SubTest.svelte';
+	import Submission from './Submission.svelte';
 	import InfiniteScrolling from './InfiniteScrolling.svelte';
 	import { jsrwrap, type SubredditSort, type Time } from '$lib/reddit/reddit';
 	import { db } from '$lib/idb/idb';
@@ -31,5 +31,5 @@
 	}
 </script>
 
-<SubTest {submissions} />
+<Submission {submissions} />
 <InfiniteScrolling bind:results={submissions} fetchMoreResults={getMoreSubmissions} {onSuccess} />
