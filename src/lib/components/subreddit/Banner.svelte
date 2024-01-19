@@ -15,11 +15,19 @@
 			style:background-image="url({bannerUrl})"
 		/>
 		<div class="relative bottom-[30px] mb-[-30px] flex gap-2 px-2">
-			<img
-				class="h-[80px] w-[80px] rounded-full border-4 border-[#292b2f] bg-[#292b2f]"
-				src={icon}
-				alt="{about.display_name} icon"
-			/>
+			{#if icon}
+				<img
+					class="h-[80px] w-[80px] rounded-full border-4 border-[#292b2f] bg-[#292b2f]"
+					src={icon}
+					alt="{about.display_name} icon"
+				/>
+			{:else}
+				<div
+					class="flex h-[80px] w-[80px] items-center justify-center rounded-full border-4 border-[#292b2f] bg-[#292b2f] text-4xl"
+				>
+					r/
+				</div>
+			{/if}
 			<a
 				href="/{about.display_name_prefixed.toLowerCase()}"
 				class="flex self-end pb-2 text-3xl font-bold">{about.display_name_prefixed}</a
