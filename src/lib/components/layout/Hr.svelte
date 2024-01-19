@@ -7,6 +7,6 @@
 
 <style>
 	hr {
-		border-color: rgb(83, 83, 83);
+		border-color: var(--divider-color);
 	}
 </style>

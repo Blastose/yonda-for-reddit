@@ -2,6 +2,7 @@
 	import { jsrwrap, type SubmissionFull } from '$lib/reddit/reddit';
 	import type { Sort } from 'jsrwrap/types';
 	import Icon from '../icon/Icon.svelte';
+	import Hr from '../layout/Hr.svelte';
 
 	export let sort: Sort | undefined;
 	export let submission: SubmissionFull;
@@ -61,14 +62,9 @@
 			<Icon class="animate-spin" height="20" width="20" name="loading" />
 		{/if}
 	</div>
-	<hr class="w-full border-[#58585a]" />
+	<Hr class="w-full" />
 	<div class="flex gap-1">
-		<input
-			class="hidden accent-[#747CB8]"
-			id="refresh-comments"
-			type="checkbox"
-			bind:checked={autoRefresh}
-		/>
+		<input class="hidden" id="refresh-comments" type="checkbox" bind:checked={autoRefresh} />
 		<label for="refresh-comments" class="cursor-pointer">
 			<span class="select-none">Auto refresh comments</span>
 		</label>

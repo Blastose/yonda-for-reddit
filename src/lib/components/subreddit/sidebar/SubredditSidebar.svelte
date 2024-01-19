@@ -11,12 +11,13 @@
 	import WidgetButton from './WidgetButton.svelte';
 	import WidgetCalendar from './WidgetCalendar.svelte';
 	import WidgetCustom from './WidgetCustom.svelte';
+	import Hr from '$lib/components/layout/Hr.svelte';
 
 	export let widgets: Widget[];
 	export let about: SubredditData;
 </script>
 
-<aside class="inherit-text-size flex flex-col gap-2 rounded-md bg-neutral-800 p-4 text-sm">
+<aside class="inherit-text-size flex flex-col gap-2 rounded-md bg-[var(--accent-l2)] p-4 text-sm">
 	{#each widgets as widget, index}
 		{#if widget.kind === 'id-card'}
 			<WidgetIdCard {widget} {about} />
@@ -42,7 +43,7 @@
 			<WidgetCustom {widget} />
 		{/if}
 		{#if index !== widgets.length - 1}
-			<hr class="opacity-10" />
+			<Hr />
 		{/if}
 	{/each}
 </aside>

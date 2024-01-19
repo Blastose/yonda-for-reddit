@@ -14,7 +14,8 @@
 		{:else if useSlot}
 			<slot />
 		{:else}
-			<span class="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-neutral-700"
+			<span
+				class="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[var(--accent-l1)]"
 				>r/</span
 			>
 		{/if}
@@ -30,6 +31,6 @@
 	}
 
 	a:hover {
-		background: #252525;
+		background-color: var(--bg-hover);
 	}
 </style>

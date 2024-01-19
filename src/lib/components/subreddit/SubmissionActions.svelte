@@ -13,7 +13,7 @@
 </script>
 
 <div class="mt-4 flex items-center gap-2">
-	<div class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-2 py-1 text-sm">
+	<div class="flex w-fit items-center gap-1 rounded-2xl bg-[var(--accent-l1)] px-2 py-1 text-sm">
 		<button><Icon name="arrowUpOutline" /></button>
 		<span title={submission.score.toString()}>{formatter.format(submission.score)}</span>
 		<button><Icon name="arrowDownOutline" /></button>
@@ -23,7 +23,7 @@
 		<a
 			use:submissionStoreClick={{ url: href, submission }}
 			{href}
-			class="flex h-full w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-3 py-1 text-sm"
+			class="flex h-full w-fit items-center gap-1 rounded-2xl bg-[var(--accent-l1)] px-3 py-1 text-sm hover:bg-[var(--accent-l1-hover)]"
 		>
 			<div class="flex h-[24px] items-center">
 				<Icon name="comment" height="20" width="20" />
@@ -36,7 +36,10 @@
 			</span>
 		</a>
 	{:else}
-		<div class="flex w-fit items-center gap-1 rounded-2xl bg-[#2c2c2c] px-2 py-1 text-sm">
+		<div
+			title={submission.num_comments.toString()}
+			class="flex w-fit items-center gap-1 rounded-2xl bg-[var(--accent-l1)] px-3 py-1 text-sm"
+		>
 			<div class="flex h-[24px] items-center">
 				<Icon name="comment" height="20" width="20" />
 			</div>

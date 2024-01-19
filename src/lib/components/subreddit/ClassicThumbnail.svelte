@@ -13,17 +13,17 @@
 			<img src={submission.thumbnail} alt="" />
 		</span>
 	{:else if submission.thumbnail !== ''}
-		<span class="thumbnail">
+		<span>
 			{#if submission.thumbnail === 'self'}
-				<span class="thumbnail-svg">
+				<span class="thumbnail">
 					<Icon height="24" width="24" name="selftext" />
 				</span>
 			{:else if submission.thumbnail === 'default'}
-				<span class="thumbnail-svg">
+				<span class="thumbnail">
 					<Icon height="24" width="24" name="linkVariant" />
 				</span>
 			{:else}
-				<p class="thumbnail-background">{submission.thumbnail}</p>
+				<p class="thumbnail">{submission.thumbnail}</p>
 			{/if}
 		</span>
 	{/if}
@@ -34,24 +34,13 @@
 		border-radius: 0.125rem;
 	}
 
-	.thumbnail-svg {
+	.thumbnail {
 		height: 70px;
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: rgb(53, 52, 56);
+		background-color: var(--accent-l1);
 		border-radius: 0.5rem;
-	}
-
-	.thumbnail-background {
-		height: 70px;
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: rgb(53, 52, 56);
-		border-radius: 0.5rem;
-		color: white;
 	}
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import SubTestCont from '$lib/components/layout/SubTestCont.svelte';
+	import SubmissionContainer from '$lib/components/layout/SubmissionContainer.svelte';
 	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
 	import { db } from '$lib/idb/idb.js';
 	import type { SubredditSort } from '$lib/reddit/reddit.js';
@@ -24,7 +24,7 @@
 		<p>Loading....</p>
 	{:then submissions}
 		<div>
-			<SubTestCont {submissions} subreddit={$page.params.subreddit} {sort} />
+			<SubmissionContainer {submissions} subreddit={$page.params.subreddit} {sort} />
 		</div>
 	{/await}
 {/key}

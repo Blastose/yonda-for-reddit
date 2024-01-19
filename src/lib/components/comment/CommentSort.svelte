@@ -90,7 +90,7 @@
 
 {#if $open}
 	<div
-		class="flex flex-col overflow-hidden rounded-md bg-neutral-700 text-sm"
+		class="flex flex-col overflow-hidden rounded-md bg-[var(--accent-l1)] text-sm"
 		use:melt={$menu}
 		transition:fly={{ duration: 150, y: -10 }}
 	>
@@ -100,8 +100,8 @@
 				data-sveltekit-noscroll
 				data-sveltekit-replacestate
 				use:melt={$item}
-				class="px-8 py-2 hover:bg-neutral-600
-        {isActive(sortOption.value) ? 'bg-neutral-600' : ''} "
+				class="px-8 py-2 hover:bg-[var(--accent-l1-hover)]
+        {isActive(sortOption.value) ? 'bg-[var(--accent-l1-hover)]' : ''} "
 				href={addSearchParamToUrl($page.url, 'sort', sortOption.value)}>{sortOption.display}</a
 			>
 		{/each}

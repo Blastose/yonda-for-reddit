@@ -63,7 +63,7 @@
 {#if currentSort === 'top' || currentSort === 'controversial'}
 	<button
 		type="button"
-		class="flex w-fit items-center gap-1 rounded-3xl px-4 py-1 text-sm hover:bg-neutral-700"
+		class="flex w-fit items-center gap-1 rounded-3xl px-4 py-1 text-sm hover:bg-[var(--accent-l1)]"
 		use:melt={$trigger}
 	>
 		<span>{display}</span>
@@ -72,7 +72,7 @@
 
 	{#if $open}
 		<div
-			class="flex flex-col overflow-hidden rounded-md bg-neutral-700 text-sm"
+			class="flex flex-col overflow-hidden rounded-md bg-[var(--accent-l1)] text-sm shadow-lg"
 			use:melt={$menu}
 			transition:fly={{ duration: 150, y: -10 }}
 		>
@@ -81,8 +81,8 @@
 				<a
 					use:melt={$item}
 					href={addSearchParamToUrl($page.url, 't', sortOption.value)}
-					class=" px-8 py-2 capitalize hover:bg-neutral-600
-        {currentTimeSort === sortOption.value ? 'bg-neutral-600' : ''} "
+					class=" px-8 py-2 capitalize hover:bg-[var(--accent-l1-hover)]
+        {currentTimeSort === sortOption.value ? 'bg-[var(--accent-l1-hover)]' : ''} "
 				>
 					{sortOption.display}
 				</a>
