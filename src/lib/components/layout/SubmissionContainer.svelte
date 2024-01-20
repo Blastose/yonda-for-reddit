@@ -7,7 +7,7 @@
 	import { page } from '$app/stores';
 	import { transformUrlForIDBKey } from '$lib/url/url';
 
-	export let subreddit: string;
+	export let subreddit: string | undefined;
 	export let submissions: SubmissionData[];
 	export let sort: SubredditSort;
 

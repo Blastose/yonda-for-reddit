@@ -6,7 +6,8 @@ export const match: ParamMatcher = (param) => {
 		param === 'rising' ||
 		param === 'controversial' ||
 		param === 'top' ||
-		param === 'hot'
+		param === 'hot' ||
+		param === 'best'
 	) {
 		return true;
 	}

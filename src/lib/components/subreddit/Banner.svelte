@@ -13,7 +13,7 @@
 		<div
 			class="{bannerUrl ? '' : 'bg-[#434b7c]'}
        h-[64px] w-full rounded-md bg-cover bg-center bg-no-repeat sm:h-[128px]"
-			style:background-image="url({bannerUrl})"
+			style:background-image={bannerUrl ? `url(${bannerUrl})` : undefined}
 		/>
 		<div class="relative bottom-[30px] mb-[-30px] flex gap-2 px-2">
 			{#if icon}
@@ -29,11 +29,15 @@
 					r/
 				</div>
 			{/if}
-			<a
-				href="/{about?.display_name_prefixed.toLowerCase() ?? fallbackSubreddit}"
-				class="flex self-end pb-2 text-3xl font-bold"
-				>{about?.display_name_prefixed ?? fallbackSubreddit}</a
-			>
+			{#if about?.display_name_prefixed || fallbackSubreddit}
+				<a
+					href="/{about?.display_name_prefixed.toLowerCase() ?? fallbackSubreddit}"
+					class="flex self-end pb-2 text-3xl font-bold"
+					>{about?.display_name_prefixed ?? fallbackSubreddit}</a
+				>
+			{:else}
+				<p class="flex self-end pb-2 text-3xl font-bold">Home</p>
+			{/if}
 		</div>
 	</section>
 {/key}

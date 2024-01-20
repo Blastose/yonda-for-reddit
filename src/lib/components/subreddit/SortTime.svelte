@@ -56,7 +56,7 @@
 	];
 
 	$: currentTimeSort = ($page.url.searchParams.get('t') ?? 'day') as keyof typeof timeMap;
-	$: currentSort = $page.params.sort ?? 'hot';
+	$: currentSort = $page.params.sort ?? $page.params.sort ?? 'hot';
 	$: display = `${timeMap[currentTimeSort]}`;
 </script>
 
