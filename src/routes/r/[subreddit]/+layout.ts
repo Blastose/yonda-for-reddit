@@ -2,7 +2,8 @@ import type { LayoutLoad } from './$types';
 import { jsrwrap } from '$lib/reddit/reddit';
 import { db } from '$lib/idb/idb';
 
-export const load: LayoutLoad = async ({ params }) => {
+export const load: LayoutLoad = async ({ params, parent }) => {
+	await parent();
 	const subreddit = params.subreddit;
 	console.log(subreddit);
 	const jsrwrapSubreddit = jsrwrap.getSubreddit(subreddit);

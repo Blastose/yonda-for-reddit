@@ -8,7 +8,7 @@ export const load: LayoutLoad = async ({ url }) => {
 	const fullUrl = getFullUrl(url);
 
 	if (fullUrl.match(/^.*[A-Z].*$/)) {
-		// redirect(301, fullUrl.toLowerCase());
+		redirect(301, fullUrl.toLowerCase());
 	}
 
 	const loggedIn = Boolean(await db.get('redditOauth', 'reddit'));
