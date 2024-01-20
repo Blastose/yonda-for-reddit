@@ -137,7 +137,7 @@
 		>
 	{:else}
 		<button
-			class="load-more-comments text-left text-sm"
+			class="load-more-comments text-left text-sm font-semibold"
 			on:click={getMoreChildren}
 			disabled={loadingMoreComments}
 		>
