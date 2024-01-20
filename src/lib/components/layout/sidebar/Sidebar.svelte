@@ -1,10 +1,12 @@
 <script lang="ts">
 	import Icon from '$lib/components/icon/Icon.svelte';
+	import type { SubredditData } from 'jsrwrap/types';
 	import Hr from '../Hr.svelte';
 	import SidebarSection from './SidebarSection.svelte';
 	import SidebarSub from './SidebarSub.svelte';
 
 	export let type: 'sidebar' | 'drawer';
+	export let subscribedSubs: Promise<SubredditData[]> | undefined;
 </script>
 
 <div
@@ -30,7 +32,7 @@
 
 	<Hr />
 	<SidebarSection heading="Pinned">
-		{#each { length: 47 } as _}
+		{#each { length: 1 } as _}
 			<SidebarSub
 				url={'/r/arknights'}
 				display="r/Arknights"
@@ -38,6 +40,22 @@
 			/>
 		{/each}
 	</SidebarSection>
+
+	{#if subscribedSubs}
+		<SidebarSection heading="Subscribed">
+			{#await subscribedSubs}
+				<p>Loading...</p>
+			{:then subs}
+				{#each subs as sub}
+					<SidebarSub
+						url="/{sub.display_name_prefixed.toLowerCase()}"
+						display={sub.display_name_prefixed}
+						icon={sub.icon_img}
+					/>
+				{/each}
+			{/await}
+		</SidebarSection>
+	{/if}
 </div>
 
 <style>

@@ -3,8 +3,7 @@ import { jsrwrap, type SubredditSort, type Time } from '$lib/reddit/reddit';
 import { db } from '$lib/idb/idb';
 import { transformUrlForIDBKey } from '$lib/url/url';
 
-export const load: LayoutLoad = async ({ params, url, parent }) => {
-	await parent();
+export const load: LayoutLoad = async ({ params, url }) => {
 	const subreddit = params.subreddit;
 	const sort = (params.sort ?? 'hot') as SubredditSort;
 	const t = (url.searchParams.get('t') ?? 'day') as Time;

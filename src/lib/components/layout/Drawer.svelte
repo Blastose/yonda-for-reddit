@@ -5,7 +5,9 @@
 	import { writable } from 'svelte/store';
 	import { quintOut } from 'svelte/easing';
 	import Sidebar from './sidebar/Sidebar.svelte';
+	import type { SubredditData } from 'jsrwrap/types';
 
+	export let subscribedSubs: Promise<SubredditData[]> | undefined;
 	const customOpen = writable(false);
 
 	const {
@@ -44,7 +46,7 @@
 
 			<p class="hidden" use:melt={$title}>Sidebar</p>
 			<div class="pt-8">
-				<Sidebar type="drawer" />
+				<Sidebar type="drawer" {subscribedSubs} />
 			</div>
 		</div>
 	{/if}

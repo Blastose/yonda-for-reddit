@@ -6,8 +6,7 @@ import { Jsrwrap } from 'jsrwrap';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
 import { redirect } from '@sveltejs/kit';
 
-export const load: PageLoad = async ({ url, parent }) => {
-	await parent();
+export const load: PageLoad = async ({ url }) => {
 	const state = url.searchParams.get('state');
 	const code = url.searchParams.get('code');
 	if (state && code) {

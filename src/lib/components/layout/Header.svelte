@@ -3,14 +3,16 @@
 	import Drawer from './Drawer.svelte';
 	import YondaIcon from './YondaIcon.svelte';
 	import { createAuthUrl, logout } from '$lib/reddit/reddit';
+	import type { SubredditData } from 'jsrwrap/types';
 
 	export let loggedIn: boolean;
+	export let subscribedSubs: Promise<SubredditData[]> | undefined;
 </script>
 
 <header class="header">
 	<div class="flex gap-2">
 		<div class="block lg:hidden">
-			<Drawer />
+			<Drawer {subscribedSubs} />
 		</div>
 		<div class="flex items-center lg:hidden">
 			<a class="block text-2xl font-bold" aria-label="Yonda homepage" href="/"><YondaIcon /></a>

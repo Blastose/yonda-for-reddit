@@ -14,7 +14,7 @@
 				class="w-full rounded-2xl bg-[var(--accent-l1)] px-2 py-1 text-center"
 				target="_blank"
 				rel="noreferrer"
-				href="/{about.display_name_prefixed}/wiki/index">Wiki</a
+				href="/{about.display_name_prefixed.toLowerCase()}/wiki/index">Wiki</a
 			>
 		{:else}
 			{#each widget.data as menuItem}

@@ -6,8 +6,7 @@ import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
 import { get } from 'svelte/store';
 import type { Sort } from 'jsrwrap/types';
 
-export const load: LayoutLoad = async ({ params, url, parent }) => {
-	await parent();
+export const load: LayoutLoad = async ({ params, url }) => {
 	const submissionId = params.submissionId;
 	const sort = (url.searchParams.get('sort') ?? undefined) as Sort | undefined;
 
