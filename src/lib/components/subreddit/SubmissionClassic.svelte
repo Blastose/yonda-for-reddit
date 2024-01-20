@@ -2,7 +2,7 @@
 	import type { SubmissionData } from 'jsrwrap/types';
 	import ClickableDivWrapper from '../layout/ClickableDivWrapper.svelte';
 	import { setSubmissionStore, submissionStoreClick } from '$lib/stores/submissionStore';
-	import { formatSubmissionPermalink } from '$lib/url/url';
+	import { formatSubmissionPermalink, showSubreddit } from '$lib/url/url';
 	import SubmissionActions from './SubmissionActions.svelte';
 	import Flair from './Flair.svelte';
 	import Tag from './Tag.svelte';
@@ -11,6 +11,7 @@
 	import Embed from './embed/Embed.svelte';
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import { markdownToHtml } from '$lib/reddit/markdownToHtml';
+	import { page } from '$app/stores';
 
 	export let submission: SubmissionData;
 	$: href = formatSubmissionPermalink(submission.permalink);
@@ -37,6 +38,8 @@
 			}
 		};
 	}
+
+	$: showSubreddit2 = showSubreddit($page.url.pathname, $page.params.subreddit);
 </script>
 
 <ClickableDivWrapper
@@ -70,7 +73,7 @@
 						>
 					</a>
 				</div>
-				<Submitter submitter={submission} type="submission" />
+				<Submitter submitter={submission} type="submission" showSubreddit={showSubreddit2} />
 
 				<SubmissionActions {submission} {numNewComments} type="subreddit" />
 			</div>

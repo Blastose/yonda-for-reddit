@@ -49,3 +49,7 @@ export function buildShowParentCommentsLink(id: string, pathname: string) {
 export function formatSubmissionPermalink(permalink: string) {
 	return removeTrailingBackslashFromUrl(permalink.toLowerCase());
 }
+
+export function showSubreddit(url: string, currentUrlSubreddit: string | undefined) {
+	return currentUrlSubreddit === 'popular' || currentUrlSubreddit === 'all' || url === '/';
+}

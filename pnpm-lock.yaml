@@ -15,8 +15,8 @@ dependencies:
     specifier: ^8.0.0
     version: 8.0.0
   jsrwrap:
-    specifier: 0.1.16-beta.0
-    version: 0.1.16-beta.0
+    specifier: 0.1.16-beta.3
+    version: 0.1.16-beta.3
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
@@ -2702,8 +2702,8 @@ packages:
       graceful-fs: 4.2.11
     dev: false
 
-  /jsrwrap@0.1.16-beta.0:
-    resolution: {integrity: sha512-6bO+mtOYC9A2YWlZTu/Yf/fVdCAy3ujObiQZPErddCTwiZhg1bLvWU74/pJ0PDy+cUnd0pwYjp2gGXFJb+krqg==}
+  /jsrwrap@0.1.16-beta.3:
+    resolution: {integrity: sha512-Gb5E8EhWfJvGDlhfT8FypxVPXyrJZAOGdceRQMicqNMkJlR2tO3KG6+5kWFQcVG46qZVhsYufqWcEzeX5cvTJw==}
     engines: {node: '>=14.16'}
     dev: false
 

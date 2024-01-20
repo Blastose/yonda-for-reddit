@@ -34,7 +34,7 @@
 
 		<Embed {submission} />
 		{#if submission.selftext}
-			<div class="selftext max-h-24 overflow-hidden">
+			<div class="selftext max-h-24 overflow-hidden text-sm">
 				<RedditHtml rawHTML={markdownToHtml(submission.selftext)} />
 			</div>
 		{/if}

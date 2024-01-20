@@ -25,7 +25,7 @@
 			<p>Loading....</p>
 		{:then submissions}
 			<div>
-				<SubmissionContainer {submissions} subreddit={undefined} sort="best" />
+				<SubmissionContainer {submissions} subreddit={$page.params.subreddit} sort={data.sort} />
 			</div>
 		{/await}
 	{/key}

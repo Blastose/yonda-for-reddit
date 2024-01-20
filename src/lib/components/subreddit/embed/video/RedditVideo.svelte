@@ -27,8 +27,8 @@
 
 	$: console.log(submission.media);
 	$: poster =
-		submission.preview.images.at(0)?.resolutions.at(3)?.url ??
-		submission.preview.images.at(0)?.resolutions.at(0)?.url;
+		submission.preview?.images.at(0)?.resolutions.at(3)?.url ??
+		submission.preview?.images.at(0)?.resolutions.at(0)?.url;
 	$: redditVideo = submission.media?.reddit_video;
 	$: baseUrl = getBaseUrl(submission.media?.reddit_video?.fallback_url ?? '');
 	$: source = submission.media?.reddit_video?.dash_url ?? '';

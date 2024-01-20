@@ -88,9 +88,9 @@ html {
 		max-width: 1024px;
 	}
 }
-@media (min-width: 1280px) {
+@media (min-width: 1180px) {
 	.container-doku {
-		max-width: 1280px;
+		max-width: 1180px;
 	}
 }
 

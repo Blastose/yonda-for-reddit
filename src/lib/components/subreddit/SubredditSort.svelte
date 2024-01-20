@@ -13,9 +13,18 @@
 		forceVisible: true
 	});
 
-	$: currentSubreddit = $page.params.subreddit;
-	$: currentSort = $page.params.sort ?? 'hot';
+	$: currentSubreddit = $page.params.subreddit || undefined;
+	$: currentSort = currentSubreddit ? $page.params.sort ?? 'hot' : $page.params.sort ?? 'best';
 	const sortOptions = ['hot', 'new', 'top', 'rising', 'controversial'];
+	const sortOptionsWithBest = ['best', 'hot', 'new', 'top', 'rising', 'controversial'];
+
+	$: usedSortOptions = currentSubreddit === undefined ? sortOptionsWithBest : sortOptions;
+	function buildSortUrl(subreddit: string | undefined, sort: string) {
+		if (subreddit === undefined) {
+			return `/${sort}`;
+		}
+		return `/r/${subreddit}/${sort}`;
+	}
 </script>
 
 <button
@@ -35,10 +44,10 @@
 		transition:fly={{ duration: 150, y: -10 }}
 	>
 		<span class="px-4 py-2 font-bold">Sort by</span>
-		{#each sortOptions as sortOption}
+		{#each usedSortOptions as sortOption}
 			<a
 				use:melt={$item}
-				href="/r/{currentSubreddit}/{sortOption}"
+				href={buildSortUrl(currentSubreddit, sortOption)}
 				class=" px-8 py-2 capitalize hover:bg-[var(--accent-l1-hover)]
         {currentSort === sortOption ? 'bg-[var(--accent-l1-hover)]' : ''} "
 			>
