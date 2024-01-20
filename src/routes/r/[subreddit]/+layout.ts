@@ -4,6 +4,7 @@ import { db } from '$lib/idb/idb';
 
 export const load: LayoutLoad = async ({ params }) => {
 	const subreddit = params.subreddit;
+	console.log(subreddit);
 	const jsrwrapSubreddit = jsrwrap.getSubreddit(subreddit);
 	if (subreddit === 'all' || subreddit === 'popular') {
 		return {

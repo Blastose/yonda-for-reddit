@@ -2,6 +2,9 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Drawer from './Drawer.svelte';
 	import YondaIcon from './YondaIcon.svelte';
+	import { createAuthUrl, logout } from '$lib/reddit/reddit';
+
+	export let loggedIn: boolean;
 </script>
 
 <header class="header">
@@ -33,7 +36,23 @@
 	</div>
 
 	<div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-600">
-		<Icon name="profile"></Icon>
+		{#if !loggedIn}
+			<button
+				on:click={() => {
+					window.location.href = createAuthUrl();
+				}}
+			>
+				<Icon name="profile"></Icon>
+			</button>
+		{:else}
+			<button
+				on:click={() => {
+					logout();
+				}}
+			>
+				L
+			</button>
+		{/if}
 	</div>
 </header>
 

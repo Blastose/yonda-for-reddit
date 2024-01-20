@@ -8,6 +8,7 @@
 	import Layout from '$lib/components/layout/Layout.svelte';
 	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
 
+	export let data;
 	let nprogressTimeoutId: ReturnType<typeof setTimeout>;
 
 	NProgress.configure({
@@ -74,7 +75,7 @@
 
 <svelte:document on:keydown={handleKeydown} />
 
-<Layout>
+<Layout loggedIn={data.loggedIn}>
 	<slot />
 </Layout>
 

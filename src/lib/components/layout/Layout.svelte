@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Header from './Header.svelte';
 	import Sidebar from './sidebar/Sidebar.svelte';
+	export let loggedIn: boolean;
 </script>
 
 <div class="flex flex-col">
-	<Header />
+	<Header {loggedIn} />
 
 	<div class="mt-14 flex gap-4">
 		<aside class="sidebar-wrapper sidebar-animation sticky top-14 border-r border-[#3a3a3a]">

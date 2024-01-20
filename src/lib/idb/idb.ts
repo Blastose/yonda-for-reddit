@@ -3,7 +3,7 @@ import type { SubmissionFull } from '$lib/reddit/reddit';
 import { openDB, type DBSchema } from 'idb';
 import type { SubmissionData, SubredditData } from 'jsrwrap/types';
 
-interface MyDB extends DBSchema {
+export interface MyDB extends DBSchema {
 	sub: {
 		value: {
 			name: string;
@@ -35,6 +35,13 @@ interface MyDB extends DBSchema {
 		};
 		key: string;
 	};
+	redditOauth: {
+		value: {
+			accessToken: string;
+			refreshToken: string;
+		};
+		key: 'reddit';
+	};
 }
 
 // For some reason, browser is false, which means idb is undefined when it first loads or something
@@ -49,6 +56,15 @@ export const db = (browser
 				db.createObjectStore('submissionCommentCount');
 				db.createObjectStore('submissions');
 				db.createObjectStore('subredditAbout');
+				db.createObjectStore('redditOauth');
 			}
 		})
 	: null) as unknown as Awaited<ReturnType<typeof openDB<MyDB>>>;
+
+export async function clearIdb() {
+	const databases = await window.indexedDB.databases();
+	for (const d of databases) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await db.clear(d as unknown as any);
+	}
+}
