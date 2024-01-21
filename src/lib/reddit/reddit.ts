@@ -1,7 +1,7 @@
 import { dev } from '$app/environment';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
-import { clearIdb, db } from '$lib/idb/idb';
-import { Jsrwrap, Submission } from 'jsrwrap';
+import { db } from '$lib/idb/idb';
+import { Jsrwrap, Submission, Subreddit } from 'jsrwrap';
 import type { SubredditData } from 'jsrwrap/types';
 
 export const redirectUri = dev
@@ -82,7 +82,7 @@ export { jsrwrap, createAuthUrl, logout, login };
 export type SubredditSort = 'top' | 'new' | 'controversial' | 'hot' | 'best' | 'rising';
 export type Time = 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
 export type SubmissionFull = Awaited<ReturnType<Submission['fetch']>>;
-
+export type Moderators = Awaited<ReturnType<Subreddit['getModerators']>>;
 export type PinnedSubreddit = Pick<SubredditData, 'display_name_prefixed'> &
 	Partial<Pick<SubredditData, 'community_icon'>> & {
 		url: string;

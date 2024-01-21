@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import type { SubmissionFull } from '$lib/reddit/reddit';
+import type { Moderators, SubmissionFull } from '$lib/reddit/reddit';
 import { openDB, type DBSchema } from 'idb';
 import type { SubmissionData, SubredditData, Widget } from 'jsrwrap/types';
 
@@ -42,6 +42,13 @@ export interface MyDB extends DBSchema {
 		};
 		key: string;
 	};
+	subredditModerators: {
+		value: {
+			cached: number;
+			value: Moderators | null;
+		};
+		key: string;
+	};
 	redditOauth: {
 		value: {
 			accessToken: string;
@@ -65,6 +72,7 @@ export const db = (browser
 				db.createObjectStore('subredditAbout');
 				db.createObjectStore('redditOauth');
 				db.createObjectStore('subredditSidebar');
+				db.createObjectStore('subredditModerators');
 			}
 		})
 	: null) as unknown as Awaited<ReturnType<typeof openDB<MyDB>>>;

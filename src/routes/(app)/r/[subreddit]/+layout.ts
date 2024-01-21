@@ -9,7 +9,8 @@ export const load: LayoutLoad = async ({ params }) => {
 	if (subreddit === 'all' || subreddit === 'popular') {
 		return {
 			about: null,
-			sidebarPromise: null
+			sidebarPromise: null,
+			moderators: null
 		};
 	}
 
@@ -28,12 +29,22 @@ export const load: LayoutLoad = async ({ params }) => {
 			subreddit.toLowerCase()
 		);
 	}
+	let moderators = null;
+	const moderatorsMaybe = await db.get('subredditModerators', subreddit.toLowerCase());
+	if (moderatorsMaybe && now < moderatorsMaybe.cached + 360000) {
+		moderators = moderatorsMaybe.value;
+	} else {
+		const loggedIn = Boolean(await db.get('redditOauth', 'reddit'));
+		if (loggedIn) {
+			moderators = jsrwrapSubreddit.getModerators();
+		}
+	}
 
-	if (sidebarMaybe && now < sidebarMaybe.cached + 3600) {
+	if (sidebarMaybe && now < sidebarMaybe.cached + 360000) {
 		sidebarPromise = sidebarMaybe.value;
 	} else {
 		sidebarPromise = jsrwrapSubreddit.getSidebar();
 	}
 
-	return { about, sidebarPromise };
+	return { about, sidebarPromise, moderators };
 };

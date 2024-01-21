@@ -12,12 +12,24 @@
 		(async () => {
 			const sidebar = await data.sidebarPromise;
 			db.put('subredditSidebar', { cached: new Date().getTime(), value: sidebar }, subreddit);
+			const moderators = await data.moderators;
+			if (moderators) {
+				db.put(
+					'subredditModerators',
+					{ cached: new Date().getTime(), value: moderators },
+					subreddit
+				);
+			}
 		})();
 	}
 </script>
 
 <svelte:head><title>{data.about?.title ?? subreddit}</title></svelte:head>
 
-<Subreddit about={data.about} sidebarPromise={data.sidebarPromise}>
+<Subreddit
+	about={data.about}
+	sidebarPromise={data.sidebarPromise}
+	moderatorsPromise={data.moderators}
+>
 	<slot />
 </Subreddit>

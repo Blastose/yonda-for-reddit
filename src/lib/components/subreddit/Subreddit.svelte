@@ -4,11 +4,13 @@
 	import SortTime from '$lib/components/subreddit/SortTime.svelte';
 	import SubredditSort from '$lib/components/subreddit/SubredditSort.svelte';
 	import SubredditSidebar from '$lib/components/subreddit/sidebar/SubredditSidebar.svelte';
+	import type { Moderators } from '$lib/reddit/reddit';
 	import type { MaybePromise } from '@sveltejs/kit';
 	import type { SubredditData, Widget } from 'jsrwrap/types';
 
 	export let about: SubredditData | null;
 	export let sidebarPromise: MaybePromise<Widget[] | null> | null;
+	export let moderatorsPromise: MaybePromise<Moderators> | null;
 
 	// We show the hot, new, rising, etc. buttons if the page isn't a comment thread
 	$: showSubredditOptions =
@@ -42,7 +44,7 @@
 				<div
 					class="subreddit-sidebar thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
 				>
-					<SubredditSidebar {about} {widgets} />
+					<SubredditSidebar {about} {widgets} {moderatorsPromise} />
 				</div>
 			{/await}
 		{:else}

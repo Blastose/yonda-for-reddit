@@ -12,9 +12,12 @@
 	import WidgetCalendar from './WidgetCalendar.svelte';
 	import WidgetCustom from './WidgetCustom.svelte';
 	import Hr from '$lib/components/layout/Hr.svelte';
+	import type { MaybePromise } from '@sveltejs/kit';
+	import type { Moderators } from '$lib/reddit/reddit';
 
 	export let widgets: Widget[] | null;
 	export let about: SubredditData;
+	export let moderatorsPromise: MaybePromise<Moderators> | null;
 </script>
 
 {#if widgets}
@@ -32,8 +35,6 @@
 				<WidgetTextarea {widget} />
 			{:else if widget.kind === 'image'}
 				<WidgetImage {widget} />
-			{:else if widget.kind === 'moderators'}
-				<WidgetModerators {widget} />
 			{:else if widget.kind === 'community-list'}
 				<WidgetCommunityList {widget} />
 			{:else if widget.kind === 'button'}
@@ -47,5 +48,11 @@
 				<Hr />
 			{/if}
 		{/each}
+		{#if moderatorsPromise}
+			{#await moderatorsPromise then moderators}
+				<Hr />
+				<WidgetModerators {moderators} />
+			{/await}
+		{/if}
 	</aside>
 {/if}
