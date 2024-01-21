@@ -1,10 +1,19 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Subreddit from '$lib/components/subreddit/Subreddit.svelte';
+	import { db } from '$lib/idb/idb.js';
 
 	export let data;
 
 	$: subreddit = $page.params.subreddit;
+
+	$: {
+		subreddit;
+		(async () => {
+			const sidebar = await data.sidebarPromise;
+			db.put('subredditSidebar', { cached: new Date().getTime(), value: sidebar }, subreddit);
+		})();
+	}
 </script>
 
 <svelte:head><title>{data.about?.title ?? subreddit}</title></svelte:head>

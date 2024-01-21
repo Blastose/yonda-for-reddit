@@ -13,37 +13,39 @@
 	import WidgetCustom from './WidgetCustom.svelte';
 	import Hr from '$lib/components/layout/Hr.svelte';
 
-	export let widgets: Widget[];
+	export let widgets: Widget[] | null;
 	export let about: SubredditData;
 </script>
 
-<aside class="inherit-text-size flex flex-col gap-2 rounded-md bg-[var(--accent-l2)] p-4 text-sm">
-	{#each widgets as widget, index}
-		{#if widget.kind === 'id-card'}
-			<WidgetIdCard {widget} {about} />
-		{:else if widget.kind === 'menu'}
-			<WidgetMenu {widget} {about} />
-		{:else if widget.kind === 'post-flair'}
-			<WidgetPostFlair {widget} />
-		{:else if widget.kind === 'subreddit-rules'}
-			<WidgetRules {widget} />
-		{:else if widget.kind === 'textarea'}
-			<WidgetTextarea {widget} />
-		{:else if widget.kind === 'image'}
-			<WidgetImage {widget} />
-		{:else if widget.kind === 'moderators'}
-			<WidgetModerators {widget} />
-		{:else if widget.kind === 'community-list'}
-			<WidgetCommunityList {widget} />
-		{:else if widget.kind === 'button'}
-			<WidgetButton {widget} />
-		{:else if widget.kind === 'calendar'}
-			<WidgetCalendar {widget} />
-		{:else if widget.kind === 'custom'}
-			<WidgetCustom {widget} />
-		{/if}
-		{#if index !== widgets.length - 1}
-			<Hr />
-		{/if}
-	{/each}
-</aside>
+{#if widgets}
+	<aside class="inherit-text-size flex flex-col gap-2 rounded-md bg-[var(--accent-l2)] p-4 text-sm">
+		{#each widgets as widget, index}
+			{#if widget.kind === 'id-card'}
+				<WidgetIdCard {widget} {about} />
+			{:else if widget.kind === 'menu'}
+				<WidgetMenu {widget} {about} />
+			{:else if widget.kind === 'post-flair'}
+				<WidgetPostFlair {widget} />
+			{:else if widget.kind === 'subreddit-rules'}
+				<WidgetRules {widget} />
+			{:else if widget.kind === 'textarea'}
+				<WidgetTextarea {widget} />
+			{:else if widget.kind === 'image'}
+				<WidgetImage {widget} />
+			{:else if widget.kind === 'moderators'}
+				<WidgetModerators {widget} />
+			{:else if widget.kind === 'community-list'}
+				<WidgetCommunityList {widget} />
+			{:else if widget.kind === 'button'}
+				<WidgetButton {widget} />
+			{:else if widget.kind === 'calendar'}
+				<WidgetCalendar {widget} />
+			{:else if widget.kind === 'custom'}
+				<WidgetCustom {widget} />
+			{/if}
+			{#if index !== widgets.length - 1}
+				<Hr />
+			{/if}
+		{/each}
+	</aside>
+{/if}

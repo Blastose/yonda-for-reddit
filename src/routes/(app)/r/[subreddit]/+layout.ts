@@ -14,13 +14,26 @@ export const load: LayoutLoad = async ({ params }) => {
 	}
 
 	const now = new Date().getTime();
-	const sidebarPromise = jsrwrapSubreddit.getSidebar();
+	let about;
 	const aboutMaybe = await db.get('subredditAbout', subreddit.toLowerCase());
+	let sidebarPromise;
+	const sidebarMaybe = await db.get('subredditSidebar', subreddit.toLowerCase());
 	if (aboutMaybe && now < aboutMaybe.cached + 86400000) {
-		return { about: aboutMaybe.value, sidebarPromise };
+		about = aboutMaybe.value;
+	} else {
+		about = await jsrwrapSubreddit.getAbout();
+		db.put(
+			'subredditAbout',
+			{ value: about, cached: new Date().getTime() },
+			subreddit.toLowerCase()
+		);
 	}
-	const about = await jsrwrapSubreddit.getAbout();
-	db.put('subredditAbout', { value: about, cached: new Date().getTime() }, subreddit.toLowerCase());
+
+	if (sidebarMaybe && now < sidebarMaybe.cached + 3600) {
+		sidebarPromise = sidebarMaybe.value;
+	} else {
+		sidebarPromise = jsrwrapSubreddit.getSidebar();
+	}
 
 	return { about, sidebarPromise };
 };

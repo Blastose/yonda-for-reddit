@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import type { SubmissionFull } from '$lib/reddit/reddit';
 import { openDB, type DBSchema } from 'idb';
-import type { SubmissionData, SubredditData } from 'jsrwrap/types';
+import type { SubmissionData, SubredditData, Widget } from 'jsrwrap/types';
 
 export interface MyDB extends DBSchema {
 	sub: {
@@ -35,6 +35,13 @@ export interface MyDB extends DBSchema {
 		};
 		key: string;
 	};
+	subredditSidebar: {
+		value: {
+			cached: number;
+			value: Widget[] | null;
+		};
+		key: string;
+	};
 	redditOauth: {
 		value: {
 			accessToken: string;
@@ -57,6 +64,7 @@ export const db = (browser
 				db.createObjectStore('submissions');
 				db.createObjectStore('subredditAbout');
 				db.createObjectStore('redditOauth');
+				db.createObjectStore('subredditSidebar');
 			}
 		})
 	: null) as unknown as Awaited<ReturnType<typeof openDB<MyDB>>>;
