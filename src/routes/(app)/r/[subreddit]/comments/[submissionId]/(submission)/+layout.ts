@@ -13,7 +13,7 @@ export const load: LayoutLoad = async ({ params, url }) => {
 	console.log(get(navigationTypeStore));
 	// TODO we use url here, which will rerun in the commentId for single comment threads
 	// fix somehow?
-	const maybeSubmission = await db.get('subredditv2', transformUrlForIDBKey(url));
+	const maybeSubmission = await db.get('submission', transformUrlForIDBKey(url));
 	if (maybeSubmission) {
 		return {
 			submission: maybeSubmission,

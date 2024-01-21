@@ -4,19 +4,7 @@ import { openDB, type DBSchema } from 'idb';
 import type { SubmissionData, SubredditData, Widget } from 'jsrwrap/types';
 
 export interface MyDB extends DBSchema {
-	sub: {
-		value: {
-			name: string;
-			price: number;
-			productCode: string;
-		};
-		key: number;
-	};
-	subreddit: {
-		value: SubmissionFull;
-		key: number;
-	};
-	subredditv2: {
+	submission: {
 		value: SubmissionFull;
 		key: string;
 	};
@@ -64,9 +52,7 @@ export interface MyDB extends DBSchema {
 export const db = (browser
 	? await openDB<MyDB>('yonda', 1, {
 			upgrade(db) {
-				db.createObjectStore('sub', { autoIncrement: true });
-				db.createObjectStore('subreddit', { autoIncrement: true });
-				db.createObjectStore('subredditv2');
+				db.createObjectStore('submission');
 				db.createObjectStore('submissionCommentCount');
 				db.createObjectStore('submissions');
 				db.createObjectStore('subredditAbout');
