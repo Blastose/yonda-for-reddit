@@ -19,7 +19,7 @@
 
 <svelte:head><title>Yonda for Reddit</title></svelte:head>
 
-<Subreddit about={null} sidebarPromise={null}>
+<Subreddit about={null} sidebarPromise={null} moderatorsPromise={null}>
 	{#key getFullUrl($page.url)}
 		{#await data.submissions}
 			<p>Loading....</p>

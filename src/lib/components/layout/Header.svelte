@@ -7,6 +7,7 @@
 
 	export let loggedIn: boolean;
 	export let subscribedSubs: Promise<SubredditData[]> | undefined;
+	export let me: { username: string } | undefined;
 </script>
 
 <header class="header">
@@ -38,7 +39,7 @@
 	</div>
 
 	<div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-600">
-		{#if !loggedIn}
+		{#if !loggedIn && !me}
 			<button
 				on:click={() => {
 					window.location.href = createAuthUrl();
@@ -52,7 +53,7 @@
 					logout();
 				}}
 			>
-				L
+				{me?.name}
 			</button>
 		{/if}
 	</div>

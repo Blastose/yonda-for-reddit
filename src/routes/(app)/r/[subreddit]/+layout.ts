@@ -34,7 +34,7 @@ export const load: LayoutLoad = async ({ params }) => {
 	if (moderatorsMaybe && now < moderatorsMaybe.cached + 360000) {
 		moderators = moderatorsMaybe.value;
 	} else {
-		const loggedIn = Boolean(await db.get('redditOauth', 'reddit'));
+		const loggedIn = Boolean(await db.get('redditOauthMe', 'reddit'));
 		if (loggedIn) {
 			moderators = jsrwrapSubreddit.getModerators();
 		}

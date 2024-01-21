@@ -17,7 +17,7 @@
 
 	const persistSubmission = () => {
 		setSubmissionStore(transformUrlForIDBKey($page.url), submission);
-		db.put('subredditv2', submission, transformUrlForIDBKey($page.url));
+		db.put('submission', submission, transformUrlForIDBKey($page.url));
 	};
 </script>
 

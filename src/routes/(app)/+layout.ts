@@ -3,11 +3,12 @@ import { jsrwrap } from '$lib/reddit/reddit';
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async () => {
-	const loggedIn = Boolean(await db.get('redditOauth', 'reddit'));
+	const me = await db.get('redditOauthMe', 'reddit');
+	const loggedIn = Boolean(me);
 	let subscribedSubs;
 	if (loggedIn) {
 		subscribedSubs = jsrwrap.getMe().getSubscribedSubreddits();
 	}
 
-	return { loggedIn, subscribedSubs };
+	return { loggedIn, subscribedSubs, me };
 };

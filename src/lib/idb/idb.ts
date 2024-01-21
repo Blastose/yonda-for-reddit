@@ -41,6 +41,13 @@ export interface MyDB extends DBSchema {
 		value: {
 			accessToken: string;
 			refreshToken: string;
+			expires: number | undefined;
+		};
+		key: 'reddit';
+	};
+	redditOauthMe: {
+		value: {
+			username: string;
 		};
 		key: 'reddit';
 	};
@@ -57,6 +64,7 @@ export const db = (browser
 				db.createObjectStore('submissions');
 				db.createObjectStore('subredditAbout');
 				db.createObjectStore('redditOauth');
+				db.createObjectStore('redditOauthMe');
 				db.createObjectStore('subredditSidebar');
 				db.createObjectStore('subredditModerators');
 			}

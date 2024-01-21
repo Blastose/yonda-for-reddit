@@ -1,4 +1,4 @@
-import { dev } from '$app/environment';
+import { browser, dev } from '$app/environment';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
 import { db } from '$lib/idb/idb';
 import { Jsrwrap, Submission, Subreddit } from 'jsrwrap';
@@ -12,13 +12,15 @@ async function createJsrwrap() {
 	const oauth = await db?.get('redditOauth', 'reddit');
 	let jsrwrap;
 	if (oauth) {
-		jsrwrap = await Jsrwrap.fromRefreshToken({
+		jsrwrap = await Jsrwrap.fromAccessAndRefreshToken({
 			clientId: PUBLIC_CLIENT_ID,
 			clientSecret: '',
 			grantType: 'https://oauth.reddit.com/grants/installed_client',
 			userAgent: 'web:yonda-for-reddit:0.1.0 (by /u/blastose)',
 			deviceId: '63V92W6D11SI1HPZMYPS91ZV',
-			refreshToken: oauth.refreshToken
+			refreshToken: oauth.refreshToken,
+			accessToken: oauth.accessToken,
+			expiresIn: oauth.expires ?? new Date().getTime() / 1000 + 3600
 		});
 	} else {
 		jsrwrap = await Jsrwrap.fromApplicationOnlyAuth({
@@ -28,6 +30,17 @@ async function createJsrwrap() {
 			userAgent: 'web:yonda-for-reddit:0.1.0 (by /u/blastose)',
 			deviceId: '63V92W6D11SI1HPZMYPS91ZV'
 		});
+		if (browser) {
+			await db.put(
+				'redditOauth',
+				{
+					accessToken: jsrwrap.accessToken,
+					refreshToken: jsrwrap.refreshToken!,
+					expires: jsrwrap.expires
+				},
+				'reddit'
+			);
+		}
 	}
 
 	return jsrwrap;
@@ -44,9 +57,12 @@ function createAuthUrl() {
 	});
 }
 
+let checkIntervalId: number | undefined;
 async function logout() {
 	// await clearIdb();
+	clearInterval(checkIntervalId);
 	await db.clear('redditOauth');
+	await db.clear('redditOauthMe');
 	window.location.href = '/';
 }
 
@@ -63,11 +79,25 @@ async function login(code: string) {
 		jsrwrap.refreshToken = jsrwarpLoggedIn.refreshToken;
 		jsrwrap.expires = jsrwarpLoggedIn.expires;
 		// await clearIdb();
+		const me = await jsrwrap.getMe().getMe();
+		await db.put('redditOauthMe', me, 'reddit');
+		checkIntervalId = setInterval(async () => {
+			await db.put(
+				'redditOauth',
+				{
+					accessToken: jsrwrap.accessToken,
+					refreshToken: jsrwrap.refreshToken!,
+					expires: jsrwrap.expires
+				},
+				'reddit'
+			);
+		}, 600000);
 		await db.put(
 			'redditOauth',
 			{
 				accessToken: jsrwrap.accessToken,
-				refreshToken: jsrwrap.refreshToken!
+				refreshToken: jsrwrap.refreshToken!,
+				expires: jsrwrap.expires
 			},
 			'reddit'
 		);

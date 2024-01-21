@@ -74,7 +74,7 @@
 
 <svelte:document on:keydown={handleKeydown} />
 
-<Layout loggedIn={data.loggedIn} subscribedSubs={data.subscribedSubs}>
+<Layout loggedIn={data.loggedIn} me={data.me} subscribedSubs={data.subscribedSubs}>
 	<slot />
 </Layout>
 
