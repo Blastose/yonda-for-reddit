@@ -51,5 +51,16 @@ export function formatSubmissionPermalink(permalink: string) {
 }
 
 export function showSubreddit(url: string, currentUrlSubreddit: string | undefined) {
-	return currentUrlSubreddit === 'popular' || currentUrlSubreddit === 'all' || url === '/';
+	// TODO Refactor /{sort}
+	return (
+		currentUrlSubreddit === 'popular' ||
+		currentUrlSubreddit === 'all' ||
+		url === '/' ||
+		url === '/new' ||
+		url === '/hot' ||
+		url === '/best' ||
+		url === '/top' ||
+		url === '/rising' ||
+		url === '/controversial'
+	);
 }
