@@ -1,24 +1,19 @@
 import type { PageLoad } from './$types';
-import { jsrwrap, login } from '$lib/reddit/reddit';
+import { jsrwrap } from '$lib/reddit/reddit';
 import { db } from '$lib/idb/idb';
 import { transformUrlForIDBKey } from '$lib/url/url';
-import { redirect } from '@sveltejs/kit';
+import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
+import { get } from 'svelte/store';
 
 export const load: PageLoad = async ({ url }) => {
-	const state = url.searchParams.get('state');
-	const code = url.searchParams.get('code');
-	if (state && code) {
-		login(code);
-		redirect(303, '/');
-	}
-
 	const jsrwrapSubreddit = jsrwrap.getSubreddit();
 
-	const submissionsMaybe = await db.get('submissions', transformUrlForIDBKey(url));
-
-	if (submissionsMaybe) {
-		const submissions = submissionsMaybe;
-		return { submissions };
+	if (get(navigationTypeStore) === 'bfbutton') {
+		const submissionsMaybe = await db.get('submissions', transformUrlForIDBKey(url));
+		if (submissionsMaybe) {
+			const submissions = submissionsMaybe;
+			return { submissions };
+		}
 	}
 	const submissions = jsrwrapSubreddit.getSubmissions({ sort: 'best' });
 
