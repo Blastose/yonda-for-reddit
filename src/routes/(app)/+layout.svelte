@@ -6,6 +6,8 @@
 	import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
 	import Layout from '$lib/components/layout/Layout.svelte';
 	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
+	import { onMount } from 'svelte';
+	import { db } from '$lib/idb/idb.js';
 
 	export let data;
 	let nprogressTimeoutId: ReturnType<typeof setTimeout>;
@@ -62,14 +64,26 @@
 	});
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 't') {
-			if ($submissionDisplayStore === 'classic') {
-				$submissionDisplayStore = 'card';
-			} else {
-				$submissionDisplayStore = 'classic';
+		if (document.activeElement?.nodeName !== 'INPUT')
+			if (e.key === 't') {
+				if ($submissionDisplayStore === 'classic') {
+					$submissionDisplayStore = 'card';
+				} else {
+					$submissionDisplayStore = 'classic';
+				}
 			}
-		}
 	}
+
+	onMount(async () => {
+		if (data.subscribedSubs) {
+			const subscribedSubs = await data.subscribedSubs;
+			db.put(
+				'subscribedSubreddits',
+				{ value: subscribedSubs, cached: new Date().getTime() },
+				'reddit'
+			);
+		}
+	});
 </script>
 
 <svelte:document on:keydown={handleKeydown} />

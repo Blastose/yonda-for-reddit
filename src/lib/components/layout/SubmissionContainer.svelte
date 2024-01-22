@@ -6,6 +6,7 @@
 	import { db } from '$lib/idb/idb';
 	import { page } from '$app/stores';
 	import { transformUrlForIDBKey } from '$lib/url/url';
+	import SubmissionSkeleton from '../subreddit/SubmissionSkeleton.svelte';
 
 	export let subreddit: string | undefined;
 	export let submissions: SubmissionData[];
@@ -32,4 +33,6 @@
 </script>
 
 <Submission {submissions} />
-<InfiniteScrolling bind:results={submissions} fetchMoreResults={getMoreSubmissions} {onSuccess} />
+<InfiniteScrolling bind:results={submissions} fetchMoreResults={getMoreSubmissions} {onSuccess}>
+	<SubmissionSkeleton />
+</InfiniteScrolling>

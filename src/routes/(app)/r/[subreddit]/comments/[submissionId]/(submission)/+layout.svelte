@@ -4,6 +4,7 @@
 	import { stripSearchParams, transformUrlForIDBKey } from '$lib/url/url.js';
 	import { setSubmissionStore, submissionStore } from '$lib/stores/submissionStore.js';
 	import SubmissionInfo from '$lib/components/subreddit/SubmissionInfo.svelte';
+	import SubmissionSkeleton from '$lib/components/subreddit/SubmissionSkeleton.svelte';
 
 	export let data;
 
@@ -27,7 +28,7 @@
 		<SubmissionInfo {submission} type="submission" numNewComments={0} />
 	{:else}
 		{#await data.submission}
-			<p>Loading....</p>
+			<SubmissionSkeleton padding={false} />
 		{:then submission}
 			<SubmissionInfo {submission} type="submission" numNewComments={0} />
 		{/await}

@@ -7,6 +7,7 @@
 	import type { Moderators } from '$lib/reddit/reddit';
 	import type { MaybePromise } from '@sveltejs/kit';
 	import type { SubredditData, Widget } from 'jsrwrap/types';
+	import { fade } from 'svelte/transition';
 
 	export let about: SubredditData | null;
 	export let sidebarPromise: MaybePromise<Widget[] | null> | null;
@@ -38,10 +39,9 @@
 		</div>
 
 		{#if sidebarPromise && about}
-			{#await sidebarPromise}
-				<p>Loading sidebar...</p>
-			{:then widgets}
+			{#await sidebarPromise then widgets}
 				<div
+					transition:fade={{ duration: 150 }}
 					class="subreddit-sidebar thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
 				>
 					<SubredditSidebar {about} {widgets} {moderatorsPromise} />

@@ -1,12 +1,13 @@
 import { browser, dev } from '$app/environment';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
 import { db } from '$lib/idb/idb';
+import { lsdb } from '$lib/idb/ls';
 import { Jsrwrap, Submission, Subreddit } from 'jsrwrap';
 import type { SubredditData } from 'jsrwrap/types';
 
 export const redirectUri = dev
 	? 'http://localhost:5173/auth'
-	: 'https://yonda-for-reddit.vercel.app';
+	: 'https://yonda-for-reddit.vercel.app/auth';
 
 async function createJsrwrap() {
 	const oauth = await db?.get('redditOauth', 'reddit');
@@ -48,27 +49,49 @@ async function createJsrwrap() {
 
 const jsrwrap = await createJsrwrap();
 function createAuthUrl() {
+	const state = crypto.randomUUID();
+	lsdb.set('state', state);
 	return Jsrwrap.createAuthUrl({
 		clientId: PUBLIC_CLIENT_ID,
 		duration: 'permanent',
 		redirectUri: redirectUri,
 		scope: ['*'],
-		state: 'state'
+		state: state,
+		responseType: 'code'
 	});
 }
 
-let checkIntervalId: number | undefined;
+if (browser) {
+	setInterval(async () => {
+		await db.put(
+			'redditOauth',
+			{
+				accessToken: jsrwrap.accessToken,
+				refreshToken: jsrwrap.refreshToken!,
+				expires: jsrwrap.expires
+			},
+			'reddit'
+		);
+	}, 600000);
+}
 async function logout() {
 	// await clearIdb();
-	clearInterval(checkIntervalId);
+	await jsrwrap.revokeToken({
+		token: jsrwrap.refreshToken ?? '',
+		type: 'refresh_token'
+	});
 	await db.clear('redditOauth');
 	await db.clear('subscribedSubreddits');
 	await db.clear('redditOauthMe');
 	window.location.href = '/';
 }
 
-async function login(code: string) {
+async function login(code: string, state: string) {
 	try {
+		if (state !== lsdb.get('state')) {
+			throw new Error('Invalid state');
+		}
+		lsdb.remove('state');
 		const jsrwarpLoggedIn = await Jsrwrap.fromAuthCode({
 			clientId: PUBLIC_CLIENT_ID,
 			clientSecret: '',
@@ -82,17 +105,6 @@ async function login(code: string) {
 		// await clearIdb();
 		const me = await jsrwrap.getMe().getMe();
 		await db.put('redditOauthMe', me, 'reddit');
-		checkIntervalId = setInterval(async () => {
-			await db.put(
-				'redditOauth',
-				{
-					accessToken: jsrwrap.accessToken,
-					refreshToken: jsrwrap.refreshToken!,
-					expires: jsrwrap.expires
-				},
-				'reddit'
-			);
-		}, 600000);
 		await db.put(
 			'redditOauth',
 			{
