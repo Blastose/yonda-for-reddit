@@ -91,7 +91,6 @@ async function login(code: string, state: string) {
 		if (state !== lsdb.get('state')) {
 			throw new Error('Invalid state');
 		}
-		lsdb.remove('state');
 		const jsrwarpLoggedIn = await Jsrwrap.fromAuthCode({
 			clientId: PUBLIC_CLIENT_ID,
 			clientSecret: '',
@@ -114,6 +113,7 @@ async function login(code: string, state: string) {
 			},
 			'reddit'
 		);
+		lsdb.remove('state');
 	} catch (e) {
 		console.log(e);
 	}
