@@ -17,7 +17,7 @@ async function createJsrwrap() {
 			clientSecret: '',
 			grantType: 'https://oauth.reddit.com/grants/installed_client',
 			userAgent: 'web:yonda-for-reddit:0.1.0 (by /u/blastose)',
-			deviceId: '63V92W6D11SI1HPZMYPS91ZV',
+			deviceId: 'DO_NOT_TRACK_THIS_DEVICE',
 			refreshToken: oauth.refreshToken,
 			accessToken: oauth.accessToken,
 			expiresIn: oauth.expires ?? new Date().getTime() / 1000 + 3600
@@ -28,7 +28,7 @@ async function createJsrwrap() {
 			clientSecret: '',
 			grantType: 'https://oauth.reddit.com/grants/installed_client',
 			userAgent: 'web:yonda-for-reddit:0.1.0 (by /u/blastose)',
-			deviceId: '63V92W6D11SI1HPZMYPS91ZV'
+			deviceId: 'DO_NOT_TRACK_THIS_DEVICE'
 		});
 		if (browser) {
 			await db.put(
