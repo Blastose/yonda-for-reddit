@@ -9,7 +9,13 @@
 </script>
 
 {#if submission.post_hint === 'image'}
+	<!-- TODO -->
+	<!-- {#if submission.preview.images.at(0)?.variants?.mp4} -->
+	<!-- svelte-ignore a11y-media-has-caption -->
+	<!-- <video controls={true} src={submission.preview.images.at(0)?.variants?.mp4?.source.url}></video> -->
+	<!-- {:else} -->
 	<RedditImage {submission} />
+	<!-- {/if} -->
 {:else if submission.is_gallery}
 	<RedditGallery {submission} />
 {:else if submission.is_video || submission.url.match(/https?:\/\/v.redd.it\/.*/)}

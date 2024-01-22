@@ -27,7 +27,7 @@
 <style>
 	a {
 		padding: 0.25rem 1rem;
-		border-radius: 0.5rem;
+		border-radius: 1rem;
 	}
 
 	a:hover {

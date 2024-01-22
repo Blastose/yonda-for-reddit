@@ -1,15 +1,24 @@
 import type { SubmissionData } from 'jsrwrap/types';
 
-export type RedditImageData = Omit<SubmissionData['preview']['images'][0], 'variants'>;
+export type RedditImageData = SubmissionData['preview']['images'][0];
 
 export function getSrcsetAndSizes(redditImageData: RedditImageData) {
 	const image = redditImageData;
 	if (!image) return null;
-	const resolutions = image.resolutions;
+
+	let source;
+	let resolutions;
+	if (image.variants?.gif) {
+		source = image.variants.gif.source;
+		resolutions = image.variants.gif.resolutions;
+	} else {
+		source = image.source;
+		resolutions = image.resolutions;
+	}
 	const srcsetWidths = [320, 640, 1080];
-	if (!srcsetWidths.includes(image.source.width)) {
-		resolutions.push(image.source);
-		srcsetWidths.push(image.source.width);
+	if (!srcsetWidths.includes(source.width)) {
+		resolutions.push(source);
+		srcsetWidths.push(source.width);
 		srcsetWidths.sort((a, b) => a - b);
 	}
 
