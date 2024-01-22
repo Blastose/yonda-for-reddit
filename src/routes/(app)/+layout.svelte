@@ -64,13 +64,14 @@
 	});
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 't') {
-			if ($submissionDisplayStore === 'classic') {
-				$submissionDisplayStore = 'card';
-			} else {
-				$submissionDisplayStore = 'classic';
+		if (document.activeElement?.nodeName !== 'INPUT')
+			if (e.key === 't') {
+				if ($submissionDisplayStore === 'classic') {
+					$submissionDisplayStore = 'card';
+				} else {
+					$submissionDisplayStore = 'classic';
+				}
 			}
-		}
 	}
 
 	onMount(async () => {

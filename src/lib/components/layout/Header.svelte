@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Icon from '$lib/components/icon/Icon.svelte';
 	import Drawer from './Drawer.svelte';
 	import YondaIcon from './YondaIcon.svelte';
 	import { createAuthUrl } from '$lib/reddit/reddit';
 	import type { RedditUser, SubredditData } from 'jsrwrap/types';
 	import UserMenu from './UserMenu.svelte';
 	import type { MaybePromise } from '@sveltejs/kit';
+	import Search from './Search.svelte';
 
 	export let loggedIn: boolean;
 	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
@@ -28,16 +28,7 @@
 	</div>
 
 	<div class="flex grow justify-center">
-		<div class="flex w-full max-w-[586px] items-center">
-			<button class="relative left-8">
-				<Icon name="search"></Icon>
-			</button>
-			<input
-				class="w-full rounded-3xl bg-[var(--search-input-bg)] px-4 py-2 pl-10"
-				type="text"
-				placeholder="Search"
-			/>
-		</div>
+		<Search />
 	</div>
 
 	{#if !loggedIn || !me}
