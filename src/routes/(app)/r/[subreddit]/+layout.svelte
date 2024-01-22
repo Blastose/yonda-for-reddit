@@ -11,7 +11,11 @@
 		subreddit;
 		(async () => {
 			const sidebar = await data.sidebarPromise;
-			db.put('subredditSidebar', { cached: new Date().getTime(), value: sidebar }, subreddit);
+			if (Array.isArray(sidebar)) {
+				// Need to check if it is an array since we may get an error {message: 'Internal Error'}
+				db.put('subredditSidebar', { cached: new Date().getTime(), value: sidebar }, subreddit);
+			}
+
 			const moderators = await data.moderators;
 			if (moderators) {
 				db.put(

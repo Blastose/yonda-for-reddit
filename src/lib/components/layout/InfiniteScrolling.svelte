@@ -40,5 +40,5 @@
 </script>
 
 <div class:hidden={noMoreSearchResults} bind:this={loadingElement}>
-	<p>Loading...</p>
+	<slot />
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import SubmissionContainer from '$lib/components/layout/SubmissionContainer.svelte';
+	import SubmissionSkeleton from '$lib/components/subreddit/SubmissionSkeleton.svelte';
 	import Subreddit from '$lib/components/subreddit/Subreddit.svelte';
 	import { db } from '$lib/idb/idb.js';
 	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
@@ -22,7 +23,9 @@
 <Subreddit about={null} sidebarPromise={null} moderatorsPromise={null}>
 	{#key getFullUrl($page.url)}
 		{#await data.submissions}
-			<p>Loading....</p>
+			{#each { length: 5 } as _}
+				<SubmissionSkeleton />
+			{/each}
 		{:then submissions}
 			<div>
 				<SubmissionContainer {submissions} subreddit={undefined} sort="best" />

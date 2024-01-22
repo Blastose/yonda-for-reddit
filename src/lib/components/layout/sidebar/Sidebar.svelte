@@ -44,9 +44,7 @@
 
 	{#if subscribedSubs}
 		<SidebarSection heading="Subscribed">
-			{#await subscribedSubs}
-				<p>Loading...</p>
-			{:then subs}
+			{#await subscribedSubs then subs}
 				{#each subs as sub}
 					<SidebarSub
 						url="/{sub.display_name_prefixed.toLowerCase()}"

@@ -4,6 +4,7 @@
 	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
 	import { db } from '$lib/idb/idb.js';
 	import type { SubredditSort } from '$lib/reddit/reddit.js';
+	import SubmissionSkeleton from '$lib/components/subreddit/SubmissionSkeleton.svelte';
 
 	export let data;
 
@@ -21,7 +22,9 @@
 
 {#key getFullUrl($page.url)}
 	{#await data.submissions}
-		<p>Loading....</p>
+		{#each { length: 5 } as _}
+			<SubmissionSkeleton />
+		{/each}
 	{:then submissions}
 		<div>
 			<SubmissionContainer {submissions} subreddit={$page.params.subreddit} {sort} />
