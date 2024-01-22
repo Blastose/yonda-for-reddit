@@ -2,6 +2,8 @@
 	import { page } from '$app/stores';
 </script>
 
+<svelte:head><title>OAuth</title></svelte:head>
+
 {#if $page.url.searchParams.get('code')}
 	<div class="container-doku">
 		<p>

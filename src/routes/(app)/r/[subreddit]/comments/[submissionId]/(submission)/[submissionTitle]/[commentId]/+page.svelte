@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import CommentSkeleton from '$lib/components/comment/CommentSkeleton.svelte';
 	import SubmissionCommentsContainer from '$lib/components/subreddit/SubmissionCommentsContainer.svelte';
+	import SubmissionTitle from '../../SubmissionTitle.svelte';
 
 	export let data;
 
@@ -16,6 +17,11 @@
 			{/each}
 		</div>
 	{:then submission}
+		<SubmissionTitle
+			commenter={'A redditor'}
+			subreddit={submission.subreddit}
+			title={submission.title}
+		/>
 		<SubmissionCommentsContainer {submission} sort={data.sort} {singleCommentThread} />
 	{/await}
 </div>
