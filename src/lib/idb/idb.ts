@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import type { Moderators, SubmissionFull } from '$lib/reddit/reddit';
 import { openDB, type DBSchema } from 'idb';
-import type { SubmissionData, SubredditData, Widget } from 'jsrwrap/types';
+import type { SubmissionData, SubredditData, Widget, RedditUser } from 'jsrwrap/types';
 
 export interface MyDB extends DBSchema {
 	submission: {
@@ -46,9 +46,7 @@ export interface MyDB extends DBSchema {
 		key: 'reddit';
 	};
 	redditOauthMe: {
-		value: {
-			username: string;
-		};
+		value: RedditUser;
 		key: 'reddit';
 	};
 }

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { SubredditData } from 'jsrwrap/types';
+	import type { RedditUser, SubredditData } from 'jsrwrap/types';
 	import Header from './Header.svelte';
 	import Sidebar from './sidebar/Sidebar.svelte';
 	export let loggedIn: boolean;
 	export let subscribedSubs: Promise<SubredditData[]> | undefined;
-	export let me: { username: string } | undefined;
+	export let me: RedditUser | undefined;
 </script>
 
 <div class="flex flex-col">

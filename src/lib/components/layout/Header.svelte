@@ -2,12 +2,13 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Drawer from './Drawer.svelte';
 	import YondaIcon from './YondaIcon.svelte';
-	import { createAuthUrl, logout } from '$lib/reddit/reddit';
-	import type { SubredditData } from 'jsrwrap/types';
+	import { createAuthUrl } from '$lib/reddit/reddit';
+	import type { RedditUser, SubredditData } from 'jsrwrap/types';
+	import UserMenu from './UserMenu.svelte';
 
 	export let loggedIn: boolean;
 	export let subscribedSubs: Promise<SubredditData[]> | undefined;
-	export let me: { username: string } | undefined;
+	export let me: RedditUser | undefined;
 </script>
 
 <header class="header">
@@ -38,25 +39,18 @@
 		</div>
 	</div>
 
-	<div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-600">
-		{#if !loggedIn && !me}
-			<button
-				on:click={() => {
-					window.location.href = createAuthUrl();
-				}}
-			>
-				<Icon name="profile"></Icon>
-			</button>
-		{:else}
-			<button
-				on:click={() => {
-					logout();
-				}}
-			>
-				{me?.name}
-			</button>
-		{/if}
-	</div>
+	{#if !loggedIn || !me}
+		<button
+			class="flex h-10 items-center justify-center rounded-3xl bg-[#43465f] px-4 text-sm font-semibold"
+			on:click={() => {
+				window.location.href = createAuthUrl();
+			}}
+		>
+			Log In
+		</button>
+	{:else}
+		<UserMenu user={me} />
+	{/if}
 </header>
 
 <style>
