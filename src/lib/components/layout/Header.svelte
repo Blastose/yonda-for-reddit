@@ -42,7 +42,7 @@
 
 	{#if !loggedIn || !me}
 		<button
-			class="flex h-10 items-center justify-center rounded-3xl bg-[#43465f] px-4 text-sm font-semibold"
+			class="flex h-10 items-center justify-center whitespace-nowrap rounded-3xl bg-[#43465f] px-4 text-sm font-semibold"
 			on:click={() => {
 				window.location.href = createAuthUrl();
 			}}
