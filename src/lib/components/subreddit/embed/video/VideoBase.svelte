@@ -3,37 +3,17 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Controls from './Controls.svelte';
 	import { lsdb } from '$lib/idb/ls';
-	import { MediaPlayer } from 'dashjs';
 
 	export let submission: SubmissionData;
-	let dashPlayer: dashjs.MediaPlayerClass;
+	export let width: number;
+	export let height: number;
+	export let loop: boolean = false;
+	export let src: string | undefined = undefined;
+	export let action: (v: HTMLVideoElement) => void = () => {};
 
-	console.log(submission);
-
-	function getBaseUrl(url: string) {
-		const match = url.match(/https:\/\/v.redd.it\/.*?\//);
-		if (match) {
-			return match[0];
-		}
-		return url;
-	}
-
-	function dash(node: HTMLVideoElement) {
-		dashPlayer = MediaPlayer().create();
-		dashPlayer.initialize();
-		dashPlayer.setAutoPlay(false);
-		dashPlayer.attachView(node);
-	}
-
-	$: console.log(submission.media);
 	$: poster =
 		submission.preview?.images.at(0)?.resolutions.at(3)?.url ??
 		submission.preview?.images.at(0)?.resolutions.at(0)?.url;
-	$: redditVideo = submission.media?.reddit_video;
-	$: baseUrl = getBaseUrl(submission.media?.reddit_video?.fallback_url ?? '');
-	$: source = submission.media?.reddit_video?.dash_url ?? '';
-
-	// $: console.log(getRedditVideoLinks(baseUrl));
 
 	let hoveringVideoPlayer = false;
 	let videoStarted = false;
@@ -47,18 +27,18 @@
 	let setInputValue: (v: number) => void;
 
 	function videoControls(node: HTMLElement) {
-		function a() {
+		function pointerOver() {
 			hoveringVideoPlayer = true;
 		}
-		function b() {
+		function pointerOut() {
 			hoveringVideoPlayer = false;
 		}
-		node.addEventListener('pointerover', a);
-		node.addEventListener('pointerout', b);
+		node.addEventListener('pointerover', pointerOver);
+		node.addEventListener('pointerout', pointerOut);
 		return {
 			destroy() {
-				node.removeEventListener('pointerover', a);
-				node.removeEventListener('pointerout', b);
+				node.removeEventListener('pointerover', pointerOver);
+				node.removeEventListener('pointerout', pointerOut);
 			}
 		};
 	}
@@ -73,7 +53,6 @@
 		<button
 			class="absolute flex h-full w-full items-center justify-center bg-[#0000007a]"
 			on:click={() => {
-				console.log('aklsdjslkdjsjdd');
 				videoStarted = true;
 				videoNode.play();
 			}}
@@ -95,9 +74,8 @@
 		bind:paused
 		bind:ended
 		bind:volume
-		use:dash
+		use:action
 		on:play|once={() => {
-			dashPlayer.attachSource(source);
 			volume = Number(lsdb.get('videoVolume')) || 0;
 			setInputValue(volume);
 		}}
@@ -108,13 +86,18 @@
 				console.log('plays');
 			} else videoNode.pause();
 		}}
-		style:aspect-ratio={(redditVideo?.width ?? 0) / (redditVideo?.height ?? 0)}
+		style:aspect-ratio={(width ?? 0) / (height ?? 0)}
 		class="w-full object-contain"
 		controls={false}
 		{poster}
-		height={redditVideo?.height}
-		width={redditVideo?.width}
-	/>
+		{height}
+		{width}
+		{loop}
+	>
+		{#if src}
+			<source {src} />
+		{/if}
+	</video>
 
 	<div
 		class="duration-300 {(videoStarted && hoveringVideoPlayer) || paused
