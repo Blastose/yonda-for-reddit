@@ -46,10 +46,11 @@
 		<SidebarSection heading="Subscribed">
 			{#await subscribedSubs then subs}
 				{#each subs as sub}
+					{@const icon = sub?.community_icon || sub?.icon_img}
 					<SidebarSub
 						url="/{sub.display_name_prefixed.toLowerCase()}"
 						display={sub.display_name_prefixed}
-						icon={sub.icon_img}
+						{icon}
 					/>
 				{/each}
 			{/await}
