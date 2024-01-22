@@ -1,5 +1,6 @@
 type LSSchema = {
 	videoVolume: string;
+	state: string;
 };
 
 type Keys = keyof LSSchema;

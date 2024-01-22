@@ -6,7 +6,7 @@ export const load: PageLoad = async ({ url }) => {
 	const state = url.searchParams.get('state');
 	const code = url.searchParams.get('code');
 	if (state && code) {
-		await login(code);
+		await login(code, state);
 		redirect(303, '/');
 	}
 };

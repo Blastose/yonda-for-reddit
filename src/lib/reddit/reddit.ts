@@ -1,6 +1,7 @@
 import { browser, dev } from '$app/environment';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
 import { db } from '$lib/idb/idb';
+import { lsdb } from '$lib/idb/ls';
 import { Jsrwrap, Submission, Subreddit } from 'jsrwrap';
 import type { SubredditData } from 'jsrwrap/types';
 
@@ -48,12 +49,14 @@ async function createJsrwrap() {
 
 const jsrwrap = await createJsrwrap();
 function createAuthUrl() {
+	const state = crypto.randomUUID();
+	lsdb.set('state', state);
 	return Jsrwrap.createAuthUrl({
 		clientId: PUBLIC_CLIENT_ID,
 		duration: 'permanent',
 		redirectUri: redirectUri,
 		scope: ['*'],
-		state: 'state',
+		state: state,
 		responseType: 'code'
 	});
 }
@@ -83,8 +86,12 @@ async function logout() {
 	window.location.href = '/';
 }
 
-async function login(code: string) {
+async function login(code: string, state: string) {
 	try {
+		if (state !== lsdb.get('state')) {
+			throw new Error('Invalid state');
+		}
+		lsdb.remove('state');
 		const jsrwarpLoggedIn = await Jsrwrap.fromAuthCode({
 			clientId: PUBLIC_CLIENT_ID,
 			clientSecret: '',
