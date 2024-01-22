@@ -1,3 +1,6 @@
-import { writable } from "svelte/store";
+import { persistedStore } from '$lib/idb/persistedStore';
 
-export const submissionDisplayStore = writable<'card' | 'classic'>('classic');
+export const submissionDisplayStore = persistedStore<'card' | 'classic'>(
+	'submissionDisplay',
+	'card'
+);

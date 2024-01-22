@@ -8,7 +8,7 @@ export function isRedditVideo(submission: SubmissionData) {
 }
 
 export function formatVideoTime(seconds: number) {
-	if (typeof seconds !== 'number') {
+	if (typeof seconds !== 'number' || Number.isNaN(seconds)) {
 		return '0:00';
 	}
 
