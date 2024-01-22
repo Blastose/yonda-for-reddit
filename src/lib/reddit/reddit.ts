@@ -6,7 +6,7 @@ import type { SubredditData } from 'jsrwrap/types';
 
 export const redirectUri = dev
 	? 'http://localhost:5173/auth'
-	: 'https://yonda-for-reddit.vercel.app';
+	: 'https://yonda-for-reddit.vercel.app/auth';
 
 async function createJsrwrap() {
 	const oauth = await db?.get('redditOauth', 'reddit');
@@ -53,14 +53,30 @@ function createAuthUrl() {
 		duration: 'permanent',
 		redirectUri: redirectUri,
 		scope: ['*'],
-		state: 'state'
+		state: 'state',
+		responseType: 'code'
 	});
 }
 
-let checkIntervalId: number | undefined;
+if (browser) {
+	setInterval(async () => {
+		await db.put(
+			'redditOauth',
+			{
+				accessToken: jsrwrap.accessToken,
+				refreshToken: jsrwrap.refreshToken!,
+				expires: jsrwrap.expires
+			},
+			'reddit'
+		);
+	}, 600000);
+}
 async function logout() {
 	// await clearIdb();
-	clearInterval(checkIntervalId);
+	await jsrwrap.revokeToken({
+		token: jsrwrap.refreshToken ?? '',
+		type: 'refresh_token'
+	});
 	await db.clear('redditOauth');
 	await db.clear('subscribedSubreddits');
 	await db.clear('redditOauthMe');
@@ -82,17 +98,6 @@ async function login(code: string) {
 		// await clearIdb();
 		const me = await jsrwrap.getMe().getMe();
 		await db.put('redditOauthMe', me, 'reddit');
-		checkIntervalId = setInterval(async () => {
-			await db.put(
-				'redditOauth',
-				{
-					accessToken: jsrwrap.accessToken,
-					refreshToken: jsrwrap.refreshToken!,
-					expires: jsrwrap.expires
-				},
-				'reddit'
-			);
-		}, 600000);
 		await db.put(
 			'redditOauth',
 			{

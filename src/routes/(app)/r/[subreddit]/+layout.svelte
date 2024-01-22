@@ -20,14 +20,6 @@
 					subreddit
 				);
 			}
-			if (data.subscribedSubs) {
-				const subscribedSubs = await data.subscribedSubs;
-				db.put(
-					'subscribedSubreddits',
-					{ value: subscribedSubs, cached: new Date().getTime() },
-					'reddit'
-				);
-			}
 		})();
 	}
 </script>

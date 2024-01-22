@@ -1,6 +1,16 @@
 import type { LayoutLoad } from './$types';
 import { jsrwrap } from '$lib/reddit/reddit';
 import { db } from '$lib/idb/idb';
+import type { Widget } from 'jsrwrap/types';
+
+async function getSidebar(subreddit: string) {
+	try {
+		const res = await fetch(`https://dokusha-for-reddit.vercel.app/api/${subreddit}/sidebar`);
+		return (await res.json()) as Promise<Widget[] | null>;
+	} catch {
+		return null;
+	}
+}
 
 export const load: LayoutLoad = async ({ params }) => {
 	const subreddit = params.subreddit;
@@ -43,7 +53,7 @@ export const load: LayoutLoad = async ({ params }) => {
 	if (sidebarMaybe && now < sidebarMaybe.cached + 360000) {
 		sidebarPromise = sidebarMaybe.value;
 	} else {
-		sidebarPromise = jsrwrapSubreddit.getSidebar();
+		sidebarPromise = getSidebar(subreddit);
 	}
 
 	return { about, sidebarPromise, moderators };
