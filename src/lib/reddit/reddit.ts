@@ -62,6 +62,7 @@ async function logout() {
 	// await clearIdb();
 	clearInterval(checkIntervalId);
 	await db.clear('redditOauth');
+	await db.clear('subscribedSubreddits');
 	await db.clear('redditOauthMe');
 	window.location.href = '/';
 }

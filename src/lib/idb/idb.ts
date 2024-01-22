@@ -49,6 +49,13 @@ export interface MyDB extends DBSchema {
 		value: RedditUser;
 		key: 'reddit';
 	};
+	subscribedSubreddits: {
+		value: {
+			cached: number;
+			value: SubredditData[];
+		};
+		key: 'reddit';
+	};
 }
 
 // For some reason, browser is false, which means idb is undefined when it first loads or something
@@ -63,6 +70,7 @@ export const db = (browser
 				db.createObjectStore('subredditAbout');
 				db.createObjectStore('redditOauth');
 				db.createObjectStore('redditOauthMe');
+				db.createObjectStore('subscribedSubreddits');
 				db.createObjectStore('subredditSidebar');
 				db.createObjectStore('subredditModerators');
 			}

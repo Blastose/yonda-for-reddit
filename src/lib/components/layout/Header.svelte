@@ -5,9 +5,10 @@
 	import { createAuthUrl } from '$lib/reddit/reddit';
 	import type { RedditUser, SubredditData } from 'jsrwrap/types';
 	import UserMenu from './UserMenu.svelte';
+	import type { MaybePromise } from '@sveltejs/kit';
 
 	export let loggedIn: boolean;
-	export let subscribedSubs: Promise<SubredditData[]> | undefined;
+	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
 	export let me: RedditUser | undefined;
 </script>
 

@@ -4,9 +4,10 @@
 	import Hr from '../Hr.svelte';
 	import SidebarSection from './SidebarSection.svelte';
 	import SidebarSub from './SidebarSub.svelte';
+	import type { MaybePromise } from '@sveltejs/kit';
 
 	export let type: 'sidebar' | 'drawer';
-	export let subscribedSubs: Promise<SubredditData[]> | undefined;
+	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
 </script>
 
 <div

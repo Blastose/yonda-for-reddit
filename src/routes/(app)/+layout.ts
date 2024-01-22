@@ -7,7 +7,13 @@ export const load: LayoutLoad = async () => {
 	const loggedIn = Boolean(me);
 	let subscribedSubs;
 	if (loggedIn) {
-		subscribedSubs = jsrwrap.getMe().getSubscribedSubreddits();
+		const now = new Date().getTime();
+		const subscribedSubsMaybe = await db.get('subscribedSubreddits', 'reddit');
+		if (subscribedSubsMaybe && now < subscribedSubsMaybe.cached + 360000) {
+			subscribedSubs = subscribedSubsMaybe.value;
+		} else {
+			subscribedSubs = jsrwrap.getMe().getSubscribedSubreddits();
+		}
 	}
 
 	return { loggedIn, subscribedSubs, me };

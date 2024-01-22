@@ -6,8 +6,9 @@
 	import { quintOut } from 'svelte/easing';
 	import Sidebar from './sidebar/Sidebar.svelte';
 	import type { SubredditData } from 'jsrwrap/types';
+	import type { MaybePromise } from '@sveltejs/kit';
 
-	export let subscribedSubs: Promise<SubredditData[]> | undefined;
+	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
 	const customOpen = writable(false);
 
 	const {
