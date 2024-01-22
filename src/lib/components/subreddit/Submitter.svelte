@@ -40,7 +40,8 @@
 		<span class="text-sm font-semibold text-[var(--visited-link-color)]">in</span>
 		<a
 			class="text-sm font-semibold text-[var(--reddit-username-color)]"
-			href="/{submitter.subreddit_name_prefixed}">{submitter.subreddit_name_prefixed}</a
+			href="/{submitter.subreddit_name_prefixed.toLowerCase()}"
+			>{submitter.subreddit_name_prefixed}</a
 		>
 	{/if}
 

@@ -6,8 +6,10 @@ export const ssr = false;
 export const load: LayoutLoad = async ({ url }) => {
 	const fullUrl = getFullUrl(url);
 
-	if (fullUrl.match(/^.*[A-Z].*$/)) {
-		redirect(301, fullUrl.toLowerCase());
+	if (!url.searchParams.get('code')) {
+		if (fullUrl.match(/^.*[A-Z].*$/)) {
+			redirect(301, fullUrl.toLowerCase());
+		}
 	}
 
 	return {};

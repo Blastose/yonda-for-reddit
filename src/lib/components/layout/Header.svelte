@@ -2,12 +2,20 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Drawer from './Drawer.svelte';
 	import YondaIcon from './YondaIcon.svelte';
+	import { createAuthUrl } from '$lib/reddit/reddit';
+	import type { RedditUser, SubredditData } from 'jsrwrap/types';
+	import UserMenu from './UserMenu.svelte';
+	import type { MaybePromise } from '@sveltejs/kit';
+
+	export let loggedIn: boolean;
+	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
+	export let me: RedditUser | undefined;
 </script>
 
 <header class="header">
 	<div class="flex gap-2">
 		<div class="block lg:hidden">
-			<Drawer />
+			<Drawer {subscribedSubs} />
 		</div>
 		<div class="flex items-center lg:hidden">
 			<a class="block text-2xl font-bold" aria-label="Yonda homepage" href="/"><YondaIcon /></a>
@@ -32,9 +40,18 @@
 		</div>
 	</div>
 
-	<div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-600">
-		<Icon name="profile"></Icon>
-	</div>
+	{#if !loggedIn || !me}
+		<button
+			class="flex h-10 items-center justify-center rounded-3xl bg-[#43465f] px-4 text-sm font-semibold"
+			on:click={() => {
+				window.location.href = createAuthUrl();
+			}}
+		>
+			Log In
+		</button>
+	{:else}
+		<UserMenu user={me} />
+	{/if}
 </header>
 
 <style>

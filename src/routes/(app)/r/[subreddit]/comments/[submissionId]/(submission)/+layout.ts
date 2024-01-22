@@ -10,16 +10,18 @@ export const load: LayoutLoad = async ({ params, url }) => {
 	const submissionId = params.submissionId;
 	const sort = (url.searchParams.get('sort') ?? undefined) as Sort | undefined;
 
-	console.log(get(navigationTypeStore));
-	// TODO we use url here, which will rerun in the commentId for single comment threads
-	// fix somehow?
-	const maybeSubmission = await db.get('subredditv2', transformUrlForIDBKey(url));
-	if (maybeSubmission) {
-		return {
-			submission: maybeSubmission,
-			sort
-		};
+	if (get(navigationTypeStore) === 'bfbutton') {
+		// TODO we use url here, which will rerun in the commentId for single comment threads
+		// fix somehow?
+		const maybeSubmission = await db.get('submission', transformUrlForIDBKey(url));
+		if (maybeSubmission) {
+			return {
+				submission: maybeSubmission,
+				sort
+			};
+		}
 	}
+
 	let submission;
 	if (sort) {
 		submission = jsrwrap.getSubmission(submissionId).fetch({ sort });

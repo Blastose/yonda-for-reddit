@@ -1,15 +1,14 @@
 <script lang="ts">
-	import type { WidgetModerators } from 'jsrwrap/types';
 	import WidgetContainer from './WidgetContainer.svelte';
+	import type { Moderators } from '$lib/reddit/reddit';
 
-	export let widget: WidgetModerators;
-	// TODO need mod data from elsewhere, as it is not in the widget data
+	export let moderators: Moderators;
 </script>
 
-<WidgetContainer sectionHeading={widget.shortName}>
-	<div class="flex flex-col gap-2">
-		{#each widget.mods as mod}
-			<p>{mod}</p>
+<WidgetContainer sectionHeading="Moderators">
+	<div class="reddit-md flex flex-col gap-2">
+		{#each moderators as mod}
+			<a href="/u/{mod.name}">u/{mod.name}</a>
 		{/each}
 	</div>
 </WidgetContainer>

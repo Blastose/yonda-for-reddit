@@ -1,14 +1,20 @@
 <script lang="ts">
+	import type { RedditUser, SubredditData } from 'jsrwrap/types';
 	import Header from './Header.svelte';
 	import Sidebar from './sidebar/Sidebar.svelte';
+	import type { MaybePromise } from '@sveltejs/kit';
+
+	export let loggedIn: boolean;
+	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
+	export let me: RedditUser | undefined;
 </script>
 
 <div class="flex flex-col">
-	<Header />
+	<Header {loggedIn} {subscribedSubs} {me} />
 
 	<div class="mt-14 flex gap-4">
 		<aside class="sidebar-wrapper sidebar-animation sticky top-14 border-r border-[#3a3a3a]">
-			<Sidebar type="sidebar" />
+			<Sidebar type="sidebar" {subscribedSubs} />
 		</aside>
 
 		<main class="container-doku">
