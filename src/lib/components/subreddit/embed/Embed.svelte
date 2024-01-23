@@ -19,6 +19,6 @@
 	<RedditGallery {submission} />
 {:else if submission.is_video || submission.url.match(/https?:\/\/v.redd.it\/.*/)}
 	<RedditVideoDash {submission} />
-{:else if !submission.is_self && (submission.url.startsWith('https://www.youtube') || submission.url.startsWith('https://youtu.be'))}
+{:else if !submission.is_self && (submission.url.startsWith('https://www.youtube') || submission.url.startsWith('https://youtube') || submission.url.startsWith('https://youtu.be'))}
 	<Youtube {submission} />
 {/if}

@@ -10,7 +10,7 @@
 			const id = match?.at(1) ?? '';
 			return `https://www.youtube.com/embed/${id}`;
 		}
-		const match = url.match(/https:\/\/www\.youtube\.com\/watch\?v=([^\/&]+).*/);
+		const match = url.match(/https:\/\/(?:www\.)?youtube\.com\/watch\?v=([^\/&]+).*/);
 		const id = match?.at(1) ?? '';
 		return `https://www.youtube.com/embed/${id}`;
 	}
