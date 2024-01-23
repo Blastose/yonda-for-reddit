@@ -31,11 +31,13 @@
 			<SingleCommentThread {submission} />
 		{/if}
 
-		<input
-			class="w-full rounded-3xl bg-[var(--search-input-bg)] px-4 py-2"
-			type="text"
-			placeholder="Add a comment"
-		/>
+		{#if !singleCommentThread}
+			<input
+				class="w-full rounded-3xl bg-[var(--search-input-bg)] px-4 py-2"
+				type="text"
+				placeholder="Add a comment"
+			/>
+		{/if}
 	</div>
 
 	{#each submission.comments as comment, index}
