@@ -6,7 +6,11 @@ import type { Widget } from 'jsrwrap/types';
 async function getSidebar(subreddit: string) {
 	try {
 		const res = await fetch(`https://dokusha-for-reddit.vercel.app/api/${subreddit}/sidebar`);
-		return (await res.json()) as Promise<Widget[] | null>;
+		const data =  (await res.json()) as Widget[] | {message:'Internal Error'} | null;
+		if (Array.isArray(data)) {
+			return data;
+		}
+		return null;
 	} catch {
 		return null;
 	}
