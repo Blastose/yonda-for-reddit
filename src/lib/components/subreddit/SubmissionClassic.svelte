@@ -80,8 +80,11 @@
 		</div>
 		{#if open}
 			{#if submission.post_hint && submission.post_hint !== 'self' && submission.url}
-				<a class="text-[var(--link-color)]" target="_blank" rel="noreferrer" href={submission.url}
-					>{submission.url}</a
+				<a
+					class="line-clamp-1 text-[var(--link-color)]"
+					target="_blank"
+					rel="noreferrer"
+					href={submission.url}>{submission.url}</a
 				>
 			{/if}
 			<Embed {submission} />

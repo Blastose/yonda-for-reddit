@@ -36,7 +36,9 @@
 	<Submitter submitter={submission} type="submission" showSubreddit={showSubreddit2} />
 	{#if !submission.is_self}
 		<div class="reddit-md">
-			<a href={submission.url} target="_blank" rel="noreferrer">{submission.url}</a>
+			<a class="line-clamp-1" href={submission.url} target="_blank" rel="noreferrer"
+				>{submission.url}</a
+			>
 		</div>
 	{/if}
 	{#if type === 'submission'}
