@@ -4,32 +4,14 @@
 
 	export let submission: SubmissionData;
 
-	function getYoutubeEmbed(url: string) {
-		if (url.startsWith('https://youtu.be/')) {
-			const match = url.match(/https:\/\/youtu\.be\/([^\/]+).*/);
-			const id = match?.at(1) ?? '';
-			return `https://www.youtube.com/embed/${id}`;
-		}
-		const match = url.match(/https:\/\/(?:www\.)?youtube\.com\/watch\?v=([^\/&]+).*/);
-		const id = match?.at(1) ?? '';
-		return `https://www.youtube.com/embed/${id}`;
-	}
-
-	$: youtubeEmbed = getYoutubeEmbed(submission.url);
 	let show = false;
 </script>
 
-<div class=" h-full max-h-[512px] w-full">
+<div class="h-full max-h-[512px] w-full">
 	{#if show}
-		<iframe
-			width="560"
-			height="315"
-			src="{youtubeEmbed}?autoplay=1"
-			title="YouTube video player"
-			frameborder="0"
-			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-			allowfullscreen
-		></iframe>
+		<div class="youtube-embed">
+			{@html submission.secure_media_embed.content}
+		</div>
 	{:else}
 		<button
 			class="relative h-full w-full"
@@ -56,7 +38,7 @@
 		aspect-ratio: 16 / 9;
 		object-fit: cover;
 	}
-	iframe {
+	.youtube-embed > :global(iframe) {
 		width: 100%;
 		height: 100%;
 		aspect-ratio: 16 / 9;

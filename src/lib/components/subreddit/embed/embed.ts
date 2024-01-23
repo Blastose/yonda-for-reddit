@@ -16,13 +16,25 @@ export function getSubmissionType(submission: SubmissionData): SubmissionType {
 	if (submission.is_video) {
 		return 'video';
 	}
-	if (
-		submission.url.startsWith('https://www.youtube') ||
-		submission.url.startsWith('https://youtube') ||
-		submission.url.startsWith('https://youtu.be')
-	) {
+	if (submission.media?.type === 'youtube.com') {
 		return 'video';
 	}
 
-	return 'link';
+	return 'self';
+}
+
+export function hasEmbed(submission: SubmissionData) {
+	if (submission.post_hint === 'image') {
+		return true;
+	}
+	if (submission.is_gallery) {
+		return true;
+	}
+	if (submission.is_video) {
+		return true;
+	}
+	if (submission.secure_media) {
+		return true;
+	}
+	return false;
 }
