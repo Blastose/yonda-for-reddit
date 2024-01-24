@@ -10,7 +10,7 @@
 
 <button class="w-full" on:click={handleClick}>
 	{#if hasThumbnail}
-		<span class="thumbnail-image relative">
+		<span class="relative flex">
 			<img src={submission.thumbnail} alt="" />
 			<ThumbnailHint {submission} />
 		</span>

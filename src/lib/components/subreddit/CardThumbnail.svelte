@@ -5,7 +5,7 @@
 	export let submission: SubmissionData;
 </script>
 
-<a target="_blank" rel="noreferrer" href={submission.url} class="flex w-full">
+<a target="_blank" rel="noreferrer" href={submission.url} class="flex">
 	<span class="thumbnail-image relative">
 		<img src={submission.thumbnail} alt="" />
 		<ThumbnailHint {submission} />

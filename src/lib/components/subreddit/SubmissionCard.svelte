@@ -26,7 +26,11 @@
 
 	function showThumbnail(submission: SubmissionData) {
 		return Boolean(
-			submission.thumbnail && submission.post_hint === 'link' && !hasEmbed(submission)
+			submission.thumbnail &&
+				submission.thumbnail !== 'nsfw' &&
+				submission.thumbnail !== 'spoiler' &&
+				submission.post_hint === 'link' &&
+				!hasEmbed(submission)
 		);
 	}
 </script>
