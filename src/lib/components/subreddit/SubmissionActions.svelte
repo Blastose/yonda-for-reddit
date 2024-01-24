@@ -12,7 +12,7 @@
 	$: href = formatSubmissionPermalink(submission.permalink);
 </script>
 
-<div class="mt-4 flex items-center gap-2">
+<div class="mt-4 flex items-center gap-2 font-semibold">
 	<div class="flex w-fit items-center gap-1 rounded-2xl bg-[var(--accent-l1)] px-2 py-1 text-sm">
 		<button><Icon name="arrowUpOutline" /></button>
 		<span title={submission.score.toString()}>{formatter.format(submission.score)}</span>

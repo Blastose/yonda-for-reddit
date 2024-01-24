@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import type { SubmissionData } from 'jsrwrap/types';
+	import ThumbnailHint from './ThumbnailHint.svelte';
 
 	export let hasThumbnail: boolean;
 	export let submission: SubmissionData;
@@ -9,8 +10,9 @@
 
 <button class="w-full" on:click={handleClick}>
 	{#if hasThumbnail}
-		<span class="thumbnail-image">
+		<span class="thumbnail-image relative">
 			<img src={submission.thumbnail} alt="" />
+			<ThumbnailHint {submission} />
 		</span>
 	{:else if submission.thumbnail !== ''}
 		<span>
@@ -20,10 +22,13 @@
 				</span>
 			{:else if submission.thumbnail === 'default'}
 				<span class="thumbnail">
-					<Icon height="24" width="24" name="linkVariant" />
+					<Icon height="24" width="24" name="externalLink" />
 				</span>
 			{:else}
-				<p class="thumbnail">{submission.thumbnail}</p>
+				<span class="thumbnail relative">
+					{submission.thumbnail}
+					<ThumbnailHint {submission} />
+				</span>
 			{/if}
 		</span>
 	{/if}

@@ -9,6 +9,8 @@
 	import SubmissionInfo from './SubmissionInfo.svelte';
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import { markdownToHtml } from '$lib/reddit/markdownToHtml';
+	import { hasEmbed } from './embed/embed';
+	import CardThumbnail from './CardThumbnail.svelte';
 
 	export let submission: SubmissionData;
 	$: href = formatSubmissionPermalink(submission.permalink);
@@ -21,6 +23,12 @@
 	$: (async () => {
 		numNewComments = submission.num_comments - (await getCommentCount());
 	})();
+
+	function showThumbnail(submission: SubmissionData) {
+		return Boolean(
+			submission.thumbnail && submission.post_hint === 'link' && !hasEmbed(submission)
+		);
+	}
 </script>
 
 <ClickableDivWrapper
@@ -30,7 +38,18 @@
 	}}
 >
 	<article class="flex flex-col gap-2">
-		<SubmissionInfo {submission} type="subreddit" />
+		<div
+			class="grid gap-4 {showThumbnail(submission)
+				? 'grid-cols-[1fr_112px] sm:grid-cols-[1fr_128px]'
+				: ''}"
+		>
+			<SubmissionInfo {submission} type="subreddit" />
+			{#if showThumbnail(submission)}
+				<div>
+					<CardThumbnail {submission} />
+				</div>
+			{/if}
+		</div>
 
 		<Embed {submission} />
 		{#if submission.selftext}

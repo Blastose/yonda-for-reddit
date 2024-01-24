@@ -19,6 +19,16 @@
 	<RedditGallery {submission} />
 {:else if submission.is_video || submission.url.match(/https?:\/\/v.redd.it\/.*/)}
 	<RedditVideoDash {submission} />
-{:else if !submission.is_self && (submission.url.startsWith('https://www.youtube') || submission.url.startsWith('https://youtu.be'))}
+{:else if submission.media?.type === 'youtube.com'}
 	<Youtube {submission} />
+{:else if submission.media?.type === 'clips.twitch.tv'}
+	<!-- TODO twitch clips embed -->
+	<div class="reddit-md">
+		{@html submission.secure_media_embed.content}
+	</div>
+{:else if submission.secure_media}
+	<div class="reddit-md">
+		<!-- TODO -->
+		<!-- {@html submission.secure_media_embed.content} -->
+	</div>
 {/if}

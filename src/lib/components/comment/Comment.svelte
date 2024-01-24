@@ -51,6 +51,7 @@
 				sort
 			});
 			if (updateReplies) updateReplies(comment.id, children);
+			persistSubmission();
 			loadingMoreComments = false;
 		}
 	}

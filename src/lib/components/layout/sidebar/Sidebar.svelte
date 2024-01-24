@@ -43,6 +43,7 @@
 	</SidebarSection>
 
 	{#if subscribedSubs}
+		<Hr />
 		<SidebarSection heading="Subscribed">
 			{#await subscribedSubs then subs}
 				{#each subs as sub}
