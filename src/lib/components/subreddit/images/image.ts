@@ -44,13 +44,16 @@ export function getSrcsetAndSizes(redditImageData: RedditImageData) {
 	return { srcset, sizes };
 }
 
+type GalleryData =
+	| (RedditImageData & { outboundUrl?: string; caption?: string } & { type: 'image' | 'gif' })
+	| (RedditImageData & { outboundUrl?: string; caption?: string } & { type: 'mp4' });
 export function getGalleryData(submission: SubmissionData) {
 	if (!submission.is_gallery || !submission.gallery_data || !submission.media_metadata) {
 		return [];
 	}
 	if (!submission.media_metadata) return [];
 
-	const res: (RedditImageData & { outboundUrl?: string; caption?: string })[] = [];
+	const res: GalleryData[] = [];
 
 	for (const item of submission.gallery_data.items) {
 		const galleryItem = submission.media_metadata[item.media_id];
@@ -76,7 +79,8 @@ export function getGalleryData(submission: SubmissionData) {
 				resolutions,
 				id: galleryItem.id,
 				caption: item.caption,
-				outboundUrl: item.outbound_url
+				outboundUrl: item.outbound_url,
+				type: 'image'
 			});
 		} else if (galleryItem.e === 'AnimatedImage') {
 			const resolutions =
@@ -87,17 +91,31 @@ export function getGalleryData(submission: SubmissionData) {
 						url: p.u
 					};
 				}) ?? [];
-			const source = {
-				height: galleryItem.s.x,
-				width: galleryItem.s.y,
-				url: galleryItem.s.gif
-			};
+			let source;
+			let type: 'gif' | 'mp4';
+			if (galleryItem.s.mp4) {
+				source = {
+					height: galleryItem.s.x,
+					width: galleryItem.s.y,
+					url: galleryItem.s.mp4
+				};
+				type = 'mp4';
+			} else {
+				source = {
+					height: galleryItem.s.x,
+					width: galleryItem.s.y,
+					url: galleryItem.s.gif
+				};
+				type = 'gif';
+			}
+
 			res.push({
 				source,
 				resolutions,
 				id: galleryItem.id,
 				caption: item.caption,
-				outboundUrl: item.outbound_url
+				outboundUrl: item.outbound_url,
+				type
 			});
 		}
 	}

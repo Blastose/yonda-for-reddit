@@ -3,6 +3,7 @@
 	import { getGalleryData, getSrcsetAndSizes } from '../images/image';
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Image from './Image.svelte';
+	import RedditGifVideo from './video/RedditGifVideo.svelte';
 
 	export let submission: SubmissionData;
 	$: gallery = getGalleryData(submission);
@@ -44,6 +45,7 @@
 	$: console.log(gallery?.map((g) => g.source.width));
 	$: console.log(gallery?.map((g) => g.source.height));
 	$: console.log(gallery);
+	console.log(submission);
 </script>
 
 <div>
@@ -54,18 +56,22 @@
 	>
 		<div bind:this={galleryContainer} class="flex" style:transform="translateX(-{translateX}px)">
 			{#each gallery as g}
-				{@const srcsetAndSizes = getSrcsetAndSizes(g)}
-				{@const defaultImageUrl = g.source.url}
-				{@const aspectRatio = maxAspectRatio}
-				{@const bgImageUrl = g.resolutions.at(0)?.url ?? ''}
-				<Image
-					{aspectRatio}
-					{bgImageUrl}
-					{defaultImageUrl}
-					sizes={srcsetAndSizes?.sizes}
-					srcset={srcsetAndSizes?.srcset}
-					altText="{submission.subreddit_name_prefixed} - {submission.title}"
-				/>
+				{#if g.type !== 'mp4'}
+					{@const srcsetAndSizes = getSrcsetAndSizes(g)}
+					{@const defaultImageUrl = g.source.url}
+					{@const aspectRatio = maxAspectRatio}
+					{@const bgImageUrl = g.resolutions.at(0)?.url ?? ''}
+					<Image
+						{aspectRatio}
+						{bgImageUrl}
+						{defaultImageUrl}
+						sizes={srcsetAndSizes?.sizes}
+						srcset={srcsetAndSizes?.srcset}
+						altText="{submission.subreddit_name_prefixed} - {submission.title}"
+					/>
+				{:else}
+					<RedditGifVideo {submission} video={g.source} />
+				{/if}
 			{/each}
 		</div>
 
