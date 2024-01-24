@@ -2,6 +2,7 @@
 	import type { SubmissionData } from 'jsrwrap/types';
 	import { getSrcsetAndSizes } from '../images/image';
 	import Image from './Image.svelte';
+	import ImageViewerDialog from '$lib/components/layout/dialog/ImageViewerDialog.svelte';
 
 	export let submission: SubmissionData;
 
@@ -15,6 +16,23 @@
 	$: spoiler = submission.spoiler;
 	$: nsfw = submission.over_18;
 </script>
+
+<ImageViewerDialog>
+	<span slot="trigger">
+		<Image
+			{aspectRatio}
+			{bgImageUrl}
+			{defaultImageUrl}
+			srcset={srcsetAndSizes?.srcset}
+			sizes={srcsetAndSizes?.sizes}
+			altText="{submission.subreddit_name_prefixed} - {submission.title}"
+		/>
+	</span>
+
+	<div class="pointer-events-none select-none" slot="content">
+		<img src={defaultImageUrl} alt="" />
+	</div>
+</ImageViewerDialog>
 
 <Image
 	{aspectRatio}
