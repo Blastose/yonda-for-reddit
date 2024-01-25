@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SubmissionData } from 'jsrwrap/types';
-	import { getGalleryData, getSrcsetAndSizes } from '../images/image';
+	import { getGalleryData } from '../images/image';
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Image from './Image.svelte';
 	import RedditGifVideo from './video/RedditGifVideo.svelte';
@@ -54,9 +54,12 @@
 
 <ImageViewerDialog
 	title={submission.title}
-	isGallery={true}
-	{nextGalleryImage}
-	{previousGalleryImage}
+	gallery={{
+		nextGalleryImage,
+		previousGalleryImage,
+		currentPage: currentGalleryIndex + 1,
+		totalPages: gallery.length
+	}}
 >
 	<div class="cursor-pointer" slot="trigger" let:trigger>
 		<div>
@@ -67,7 +70,7 @@
 			>
 				<div
 					bind:this={galleryContainer}
-					class="flex"
+					class="stop-click-func flex"
 					style:transform="translateX(-{translateX}px)"
 				>
 					{#each gallery as g}
