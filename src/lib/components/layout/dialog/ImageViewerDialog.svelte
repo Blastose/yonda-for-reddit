@@ -5,6 +5,9 @@
 	import ImageViewer from './ImageViewer.svelte';
 
 	export let title: string;
+	export let isGallery: boolean = false;
+	export let previousGalleryImage: () => void = () => {};
+	export let nextGalleryImage: () => void = () => {};
 
 	const {
 		elements: { trigger, overlay, content, close, portalled },
@@ -22,11 +25,16 @@
 	}
 
 	let rotateImage: (direction: 'left' | 'right') => void;
+	let reset: () => void;
 </script>
 
-<div use:melt={$trigger} class="stop-click-func items-center justify-center">
-	<slot name="trigger" />
-</div>
+{#if !isGallery}
+	<div use:melt={$trigger} class="stop-click-func items-center justify-center">
+		<slot name="trigger" />
+	</div>
+{:else}
+	<slot name="trigger" trigger={$trigger} />
+{/if}
 
 <div use:melt={$portalled}>
 	{#if $open}
@@ -47,7 +55,7 @@
 			}}
 			use:melt={$content}
 		>
-			<ImageViewer bind:rotateImage>
+			<ImageViewer bind:rotateImage bind:reset>
 				<slot name="content" />
 			</ImageViewer>
 		</div>
@@ -64,6 +72,26 @@
 			>
 				<Icon name="close" />
 			</button>
+
+			{#if isGallery}
+				<button
+					class="pointer-events-auto absolute left-2 top-[50%] -translate-y-1/2 rounded-full bg-black/80 p-2"
+					aria-label="previous image"
+					on:click={() => {
+						previousGalleryImage();
+						reset();
+					}}><Icon name="chevronLeft" height="48" width="48" /></button
+				>
+				<button
+					class="pointer-events-auto absolute right-2 top-[50%] -translate-y-1/2 rounded-full bg-black/80 p-2"
+					aria-label="next image"
+					on:click={() => {
+						nextGalleryImage();
+						reset();
+					}}><Icon name="chevronRight" height="48" width="48" /></button
+				>
+			{/if}
+
 			<div class="pointer-events-auto absolute bottom-0 flex w-full justify-center bg-black/80 p-4">
 				<button
 					aria-label="rotate image left"

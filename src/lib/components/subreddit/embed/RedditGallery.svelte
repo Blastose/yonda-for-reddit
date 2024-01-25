@@ -4,6 +4,8 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import Image from './Image.svelte';
 	import RedditGifVideo from './video/RedditGifVideo.svelte';
+	import ImageViewerDialog from '$lib/components/layout/dialog/ImageViewerDialog.svelte';
+	import { melt } from '@melt-ui/svelte';
 
 	export let submission: SubmissionData;
 	$: gallery = getGalleryData(submission);
@@ -46,66 +48,98 @@
 	$: console.log(gallery?.map((g) => g.source.height));
 	$: console.log(gallery);
 	console.log(submission);
+
+	$: currentImage = gallery[currentGalleryIndex];
 </script>
 
-<div>
-	<div
-		bind:this={gridContainer}
-		class="grid-gallery-container relative grid overflow-x-hidden"
-		bind:clientWidth={width}
-	>
-		<div bind:this={galleryContainer} class="flex" style:transform="translateX(-{translateX}px)">
-			{#each gallery as g}
-				{#if g.type !== 'mp4'}
-					{@const srcsetAndSizes = getSrcsetAndSizes(g)}
-					{@const defaultImageUrl = g.source.url}
-					{@const aspectRatio = maxAspectRatio}
-					{@const bgImageUrl = g.resolutions.at(0)?.url ?? ''}
-					<Image
-						{aspectRatio}
-						{bgImageUrl}
-						{defaultImageUrl}
-						sizes={srcsetAndSizes?.sizes}
-						srcset={srcsetAndSizes?.srcset}
-						altText="{submission.subreddit_name_prefixed} - {submission.title}"
-					/>
-				{:else}
-					<RedditGifVideo {submission} video={g.source} />
+<ImageViewerDialog
+	title={submission.title}
+	isGallery={true}
+	{nextGalleryImage}
+	{previousGalleryImage}
+>
+	<div class="cursor-pointer" slot="trigger" let:trigger>
+		<div>
+			<div
+				bind:this={gridContainer}
+				class="grid-gallery-container relative grid overflow-x-hidden"
+				bind:clientWidth={width}
+			>
+				<div
+					bind:this={galleryContainer}
+					class="flex"
+					style:transform="translateX(-{translateX}px)"
+				>
+					{#each gallery as g}
+						{#if g.type !== 'mp4'}
+							{@const defaultImageUrl = g.source.url}
+							{@const aspectRatio = maxAspectRatio}
+							{@const bgImageUrl = g.resolutions.at(0)?.url ?? ''}
+							<div class="item" use:melt={trigger}>
+								<Image
+									{aspectRatio}
+									{bgImageUrl}
+									{defaultImageUrl}
+									sizes={g.srcsetAndSizes?.sizes}
+									srcset={g.srcsetAndSizes?.srcset}
+									altText="{submission.subreddit_name_prefixed} - {submission.title}"
+								/>
+							</div>
+						{:else}
+							<RedditGifVideo {submission} video={g.source} />
+						{/if}
+					{/each}
+				</div>
+
+				<div class="absolute right-2 top-2 w-fit rounded-2xl bg-black/80 px-2 py-1 text-xs">
+					{currentGalleryIndex + 1}/{gallery.length}
+				</div>
+				<button
+					class="arrow-button left-2"
+					on:click={previousGalleryImage}
+					aria-label="gallery image previous"
+				>
+					<Icon height="24" width="24" name="chevronLeft" />
+				</button>
+				<button
+					class="arrow-button right-2"
+					on:click={nextGalleryImage}
+					aria-label="gallery image next"
+				>
+					<Icon height="24" width="24" name="chevronRight" />
+				</button>
+			</div>
+			{#each gallery as g, index}
+				{#if currentGalleryIndex === index}
+					{#if g.caption}
+						<p>{g.caption}</p>
+					{/if}
+					{#if g.outboundUrl}
+						<div class="reddit-md">
+							<a href={g.outboundUrl} target="_blank" rel="noreferrer">{g.outboundUrl}</a>
+						</div>
+					{/if}
 				{/if}
 			{/each}
 		</div>
-
-		<div class="absolute right-2 top-2 w-fit rounded-2xl bg-black/80 px-2 py-1 text-xs">
-			{currentGalleryIndex + 1}/{gallery.length}
-		</div>
-		<button
-			class="arrow-button left-2"
-			on:click={previousGalleryImage}
-			aria-label="gallery image previous"
-		>
-			<Icon height="24" width="24" name="chevronLeft" />
-		</button>
-		<button
-			class="arrow-button right-2"
-			on:click={nextGalleryImage}
-			aria-label="gallery image next"
-		>
-			<Icon height="24" width="24" name="chevronRight" />
-		</button>
 	</div>
-	{#each gallery as g, index}
-		{#if currentGalleryIndex === index}
-			{#if g.caption}
-				<p>{g.caption}</p>
-			{/if}
-			{#if g.outboundUrl}
-				<div class="reddit-md">
-					<a href={g.outboundUrl} target="_blank" rel="noreferrer">{g.outboundUrl}</a>
-				</div>
-			{/if}
+
+	<div class="pointer-events-none select-none" slot="content">
+		{#if currentImage.type !== 'mp4'}
+			<img
+				class="max-h-[calc(100vh-120px)]"
+				src={currentImage.source.url}
+				srcset={currentImage.srcsetAndSizes?.srcset}
+				sizes={currentImage.srcsetAndSizes?.sizes}
+				alt=""
+			/>
+		{:else}
+			{#key currentGalleryIndex}
+				<RedditGifVideo autoplay={true} {submission} video={currentImage.source} />
+			{/key}
 		{/if}
-	{/each}
-</div>
+	</div>
+</ImageViewerDialog>
 
 <style>
 	.arrow-button {
@@ -121,5 +155,10 @@
 
 	.grid-gallery-container:hover .arrow-button {
 		opacity: 100%;
+	}
+
+	.item {
+		display: flex;
+		flex: 0 0 100%;
 	}
 </style>

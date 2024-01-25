@@ -45,8 +45,16 @@ export function getSrcsetAndSizes(redditImageData: RedditImageData) {
 }
 
 type GalleryData =
-	| (RedditImageData & { outboundUrl?: string; caption?: string } & { type: 'image' | 'gif' })
-	| (RedditImageData & { outboundUrl?: string; caption?: string } & { type: 'mp4' });
+	| (RedditImageData & {
+			outboundUrl?: string;
+			caption?: string;
+			srcsetAndSizes: { srcset: string; sizes: string } | null;
+	  } & { type: 'image' | 'gif' })
+	| (RedditImageData & {
+			outboundUrl?: string;
+			caption?: string;
+			srcsetAndSizes: { srcset: string; sizes: string } | null;
+	  } & { type: 'mp4' });
 export function getGalleryData(submission: SubmissionData) {
 	if (!submission.is_gallery || !submission.gallery_data || !submission.media_metadata) {
 		return [];
@@ -74,14 +82,14 @@ export function getGalleryData(submission: SubmissionData) {
 				width: galleryItem.s.y,
 				url: galleryItem.s.u
 			};
-			res.push({
+			const img = {
 				source,
 				resolutions,
 				id: galleryItem.id,
 				caption: item.caption,
-				outboundUrl: item.outbound_url,
-				type: 'image'
-			});
+				outboundUrl: item.outbound_url
+			};
+			res.push({ ...img, srcsetAndSizes: getSrcsetAndSizes(img), type: 'image' });
 		} else if (galleryItem.e === 'AnimatedImage') {
 			const resolutions =
 				galleryItem.p?.map((p) => {
@@ -109,12 +117,17 @@ export function getGalleryData(submission: SubmissionData) {
 				type = 'gif';
 			}
 
-			res.push({
+			const img = {
 				source,
 				resolutions,
 				id: galleryItem.id,
 				caption: item.caption,
-				outboundUrl: item.outbound_url,
+				outboundUrl: item.outbound_url
+			};
+
+			res.push({
+				...img,
+				srcsetAndSizes: getSrcsetAndSizes(img),
 				type
 			});
 		}

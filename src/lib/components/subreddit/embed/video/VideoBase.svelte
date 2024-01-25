@@ -8,12 +8,13 @@
 	export let width: number;
 	export let height: number;
 	export let loop: boolean = false;
+	export let autoplay: boolean = false;
 	export let src: string | undefined = undefined;
 	export let action: (v: HTMLVideoElement) => void = () => {};
 	export let poster: string | undefined;
 
 	let hoveringVideoPlayer = false;
-	let videoStarted = false;
+	let videoStarted = autoplay;
 	let videoContainer: HTMLElement;
 	let videoNode: HTMLVideoElement;
 	let currentTime: number;
@@ -90,6 +91,7 @@
 		{height}
 		{width}
 		{loop}
+		{autoplay}
 	>
 		{#if src}
 			<source {src} />

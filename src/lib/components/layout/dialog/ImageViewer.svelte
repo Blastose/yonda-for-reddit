@@ -8,6 +8,15 @@
 			}
 		}
 	};
+	export const reset = () => {
+		zoom = 1;
+		diffXFromCenter = 0;
+		diffYFromCenter = 0;
+		lastZoom = zoom;
+		rotate = 0;
+		translateX = 0;
+		translateY = 0;
+	};
 
 	let zoom = 1;
 	let imageContainer: HTMLDivElement;
