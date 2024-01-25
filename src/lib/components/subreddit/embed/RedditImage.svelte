@@ -18,7 +18,7 @@
 </script>
 
 <ImageViewerDialog>
-	<span slot="trigger">
+	<span class="cursor-pointer" slot="trigger">
 		<Image
 			{aspectRatio}
 			{bgImageUrl}
@@ -30,15 +30,12 @@
 	</span>
 
 	<div class="pointer-events-none select-none" slot="content">
-		<img src={defaultImageUrl} alt="" />
+		<img
+			class="max-h-screen"
+			src={defaultImageUrl}
+			srcset={srcsetAndSizes?.srcset}
+			sizes={srcsetAndSizes?.sizes}
+			alt=""
+		/>
 	</div>
 </ImageViewerDialog>
-
-<Image
-	{aspectRatio}
-	{bgImageUrl}
-	{defaultImageUrl}
-	srcset={srcsetAndSizes?.srcset}
-	sizes={srcsetAndSizes?.sizes}
-	altText="{submission.subreddit_name_prefixed} - {submission.title}"
-/>
