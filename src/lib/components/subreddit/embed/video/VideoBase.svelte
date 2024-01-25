@@ -10,10 +10,7 @@
 	export let loop: boolean = false;
 	export let src: string | undefined = undefined;
 	export let action: (v: HTMLVideoElement) => void = () => {};
-
-	$: poster =
-		submission.preview?.images.at(0)?.resolutions.at(3)?.url ??
-		submission.preview?.images.at(0)?.resolutions.at(0)?.url;
+	export let poster: string | undefined;
 
 	let hoveringVideoPlayer = false;
 	let videoStarted = false;
@@ -47,7 +44,7 @@
 <div
 	use:videoControls
 	bind:this={videoContainer}
-	class="stop-click-func video-player group relative flex max-h-[512px] w-full justify-center overflow-hidden rounded-2xl border border-[#303030] bg-black"
+	class="item stop-click-func video-player group relative flex max-h-[512px] w-full justify-center overflow-hidden rounded-2xl border border-[#303030] bg-black"
 >
 	{#if !videoStarted}
 		<button
@@ -116,3 +113,10 @@
 		/>
 	</div>
 </div>
+
+<style>
+	.item {
+		display: flex;
+		flex: 0 0 100%;
+	}
+</style>

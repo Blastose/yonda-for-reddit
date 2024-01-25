@@ -11,7 +11,7 @@
 
 {#if submission.post_hint === 'image'}
 	{#if submission.preview.images.at(0)?.variants?.mp4}
-		<RedditGifVideo {submission} />
+		<RedditGifVideo {submission} video={submission.preview.images.at(0)?.variants?.mp4?.source} />
 	{:else}
 		<RedditImage {submission} />
 	{/if}

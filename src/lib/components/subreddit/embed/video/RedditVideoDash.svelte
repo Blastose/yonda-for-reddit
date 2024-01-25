@@ -27,12 +27,17 @@
 	$: console.log(submission.media);
 	$: redditVideo = submission.media?.reddit_video;
 	$: source = submission.media?.reddit_video?.dash_url ?? '';
+
+	$: poster =
+		submission.preview?.images.at(0)?.resolutions.at(3)?.url ??
+		submission.preview?.images.at(0)?.resolutions.at(0)?.url;
 </script>
 
 <VideoBase
 	action={dash}
 	height={redditVideo?.height ?? 0}
 	width={redditVideo?.width ?? 0}
+	{poster}
 	{submission}
 	loop={false}
 />

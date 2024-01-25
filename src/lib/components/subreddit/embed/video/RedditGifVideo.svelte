@@ -3,14 +3,21 @@
 	import VideoBase from './VideoBase.svelte';
 
 	export let submission: SubmissionData;
-
-	$: source = submission.preview.images.at(0)?.variants?.mp4?.source;
+	export let video:
+		| {
+				width: number;
+				height: number;
+				url: string;
+		  }
+		| undefined;
+	export let poster: string | undefined = undefined;
 </script>
 
 <VideoBase
 	loop={true}
 	{submission}
-	width={source?.width ?? 0}
-	height={source?.height ?? 0}
-	src={source?.url ?? ''}
+	{poster}
+	width={video?.width ?? 0}
+	height={video?.height ?? 0}
+	src={video?.url ?? ''}
 />
