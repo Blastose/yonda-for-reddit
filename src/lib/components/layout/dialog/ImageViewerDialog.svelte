@@ -4,6 +4,8 @@
 	import { fade } from 'svelte/transition';
 	import ImageViewer from './ImageViewer.svelte';
 
+	export let title: string;
+
 	const {
 		elements: { trigger, overlay, content, close, portalled },
 		states: { open }
@@ -52,6 +54,9 @@
 
 		<div transition:fade={{ duration: 150 }} class="pointer-events-none fixed inset-0 z-50">
 			<!-- Controls -->
+			<div class="pointer-events-auto absolute top-0 w-full bg-black/80 px-8 py-4">
+				<p class="line-clamp-1 text-lg font-bold">{title}</p>
+			</div>
 			<button
 				use:melt={$close}
 				aria-label="close"

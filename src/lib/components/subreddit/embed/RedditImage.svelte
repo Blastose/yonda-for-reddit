@@ -17,7 +17,7 @@
 	$: nsfw = submission.over_18;
 </script>
 
-<ImageViewerDialog>
+<ImageViewerDialog title={submission.title}>
 	<span class="cursor-pointer" slot="trigger">
 		<Image
 			{aspectRatio}
@@ -31,7 +31,7 @@
 
 	<div class="pointer-events-none select-none" slot="content">
 		<img
-			class="max-h-screen"
+			class="max-h-[calc(100vh-120px)]"
 			src={defaultImageUrl}
 			srcset={srcsetAndSizes?.srcset}
 			sizes={srcsetAndSizes?.sizes}
