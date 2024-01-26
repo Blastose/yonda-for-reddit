@@ -49,7 +49,7 @@
 	$: console.log(gallery);
 	console.log(submission);
 
-	$: currentImage = gallery[currentGalleryIndex];
+	$: currentImage = gallery.at(currentGalleryIndex);
 </script>
 
 <ImageViewerDialog
@@ -59,8 +59,8 @@
 		previousGalleryImage,
 		currentPage: currentGalleryIndex + 1,
 		totalPages: gallery.length,
-		caption: currentImage.caption,
-		outboundUrl: currentImage.outboundUrl
+		caption: currentImage?.caption,
+		outboundUrl: currentImage?.outboundUrl
 	}}
 >
 	<div class="cursor-pointer" slot="trigger" let:trigger>
@@ -113,7 +113,7 @@
 				>
 					<Icon height="24" width="24" name="chevronRight" />
 				</button>
-				{#if currentImage.caption || currentImage.outboundUrl}
+				{#if currentImage?.caption || currentImage?.outboundUrl}
 					<p class="absolute bottom-0 flex w-full flex-col bg-black/80 px-4 py-2">
 						{#if currentImage.caption}<span>{currentImage.caption}</span>{/if}
 						{#if currentImage.outboundUrl}<a
@@ -129,12 +129,12 @@
 	</div>
 
 	<div class="pointer-events-none select-none" slot="content">
-		{#if currentImage.type !== 'mp4'}
+		{#if currentImage?.type !== 'mp4'}
 			<img
 				class="max-h-[calc(100vh-120px)]"
-				src={currentImage.source.url}
-				srcset={currentImage.srcsetAndSizes?.srcset}
-				sizes={currentImage.srcsetAndSizes?.sizes}
+				src={currentImage?.source.url}
+				srcset={currentImage?.srcsetAndSizes?.srcset}
+				sizes={currentImage?.srcsetAndSizes?.sizes}
 				alt=""
 			/>
 		{:else}
