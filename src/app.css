@@ -134,7 +134,7 @@ html {
 
 .reddit-md {
 	overflow-wrap: anywhere;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 .reddit-md a {
