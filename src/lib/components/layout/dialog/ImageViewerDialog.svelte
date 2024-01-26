@@ -11,6 +11,8 @@
 				nextGalleryImage: () => void;
 				currentPage: number;
 				totalPages: number;
+				caption?: string;
+				outboundUrl?: string;
 		  }
 		| undefined = undefined;
 
@@ -77,7 +79,7 @@
 
 		<div
 			transition:fade={{ duration: 150 }}
-			class="pointer-events-none fixed inset-0 z-50"
+			class="pointer-events-none fixed inset-0 z-50 select-none"
 			use:melt={$content}
 		>
 			<div
@@ -122,47 +124,69 @@
 				>
 			{/if}
 
-			<div
-				class="pointer-events-auto absolute bottom-0 flex w-full items-center justify-center bg-black/80 p-4"
-			>
-				{#if gallery}
-					<p>{gallery.currentPage} / {gallery.totalPages}</p>
-				{/if}
+			<div class="pointer-events-auto absolute bottom-0 flex w-full flex-col">
+				{#if gallery?.outboundUrl || gallery?.caption}
+					<p class="flex w-fit flex-col bg-black/80 px-4 py-2">
+						{#if gallery.caption}<span>{gallery.caption}</span>{/if}
+						{#if gallery.outboundUrl}<a
+								class="line-clamp-1 text-[var(--link-color)]"
+								href={gallery.outboundUrl}
+								target="_blank"
+								rel="noreferrer">{gallery.outboundUrl}</a
+							>{/if}
+					</p>{/if}
+				<div class="flex items-center justify-between bg-black/80 p-4">
+					<!-- Empty div for justify-between -->
+					<div></div>
+					<div class="flex items-center">
+						<button aria-label="zoom in" on:click={zoomIn}><Icon name="plus" /></button>
+						<button aria-label="zoom out" on:click={zoomOut}><Icon name="minus" /></button>
+						<button aria-label="reset image position" on:click={reset}
+							><Icon name="restart" /></button
+						>
 
-				<button aria-label="zoom in" on:click={zoomIn}><Icon name="plus" /></button>
-				<button aria-label="zoom out" on:click={zoomOut}><Icon name="minus" /></button>
-				<button aria-label="reset image position" on:click={reset}><Icon name="restart" /></button>
+						{#if gallery}
+							<button
+								aria-label="previous image"
+								on:click={() => {
+									if (!gallery) return;
+									gallery.previousGalleryImage();
+									reset();
+								}}><Icon name="chevronLeft" /></button
+							>
+							<button
+								aria-label="next image"
+								on:click={() => {
+									if (!gallery) return;
+									gallery.nextGalleryImage();
+									reset();
+								}}><Icon name="chevronRight" /></button
+							>
+						{/if}
+						<button
+							aria-label="rotate image left"
+							on:click={() => {
+								rotateImage('left');
+							}}><Icon name="rotateLeft" /></button
+						>
+						<button
+							aria-label="rotate image right"
+							on:click={() => {
+								rotateImage('right');
+							}}><Icon name="rotateRight" /></button
+						>
+					</div>
 
-				{#if gallery}
-					<button
-						aria-label="previous image"
-						on:click={() => {
-							if (!gallery) return;
-							gallery.previousGalleryImage();
-							reset();
-						}}><Icon name="chevronLeft" /></button
-					>
-					<button
-						aria-label="next image"
-						on:click={() => {
-							if (!gallery) return;
-							gallery.nextGalleryImage();
-							reset();
-						}}><Icon name="chevronRight" /></button
-					>
-				{/if}
-				<button
-					aria-label="rotate image left"
-					on:click={() => {
-						rotateImage('left');
-					}}><Icon name="rotateLeft" /></button
-				>
-				<button
-					aria-label="rotate image right"
-					on:click={() => {
-						rotateImage('right');
-					}}><Icon name="rotateRight" /></button
-				>
+					{#if gallery}
+						<!-- Extra width to prevent shift when number gets more digits -->
+						<p class="mr-2 flex w-[128px] justify-end">
+							{gallery.currentPage} / {gallery.totalPages}
+						</p>
+					{:else}
+						<!-- Empty div for justify between -->
+						<div></div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	{/if}

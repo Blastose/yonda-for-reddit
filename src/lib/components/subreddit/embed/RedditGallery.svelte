@@ -58,14 +58,16 @@
 		nextGalleryImage,
 		previousGalleryImage,
 		currentPage: currentGalleryIndex + 1,
-		totalPages: gallery.length
+		totalPages: gallery.length,
+		caption: currentImage.caption,
+		outboundUrl: currentImage.outboundUrl
 	}}
 >
 	<div class="cursor-pointer" slot="trigger" let:trigger>
 		<div>
 			<div
 				bind:this={gridContainer}
-				class="grid-gallery-container relative grid overflow-x-hidden"
+				class="grid-gallery-container relative grid overflow-x-hidden rounded-3xl"
 				bind:clientWidth={width}
 			>
 				<div
@@ -111,19 +113,18 @@
 				>
 					<Icon height="24" width="24" name="chevronRight" />
 				</button>
-			</div>
-			{#each gallery as g, index}
-				{#if currentGalleryIndex === index}
-					{#if g.caption}
-						<p>{g.caption}</p>
-					{/if}
-					{#if g.outboundUrl}
-						<div class="reddit-md">
-							<a href={g.outboundUrl} target="_blank" rel="noreferrer">{g.outboundUrl}</a>
-						</div>
-					{/if}
+				{#if currentImage.caption || currentImage.outboundUrl}
+					<p class="absolute bottom-0 flex w-full flex-col bg-black/80 px-4 py-2">
+						{#if currentImage.caption}<span>{currentImage.caption}</span>{/if}
+						{#if currentImage.outboundUrl}<a
+								class="line-clamp-1 text-[var(--link-color)]"
+								href={currentImage.outboundUrl}
+								target="_blank"
+								rel="noreferrer">{currentImage.outboundUrl}</a
+							>{/if}
+					</p>
 				{/if}
-			{/each}
+			</div>
 		</div>
 	</div>
 
