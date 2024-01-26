@@ -11,6 +11,8 @@
 	import { markdownToHtml } from '$lib/reddit/markdownToHtml';
 	import { hasEmbed } from './embed/embed';
 	import CardThumbnail from './CardThumbnail.svelte';
+	import ObfuscatedOverlay from './embed/ObfuscatedOverlay.svelte';
+	import { getSubmissionObfuscatedType } from './submission';
 
 	export let submission: SubmissionData;
 	$: href = formatSubmissionPermalink(submission.permalink);
@@ -34,6 +36,8 @@
 				!hasEmbed(submission)
 		);
 	}
+
+	$: obfuscatedType = getSubmissionObfuscatedType(submission);
 </script>
 
 <ClickableDivWrapper
@@ -56,12 +60,14 @@
 			{/if}
 		</div>
 
-		<Embed {submission} />
-		{#if submission.selftext}
-			<div class="selftext max-h-24 overflow-hidden text-sm">
-				<RedditHtml rawHTML={markdownToHtml(submission.selftext)} />
-			</div>
-		{/if}
+		<ObfuscatedOverlay type={obfuscatedType}>
+			<Embed {submission} />
+			{#if submission.selftext}
+				<div class="selftext max-h-24 overflow-hidden text-sm">
+					<RedditHtml rawHTML={markdownToHtml(submission.selftext)} />
+				</div>
+			{/if}
+		</ObfuscatedOverlay>
 
 		<SubmissionActions {submission} {numNewComments} type="subreddit" />
 	</article>
