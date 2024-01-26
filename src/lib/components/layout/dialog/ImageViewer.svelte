@@ -8,6 +8,33 @@
 			}
 		}
 	};
+	export const reset = () => {
+		zoom = 1;
+		diffXFromCenter = 0;
+		diffYFromCenter = 0;
+		lastZoom = zoom;
+		rotate = 0;
+		translateX = 0;
+		translateY = 0;
+	};
+	export const zoomIn = () => {
+		zoom += (zoom + 1) * 0.001 * 100;
+		if (zoom < 0.25) {
+			zoom = 0.25;
+		}
+		if (zoom > 6) {
+			zoom = 6;
+		}
+	};
+	export const zoomOut = () => {
+		zoom -= (zoom + 1) * 0.001 * 100;
+		if (zoom < 0.25) {
+			zoom = 0.25;
+		}
+		if (zoom > 6) {
+			zoom = 6;
+		}
+	};
 
 	let zoom = 1;
 	let imageContainer: HTMLDivElement;
@@ -19,6 +46,7 @@
 		diffXFromCenter = (e.x - rect.x - rect.width / 2) / zoom;
 		diffYFromCenter = (e.y - rect.y - rect.height / 2) / zoom;
 		lastZoom = zoom;
+		console.log(e.deltaY);
 
 		const scaleFactor = 1 + zoom;
 		zoom += -e.deltaY * 0.001 * scaleFactor;
