@@ -29,6 +29,7 @@
 			submission.thumbnail &&
 				submission.thumbnail !== 'nsfw' &&
 				submission.thumbnail !== 'spoiler' &&
+				submission.thumbnail !== 'default' &&
 				submission.post_hint === 'link' &&
 				!hasEmbed(submission)
 		);
