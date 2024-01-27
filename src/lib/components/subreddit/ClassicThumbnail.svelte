@@ -11,7 +11,12 @@
 <button class="w-full" on:click={handleClick}>
 	{#if hasThumbnail}
 		<span class="relative flex">
-			<img src={submission.thumbnail} alt="" />
+			<img
+				src={submission.thumbnail}
+				alt=""
+				width={submission.thumbnail_width}
+				height={submission.thumbnail_height}
+			/>
 			<ThumbnailHint {submission} />
 		</span>
 	{:else if submission.thumbnail !== ''}
