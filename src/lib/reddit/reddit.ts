@@ -12,7 +12,10 @@ export const redirectUri = dev
 async function createJsrwrap() {
 	const oauth = await db?.get('redditOauth', 'reddit');
 	let jsrwrap;
-	if (oauth) {
+	if (
+		oauth &&
+		((oauth.expires && oauth.expires > new Date().getTime() / 1000) || Boolean(oauth?.refreshToken))
+	) {
 		jsrwrap = await Jsrwrap.fromAccessAndRefreshToken({
 			clientId: PUBLIC_CLIENT_ID,
 			clientSecret: '',
@@ -24,24 +27,41 @@ async function createJsrwrap() {
 			expiresIn: oauth.expires ?? new Date().getTime() / 1000 + 3600
 		});
 	} else {
-		jsrwrap = await Jsrwrap.fromApplicationOnlyAuth({
-			clientId: PUBLIC_CLIENT_ID,
-			clientSecret: '',
-			grantType: 'https://oauth.reddit.com/grants/installed_client',
-			userAgent: 'web:yonda-for-reddit:0.1.0 (by /u/blastose)',
-			deviceId: 'DO_NOT_TRACK_THIS_DEVICE'
-		});
-		if (browser) {
-			await db.put(
-				'redditOauth',
-				{
-					accessToken: jsrwrap.accessToken,
-					refreshToken: jsrwrap.refreshToken!,
-					expires: jsrwrap.expires
-				},
-				'reddit'
-			);
+		if (oauth && oauth.expires && oauth.expires > new Date().getTime() / 1000) {
+			jsrwrap = await Jsrwrap.fromApplicationOnlyAuth({
+				clientId: PUBLIC_CLIENT_ID,
+				clientSecret: '',
+				grantType: 'https://oauth.reddit.com/grants/installed_client',
+				userAgent: 'web:yonda-for-reddit:0.1.0 (by /u/blastose)',
+				deviceId: 'DO_NOT_TRACK_THIS_DEVICE',
+				existingAccessToken: {
+					accessToken: oauth.accessToken,
+					expires: oauth.expires
+				}
+			});
+		} else {
+			jsrwrap = await Jsrwrap.fromApplicationOnlyAuth({
+				clientId: PUBLIC_CLIENT_ID,
+				clientSecret: '',
+				grantType: 'https://oauth.reddit.com/grants/installed_client',
+				userAgent: 'web:yonda-for-reddit:0.1.0 (by /u/blastose)',
+				deviceId: 'DO_NOT_TRACK_THIS_DEVICE'
+			});
 		}
+	}
+	if (jsrwrap.expires && jsrwrap.expires < new Date().getTime() / 1000) {
+		await jsrwrap.refreshAccessToken();
+	}
+	if (browser) {
+		await db.put(
+			'redditOauth',
+			{
+				accessToken: jsrwrap.accessToken,
+				refreshToken: jsrwrap.refreshToken,
+				expires: jsrwrap.expires
+			},
+			'reddit'
+		);
 	}
 
 	return jsrwrap;
@@ -67,7 +87,7 @@ if (browser) {
 			'redditOauth',
 			{
 				accessToken: jsrwrap.accessToken,
-				refreshToken: jsrwrap.refreshToken!,
+				refreshToken: jsrwrap.refreshToken,
 				expires: jsrwrap.expires
 			},
 			'reddit'
