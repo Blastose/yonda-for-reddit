@@ -4,6 +4,7 @@
 	import { submissionStoreClick } from '$lib/stores/submissionStore';
 	import { formatSubmissionPermalink } from '$lib/url/url';
 	import { formatter } from '$lib/reddit/number';
+	import SubmissionMoreOptions from './SubmissionMoreOptions.svelte';
 
 	export let submission: SubmissionData;
 	export let numNewComments: number;
@@ -46,4 +47,6 @@
 			{formatter.format(submission.num_comments)}
 		</div>
 	{/if}
+
+	<SubmissionMoreOptions {submission} />
 </div>
