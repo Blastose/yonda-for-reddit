@@ -23,9 +23,9 @@
 	<Youtube {submission} />
 {:else if submission.media?.type === 'clips.twitch.tv'}
 	<!-- TODO twitch clips embed -->
-	<div class="reddit-md">
+	<!-- <div class="reddit-md">
 		{@html submission.secure_media_embed.content}
-	</div>
+	</div> -->
 {:else if submission.secure_media}
 	<div class="reddit-md">
 		<!-- TODO -->

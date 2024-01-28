@@ -7,7 +7,12 @@
 
 <a target="_blank" rel="noreferrer" href={submission.url} class="flex">
 	<span class="thumbnail-image relative">
-		<img src={submission.thumbnail} alt="" />
+		<img
+			src={submission.thumbnail}
+			alt=""
+			width={submission.thumbnail_width}
+			height={submission.thumbnail_height}
+		/>
 		<ThumbnailHint {submission} />
 	</span>
 </a>

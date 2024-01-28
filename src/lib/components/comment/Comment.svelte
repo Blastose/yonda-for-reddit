@@ -10,6 +10,7 @@
 	import { jsrwrap } from '$lib/reddit/reddit';
 	import { buildCommentThreadPermalink } from '$lib/url/url';
 	import { page } from '$app/stores';
+	import CommentMoreOptions from './CommentMoreOptions.svelte';
 
 	export let comment: CommentFull;
 	export let pageSort: Sort | undefined;
@@ -108,6 +109,8 @@
 								</span>
 								<span class="flex gap-2 text-xs">Reply</span>
 							</button>
+
+							<CommentMoreOptions {comment} />
 						</div>
 					</div>
 				{/if}

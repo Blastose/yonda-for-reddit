@@ -40,7 +40,7 @@ export interface MyDB extends DBSchema {
 	redditOauth: {
 		value: {
 			accessToken: string;
-			refreshToken: string;
+			refreshToken?: string;
 			expires: number | undefined;
 		};
 		key: 'reddit';
