@@ -23,7 +23,7 @@
 				<Icon height="68" width="68" class="" name="youtube" />
 			</span>
 			{#if submission.preview}
-				<img src={submission.preview?.images.at(0)?.source.url} alt="" />
+				<img src={submission.preview?.images.at(0)?.source.url} alt="" loading="lazy" />
 			{:else}
 				<span class="block aspect-video h-full w-full bg-black"></span>
 			{/if}
