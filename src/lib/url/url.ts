@@ -55,6 +55,7 @@ export function showSubreddit(url: string, currentUrlSubreddit: string | undefin
 	return (
 		currentUrlSubreddit === 'popular' ||
 		currentUrlSubreddit === 'all' ||
+		url.startsWith('/user/') ||
 		url === '/' ||
 		url === '/new' ||
 		url === '/hot' ||

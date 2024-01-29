@@ -1,9 +1,11 @@
 <script lang="ts">
+	import RedditUser from '$lib/components/reddituser/RedditUser.svelte';
+
 	export let data;
 </script>
 
 <div class="flex flex-col gap-4 pt-6">
-	<div class="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_256px]">
+	<div class="grid grid-cols-1 gap-4 md:grid-cols-[1fr_320px]">
 		<div class="flex flex-col gap-6">
 			<div class="flex items-center gap-4">
 				<img
@@ -21,6 +23,10 @@
 
 			<slot />
 		</div>
-		<div class="hidden sm:block">Profile info</div>
+		<div
+			class="thin-scrollbar sticky top-16 hidden h-[calc(100dvh-100px)] overflow-y-auto md:block"
+		>
+			<RedditUser redditUser={data.about} />
+		</div>
 	</div>
 </div>

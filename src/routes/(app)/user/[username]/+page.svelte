@@ -1,32 +1,21 @@
 <script lang="ts">
-	import UserComment from '$lib/components/comment/UserComment.svelte';
-	import Hr from '$lib/components/layout/Hr.svelte';
-	import SubmissionCard from '$lib/components/subreddit/SubmissionCard.svelte';
-	import SubmissionClassic from '$lib/components/subreddit/SubmissionClassic.svelte';
-	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
+	import Pagination from '$lib/components/reddit/Pagination.svelte';
+	import Creations from '$lib/components/reddituser/Creations.svelte';
 
 	export let data;
 </script>
 
 <svelte:head><title>{data.about.name} (u/{data.about.name})</title></svelte:head>
 
-<div>
+<div class="flex flex-col gap-4">
 	{#await data.overview then overview}
-		<div class="flex flex-col gap-2">
-			{#each overview.data as d}
-				{#if d.type === 'post'}
-					{#if $submissionDisplayStore === 'card'}
-						<SubmissionCard submission={d} />
-					{:else}
-						<SubmissionClassic submission={d} />
-					{/if}
-				{:else}
-					<UserComment comment={d} />
-				{/if}
-				<Hr />
-			{/each}
-		</div>
+		<Creations creations={{ data: overview.data, type: 'both' }} />
 
-		<a href="/{overview.after}">next</a>
+		<Pagination
+			before={overview.before}
+			after={overview.after}
+			count={data.count}
+			dist={data.overview.dist}
+		/>
 	{/await}
 </div>

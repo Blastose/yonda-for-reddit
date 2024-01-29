@@ -11,12 +11,14 @@ export const load: PageLoad = async ({ params, url }) => {
 	const t = url.searchParams.get('t') as UserTOptions | undefined;
 	const before = url.searchParams.get('before') as string | undefined;
 	const after = url.searchParams.get('after') as string | undefined;
+	const count = Number(url.searchParams.get('count')) || undefined;
 
-	const options = { sort, t, before, after };
+	const options = { sort, t, before, after, count };
 
-	const overview = jsrwrapUser.getOverview(options);
+	const overview = await jsrwrapUser.getOverview(options);
 
 	return {
-		overview
+		overview,
+		count
 	};
 };

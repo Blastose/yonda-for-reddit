@@ -2,7 +2,7 @@ import { browser, dev } from '$app/environment';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
 import { db } from '$lib/idb/idb';
 import { lsdb } from '$lib/idb/ls';
-import { Jsrwrap, Submission, Subreddit } from 'jsrwrap';
+import { Jsrwrap, Submission, Subreddit, User } from 'jsrwrap';
 import type { SubredditData } from 'jsrwrap/types';
 
 export const redirectUri = dev
@@ -151,3 +151,4 @@ export type PinnedSubreddit = Pick<SubredditData, 'display_name_prefixed'> &
 		url: string;
 		order: number;
 	};
+export type UserCreation = Awaited<ReturnType<User['getOverview']>>['data'][number];
