@@ -28,8 +28,7 @@ export const load: PageLoad = async ({ params, url }) => {
 
 	return {
 		creations: await creations,
-		count,
-		username,
+		count, 
 		where
 	};
 };

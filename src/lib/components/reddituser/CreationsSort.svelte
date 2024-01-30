@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import SortTime from '../subreddit/SortTime.svelte';
+	import Sort from './Sort.svelte';
 	import SortItem from './SortItem.svelte';
 
 	export let username: string;
@@ -20,9 +22,12 @@
 		}
 		return `/user/${username}`;
 	}
+
+	$: userWhere = $page.params.userWhere;
+	$: t = $page.url.searchParams.get('sort') ?? 'new';
 </script>
 
-<div class="flex gap-2">
+<div class="flex flex-col gap-2">
 	<div class="thin-scrollbar flex gap-4 overflow-x-auto">
 		{#each whereOptions as where}
 			{#if !where.requiresIsUser}
@@ -31,4 +36,13 @@
 			{/if}
 		{/each}
 	</div>
+
+	{#if userWhere === undefined || userWhere === 'submitted' || userWhere === 'comments'}
+		<div class="flex">
+			<Sort />
+			{#if t === 'top' || t === 'hot' || t === 'controversial'}
+				<SortTime defaultSort="all" />
+			{/if}
+		</div>
+	{/if}
 </div>

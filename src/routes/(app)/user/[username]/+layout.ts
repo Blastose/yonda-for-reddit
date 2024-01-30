@@ -7,6 +7,7 @@ export const load: LayoutLoad = async ({ params }) => {
 	const user = jsrwrap.getUser(username);
 	const about = await user.getAbout();
 	return {
-		about
+		about,
+		username
 	};
 };

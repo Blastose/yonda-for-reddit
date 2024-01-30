@@ -21,6 +21,7 @@
 
 	$: subreddit = $page.params.subreddit;
 	$: fallbackSubreddit = subreddit ? `r/${subreddit}` : null;
+	$: currentSort = $page.params.sort ?? $page.params.sort ?? 'hot';
 </script>
 
 <div class="flex flex-col gap-4 pt-2">
@@ -31,7 +32,9 @@
 			{#if showSubredditOptions}
 				<div class="flex">
 					<SubredditSort />
-					<SortTime />
+					{#if currentSort === 'top' || currentSort === 'controversial'}
+						<SortTime />
+					{/if}
 				</div>
 			{/if}
 

@@ -19,7 +19,6 @@ export const load: PageLoad = async ({ params, url }) => {
 
 	return {
 		overview,
-		count,
-		username
+		count, 
 	};
 };
