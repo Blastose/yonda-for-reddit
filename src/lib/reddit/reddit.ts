@@ -152,3 +152,4 @@ export type PinnedSubreddit = Pick<SubredditData, 'display_name_prefixed'> &
 		order: number;
 	};
 export type UserCreation = Awaited<ReturnType<User['getOverview']>>['data'][number];
+export type UserCreationFull = Awaited<ReturnType<User['getOverview']>>;

@@ -1,4 +1,8 @@
+import { db } from '$lib/idb/idb';
 import { jsrwrap } from '$lib/reddit/reddit';
+import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
+import { transformUrlForIDBKey } from '$lib/url/url';
+import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
 import type { UserSortOptions, UserTOptions } from 'jsrwrap';
@@ -15,10 +19,24 @@ export const load: PageLoad = async ({ params, url }) => {
 
 	const options = { sort, t, before, after, count };
 
-	const overview = await jsrwrapUser.getOverview(options);
+	let overview;
+
+	if (get(navigationTypeStore) === 'bfbutton') {
+		const overviewMaybe = await db.get('redditUserCreations', transformUrlForIDBKey(url));
+		if (overviewMaybe) {
+			overview = overviewMaybe;
+
+			return {
+				overview,
+				count
+			};
+		}
+	}
+
+	overview = jsrwrapUser.getOverview(options);
 
 	return {
 		overview,
-		count, 
+		count
 	};
 };

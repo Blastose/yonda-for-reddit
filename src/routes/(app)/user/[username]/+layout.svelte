@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Hr from '$lib/components/layout/Hr.svelte';
 	import CreationsSort from '$lib/components/reddituser/CreationsSort.svelte';
 	import RedditUser from '$lib/components/reddituser/RedditUser.svelte';
