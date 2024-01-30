@@ -6,19 +6,22 @@
 	export let data;
 </script>
 
-<svelte:head><title>{data.about.name} (u/{data.about.name})</title></svelte:head>
-
 <div class="flex flex-col gap-4">
-	{#await data.overview then overview}
+	{#await data.creations then creation}
 		<CreationsSort username={data.username} />
 
-		<Creations creations={{ data: overview.data, type: 'both' }} />
+		<Creations
+			creations={{
+				data: creation.data,
+				type: 'both'
+			}}
+		/>
 
 		<Pagination
-			before={overview.before}
-			after={overview.after}
+			before={creation.before}
+			after={creation.after}
 			count={data.count}
-			dist={data.overview.dist}
+			dist={creation.dist}
 		/>
 	{/await}
 </div>

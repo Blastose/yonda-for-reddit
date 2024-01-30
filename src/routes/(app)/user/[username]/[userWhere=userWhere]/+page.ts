@@ -6,6 +6,7 @@ import type { UserSortOptions, UserTOptions } from 'jsrwrap';
 export const load: PageLoad = async ({ params, url }) => {
 	const username = params.username;
 	const jsrwrapUser = jsrwrap.getUser(username);
+	const where = params.userWhere;
 
 	const sort = url.searchParams.get('sort') as UserSortOptions | undefined;
 	const t = url.searchParams.get('t') as UserTOptions | undefined;
@@ -15,11 +16,20 @@ export const load: PageLoad = async ({ params, url }) => {
 
 	const options = { sort, t, before, after, count };
 
-	const overview = await jsrwrapUser.getOverview(options);
+	let creations;
+	if (where === 'comments') {
+		creations = jsrwrapUser.getComments(options);
+	} else if (where === 'submitted') {
+		creations = jsrwrapUser.getSubmitted(options);
+	} else {
+		// TODO implement saved/hidden/upvoted/downvoted
+		creations = jsrwrapUser.getOverview(options);
+	}
 
 	return {
-		overview,
+		creations: await creations,
 		count,
-		username
+		username,
+		where
 	};
 };
