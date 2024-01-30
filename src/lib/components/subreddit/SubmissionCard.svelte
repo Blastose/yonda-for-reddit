@@ -60,14 +60,16 @@
 			{/if}
 		</div>
 
-		<ObfuscatedOverlay type={obfuscatedType}>
-			<Embed {submission} />
-			{#if submission.selftext}
-				<div class="selftext max-h-24 overflow-hidden text-sm">
-					<RedditHtml rawHTML={markdownToHtml(submission.selftext)} />
-				</div>
-			{/if}
-		</ObfuscatedOverlay>
+		{#if !submission.stickied && !submission.pinned}
+			<ObfuscatedOverlay type={obfuscatedType}>
+				<Embed {submission} />
+				{#if submission.selftext}
+					<div class="selftext max-h-24 overflow-hidden text-sm">
+						<RedditHtml rawHTML={markdownToHtml(submission.selftext)} />
+					</div>
+				{/if}
+			</ObfuscatedOverlay>
+		{/if}
 
 		<SubmissionActions {submission} {numNewComments} type="subreddit" />
 	</article>

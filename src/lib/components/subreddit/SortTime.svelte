@@ -3,7 +3,6 @@
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import Icon from '../icon/Icon.svelte';
-	import { addSearchParamToUrl } from '$lib/url/url';
 
 	export let defaultSort: string = 'day';
 
@@ -59,6 +58,27 @@
 
 	$: currentTimeSort = ($page.url.searchParams.get('t') ?? defaultSort) as keyof typeof timeMap;
 	$: display = `${timeMap[currentTimeSort]}`;
+
+	export function addSearchParamToUrl(
+		url: URL,
+		newSearchParam: string,
+		newSearchParamValue: string
+	) {
+		const urlClone = new URL(url);
+		console.log(urlClone.search);
+		const toDelete: string[] = [];
+		for (const [key, _] of urlClone.searchParams) {
+			if (key !== 'sort' && key !== 'q') {
+				toDelete.push(key);
+			}
+		}
+		for (const key of toDelete) {
+			urlClone.searchParams.delete(key);
+		}
+		urlClone.searchParams.set(newSearchParam, newSearchParamValue);
+
+		return urlClone.toString();
+	}
 </script>
 
 <button

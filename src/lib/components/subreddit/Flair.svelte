@@ -11,14 +11,22 @@
 	>;
 
 	export let linkFlair: LinkFlair;
+	export let subreddit: string;
+
+	function makeFlairHref(sub: string, flair: LinkFlair) {
+		return `/r/${sub}/search?sort=new&restrict_sr=true&q=flair:${flair.link_flair_text}`;
+	}
 
 	$: styleTag = `background-color: ${
 		linkFlair.link_flair_background_color || 'rgb(168, 220, 232);color: black'
 	};`;
+
+	$: href = makeFlairHref(subreddit, linkFlair);
 </script>
 
 {#if linkFlair.link_flair_text}
-	<div
+	<a
+		{href}
 		class="flair text-xs"
 		class:text-black={linkFlair.link_flair_text_color === 'dark'}
 		class:text-white={linkFlair.link_flair_text_color === 'light'}
@@ -36,7 +44,7 @@
 		{:else if linkFlair.link_flair_type === 'text'}
 			<span class="flair-text">{linkFlair.link_flair_text}</span>
 		{/if}
-	</div>
+	</a>
 {/if}
 
 <style>

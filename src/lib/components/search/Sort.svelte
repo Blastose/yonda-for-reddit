@@ -14,7 +14,18 @@
 	});
 
 	$: currentSort = $page.url.searchParams.get('sort') ?? 'new';
-	const sortOptions = ['new', 'top', 'hot', 'controversial'];
+	const sortOptions = [
+		{ display: 'Relevance', value: 'relevance' },
+		{ display: 'Hot', value: 'hot' },
+		{ display: 'Top', value: 'top' },
+		{ display: 'new', value: 'new' },
+		{ display: 'Most Comments', value: 'comments' }
+	];
+
+	function buildUrl(a: string) {
+		const q = $page.url.searchParams.get('q');
+		return `${$page.url.pathname}?sort=${a}&q=${q}`;
+	}
 </script>
 
 <button
@@ -37,11 +48,11 @@
 		{#each sortOptions as sortOption}
 			<a
 				use:melt={$item}
-				href={`${$page.url.pathname}?sort=${sortOption}`}
+				href={buildUrl(sortOption.value)}
 				class=" px-8 py-2 capitalize hover:bg-[var(--accent-l1-hover)]
-        {currentSort === sortOption ? 'bg-[var(--accent-l1-hover)]' : ''} "
+        {currentSort === sortOption.value ? 'bg-[var(--accent-l1-hover)]' : ''} "
 			>
-				{sortOption}
+				{sortOption.display}
 			</a>
 		{/each}
 	</div>

@@ -28,7 +28,7 @@
 			{:else if widget.kind === 'menu'}
 				<WidgetMenu {widget} {about} />
 			{:else if widget.kind === 'post-flair'}
-				<WidgetPostFlair {widget} />
+				<WidgetPostFlair {widget} subreddit={about.display_name} />
 			{:else if widget.kind === 'subreddit-rules'}
 				<WidgetRules {widget} />
 			{:else if widget.kind === 'textarea'}

@@ -4,6 +4,7 @@
 	import WidgetContainer from './WidgetContainer.svelte';
 
 	export let widget: WidgetPostFlair;
+	export let subreddit: string;
 </script>
 
 <WidgetContainer sectionHeading={widget.shortName}>
@@ -16,7 +17,7 @@
 				link_flair_type: flair.type,
 				link_flair_text: flair.text
 			}}
-			<Flair {linkFlair} />
+			<Flair {linkFlair} {subreddit} />
 		{/each}
 	</div>
 </WidgetContainer>

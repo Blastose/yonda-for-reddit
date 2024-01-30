@@ -153,3 +153,18 @@ export type PinnedSubreddit = Pick<SubredditData, 'display_name_prefixed'> &
 	};
 export type UserCreation = Awaited<ReturnType<User['getOverview']>>['data'][number];
 export type UserCreationFull = Awaited<ReturnType<User['getOverview']>>;
+
+export function getRedditPagination<SortT, T>(
+	url: URL,
+	defaults?: { defaultSort?: SortT; defaultT?: T }
+) {
+	const sort = (url.searchParams.get('sort') ?? defaults?.defaultSort ?? undefined) as
+		| SortT
+		| undefined;
+	const t = (url.searchParams.get('t') ?? defaults?.defaultT ?? undefined) as T | undefined;
+	const before = (url.searchParams.get('before') ?? undefined) as string | undefined;
+	const after = (url.searchParams.get('after') ?? undefined) as string | undefined;
+	const count = Number(url.searchParams.get('count')) || undefined;
+	const options = { sort, t, before, after, count };
+	return options;
+}

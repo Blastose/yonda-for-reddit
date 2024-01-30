@@ -30,7 +30,7 @@
 		<h1 class="text-2xl font-bold">{submission.title}</h1>
 	{/if}
 	<div class="flex w-fit flex-wrap gap-2">
-		<Flair linkFlair={submission} />
+		<Flair linkFlair={submission} subreddit={submission.subreddit} />
 		<Tag postTag={submission} />
 	</div>
 	<Submitter submitter={submission} type="submission" showSubreddit={showSubreddit2} />
