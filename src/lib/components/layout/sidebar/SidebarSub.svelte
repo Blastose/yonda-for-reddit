@@ -10,7 +10,7 @@
 <a class="grid grid-cols-[32px_1fr] items-center gap-2" {href}>
 	<span class="flex h-[32px] w-[32px] items-center justify-center">
 		{#if icon}
-			<img class="rounded-full" src={icon} alt="" />
+			<img height="32" width="32" class="rounded-full" src={icon} alt="" />
 		{:else if useSlot}
 			<slot />
 		{:else}

@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import type { Moderators, SubmissionFull } from '$lib/reddit/reddit';
+import type { Moderators, SubmissionFull, UserCreationFull } from '$lib/reddit/reddit';
 import { openDB, type DBSchema } from 'idb';
 import type { SubmissionData, SubredditData, Widget, RedditUser } from 'jsrwrap/types';
 
@@ -56,6 +56,17 @@ export interface MyDB extends DBSchema {
 		};
 		key: 'reddit';
 	};
+	redditUser: {
+		value: {
+			cached: number;
+			value: RedditUser;
+		};
+		key: string;
+	};
+	redditUserCreations: {
+		value: UserCreationFull;
+		key: string;
+	};
 }
 
 // For some reason, browser is false, which means idb is undefined when it first loads or something
@@ -73,6 +84,8 @@ export const db = (browser
 				db.createObjectStore('subscribedSubreddits');
 				db.createObjectStore('subredditSidebar');
 				db.createObjectStore('subredditModerators');
+				db.createObjectStore('redditUser');
+				db.createObjectStore('redditUserCreations');
 			}
 		})
 	: null) as unknown as Awaited<ReturnType<typeof openDB<MyDB>>>;

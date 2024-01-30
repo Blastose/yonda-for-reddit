@@ -18,6 +18,8 @@
 		<div class="relative bottom-[30px] mb-[-30px] flex gap-2 px-2">
 			{#if icon}
 				<img
+					height="80"
+					width="80"
 					class="h-[80px] w-[80px] rounded-full border-4 border-[#292b2f] bg-[#292b2f]"
 					src={icon}
 					alt="{about?.display_name} icon"

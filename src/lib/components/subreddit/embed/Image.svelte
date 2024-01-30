@@ -19,6 +19,7 @@
 		{srcset}
 		{sizes}
 		alt={altText}
+		loading="lazy"
 	/>
 </div>
 

@@ -14,12 +14,13 @@
 		--search-input-bg: #242424;
 		--divider-color: rgb(58 58 58);
 		--visited-link-color: #7c7c88;
+		--visited-link-color-md: #4680a5;
 		--text-color: #d1d0d3;
 		--text-color-sub: rgb(163 163 163);
 		--reddit-username-color: rgb(168, 177, 255);
 		--link-color: #5aade0;
 		--spoiler-bg: rgb(190, 190, 190);
-		--spoiler-bg-revealed: rgba(121, 121, 121, 0.315);
+		--spoiler-bg-revealed: rgba(51, 35, 35, 0.315);
 		--spoiler-text-revealed-color: #e2e2e2;
 		--codeblock-bg: rgb(52, 52, 54);
 		--code-border-color: #5a5a5f;
@@ -139,6 +140,10 @@ html {
 
 .reddit-md a {
 	color: var(--link-color);
+}
+
+.reddit-md a:visited {
+	color: var(--visited-link-color-md);
 }
 
 .reddit-md a:hover {
