@@ -13,7 +13,7 @@
 		forceVisible: true
 	});
 
-	$: currentSort = $page.url.searchParams.get('sort') ?? 'new';
+	$: currentSort = $page.url.searchParams.get('sort') ?? 'relevance';
 	const sortOptions = [
 		{ display: 'Relevance', value: 'relevance' },
 		{ display: 'Hot', value: 'hot' },

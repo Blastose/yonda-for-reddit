@@ -48,7 +48,7 @@
 		"dashjs": "^4.7.3",
 		"hls.js": "^1.5.1",
 		"idb": "^8.0.0",
-		"jsrwrap": "0.1.16-beta.22",
+		"jsrwrap": "0.1.16-beta.23",
 		"nprogress": "^0.2.0",
 		"reddit-md-to-html": "^0.1.72"
 	}

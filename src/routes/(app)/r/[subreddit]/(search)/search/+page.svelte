@@ -22,7 +22,10 @@
 	}
 
 	$: sort = $page.url.searchParams.get('sort');
+	$: q = $page.url.searchParams.get('q');
 </script>
+
+<svelte:head><title>Searching for {q} in r/{subreddit}</title></svelte:head>
 
 <p>Searching {subreddit}</p>
 

@@ -14,7 +14,7 @@
 	export let subreddit: string;
 
 	function makeFlairHref(sub: string, flair: LinkFlair) {
-		return `/r/${sub}/search?sort=new&restrict_sr=true&q=flair:${flair.link_flair_text}`;
+		return `/r/${sub}/search?sort=new&restrict_sr=true&q=flair:"${flair.link_flair_text}"`;
 	}
 
 	$: styleTag = `background-color: ${
