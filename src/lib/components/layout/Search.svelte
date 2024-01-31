@@ -45,6 +45,34 @@
 		};
 	};
 
+	let suggestionsIndex = 0;
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+		e.preventDefault();
+		const focusableNodes: HTMLElement[] = [inputNode];
+		const anchorSuggestions = suggestionsContainer.querySelectorAll<HTMLAnchorElement>('a');
+		focusableNodes.push(...anchorSuggestions);
+		if (e.key === 'ArrowUp') {
+			suggestionsIndex = (suggestionsIndex - 1 + focusableNodes.length) % focusableNodes.length;
+		} else if (e.key === 'ArrowDown') {
+			suggestionsIndex = (suggestionsIndex + 1) % focusableNodes.length;
+		}
+
+		focusSearchSuggestionItem(suggestionsIndex);
+	}
+
+	function focusSearchSuggestionItem(index: number) {
+		const focusableNodes: HTMLElement[] = [inputNode];
+		const anchorSuggestions = suggestionsContainer.querySelectorAll<HTMLAnchorElement>('a');
+		focusableNodes.push(...anchorSuggestions);
+		for (const [i, node] of focusableNodes.entries()) {
+			if (i === index) {
+				node.focus();
+			}
+		}
+	}
+	let suggestionsContainer: HTMLDivElement;
+
 	let inputIsFocused: boolean = false;
 	$: q = $page.url.searchParams.get('q') ?? '';
 	$: searchTerm = q;
@@ -70,7 +98,9 @@
 		}
 	}}
 >
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
+		on:keydown={handleKeydown}
 		class="relative w-full"
 		use:mousedownOutside
 		on:mouseoutside={() => {
@@ -85,6 +115,7 @@
 			bind:this={inputNode}
 			bind:value={searchTerm}
 			on:focus={() => {
+				suggestionsIndex = 0;
 				inputIsFocused = true;
 			}}
 			class="w-full rounded-3xl bg-[var(--search-input-bg)] py-2 pl-10 pr-10 focus:outline-none focus:ring-2 focus:ring-white"
@@ -106,7 +137,10 @@
 		{/if}
 
 		{#if inputIsFocused && searchTerm && searchTerm.length > 0}
-			<div class="absolute mt-3 w-full overflow-hidden rounded-2xl text-sm">
+			<div
+				bind:this={suggestionsContainer}
+				class="absolute mt-3 w-full overflow-hidden rounded-2xl text-sm"
+			>
 				{#if subreddit}
 					<a href="/r/{subreddit}/search?q={searchTerm}" class="suggestion"
 						>Search for "{searchTerm}" in r/{subreddit}</a
@@ -134,6 +168,7 @@
 		background-color: var(--accent-l1);
 	}
 
+	.suggestion:focus,
 	.suggestion:hover {
 		background-color: var(--accent-l1-hover);
 	}
