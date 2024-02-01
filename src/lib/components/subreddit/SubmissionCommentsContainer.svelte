@@ -48,7 +48,6 @@
 			submissionId={submission.id}
 			updateReplies={(moreId, children) => {
 				const moreIndex = submission.comments.findIndex((v) => v.id === moreId);
-				console.log(moreIndex);
 				submission.comments.splice(moreIndex, 1);
 				submission.comments = submission.comments.concat(children);
 			}}

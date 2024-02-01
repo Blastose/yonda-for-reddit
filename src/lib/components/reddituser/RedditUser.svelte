@@ -1,13 +1,9 @@
 <script lang="ts">
 	import type { RedditUser } from 'jsrwrap/types';
 	import Hr from '../layout/Hr.svelte';
+	import { formatDate } from '$lib/reddit/number';
 
 	export let redditUser: RedditUser;
-
-	function formatDate(date: Date) {
-		const month = date.toLocaleString('default', { month: 'short' });
-		return `${month} ${date.getDate()}, ${date.getFullYear()}`;
-	}
 </script>
 
 <div class="flex flex-col gap-2 rounded-md bg-[var(--accent-l2)] p-4 text-sm">

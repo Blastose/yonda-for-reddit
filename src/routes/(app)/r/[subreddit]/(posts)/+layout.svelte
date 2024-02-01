@@ -3,7 +3,6 @@
 	import SubmissionContainer from '$lib/components/layout/SubmissionContainer.svelte';
 	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
 	import { db } from '$lib/idb/idb.js';
-	import type { SubredditSort } from '$lib/reddit/reddit.js';
 	import SubmissionSkeleton from '$lib/components/subreddit/SubmissionSkeleton.svelte';
 
 	export let data;
@@ -12,12 +11,9 @@
 		$page;
 		(async () => {
 			const submissions = await data.submissions;
-			console.log(submissions);
 			await db.put('submissions', submissions, transformUrlForIDBKey($page.url));
 		})();
 	}
-
-	$: sort = ($page.params.sort ?? 'hot') as SubredditSort;
 </script>
 
 {#key getFullUrl($page.url)}
@@ -26,9 +22,7 @@
 			<SubmissionSkeleton />
 		{/each}
 	{:then submissions}
-		<div>
-			<SubmissionContainer {submissions} subreddit={$page.params.subreddit} {sort} />
-		</div>
+		<SubmissionContainer {submissions} count={data.count} />
 	{/await}
 {/key}
 

@@ -34,7 +34,7 @@
 			{#if about?.display_name_prefixed || fallbackSubreddit}
 				<a
 					href="/{about?.display_name_prefixed.toLowerCase() ?? fallbackSubreddit}"
-					class="flex self-end pb-2 text-3xl font-bold"
+					class="line-clamp-1 self-end pb-2 text-3xl font-bold"
 					>{about?.display_name_prefixed ?? fallbackSubreddit}</a
 				>
 			{:else}

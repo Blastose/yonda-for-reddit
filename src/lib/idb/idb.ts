@@ -1,7 +1,12 @@
 import { browser } from '$app/environment';
-import type { Moderators, SubmissionFull, UserCreationFull } from '$lib/reddit/reddit';
+import type {
+	Moderators,
+	SubmissionDataFull,
+	SubmissionFull,
+	UserCreationFull
+} from '$lib/reddit/reddit';
 import { openDB, type DBSchema } from 'idb';
-import type { SubmissionData, SubredditData, Widget, RedditUser } from 'jsrwrap/types';
+import type { SubredditData, Widget, RedditUser } from 'jsrwrap/types';
 
 export interface MyDB extends DBSchema {
 	submission: {
@@ -9,7 +14,7 @@ export interface MyDB extends DBSchema {
 		key: string;
 	};
 	submissions: {
-		value: SubmissionData[];
+		value: SubmissionDataFull;
 		key: string;
 	};
 	submissionCommentCount: {

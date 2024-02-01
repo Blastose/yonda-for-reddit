@@ -46,7 +46,6 @@
 		diffXFromCenter = (e.x - rect.x - rect.width / 2) / zoom;
 		diffYFromCenter = (e.y - rect.y - rect.height / 2) / zoom;
 		lastZoom = zoom;
-		console.log(e.deltaY);
 
 		const scaleFactor = 1 + zoom;
 		zoom += -e.deltaY * 0.001 * scaleFactor;

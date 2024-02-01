@@ -12,7 +12,6 @@
 		$page;
 		(async () => {
 			const submissions = await data.submissions;
-			console.log(submissions);
 			await db.put('submissions', submissions, transformUrlForIDBKey($page.url));
 		})();
 	}
@@ -27,9 +26,7 @@
 				<SubmissionSkeleton />
 			{/each}
 		{:then submissions}
-			<div>
-				<SubmissionContainer {submissions} subreddit={$page.params.subreddit} sort={data.sort} />
-			</div>
+			<SubmissionContainer {submissions} count={data.count} />
 		{/await}
 	{/key}
 </Subreddit>

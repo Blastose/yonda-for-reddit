@@ -59,7 +59,7 @@
 			<div class="flex flex-col gap-1">
 				<div class="gap-1">
 					<div class="flex gap-1">
-						<Flair linkFlair={submission} />
+						<Flair linkFlair={submission} subreddit={submission.subreddit} />
 						<Tag postTag={submission} />
 					</div>
 					<a
