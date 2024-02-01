@@ -130,13 +130,15 @@
 
 	<div class="pointer-events-none select-none" slot="content">
 		{#if currentImage?.type !== 'mp4'}
-			<img
-				class="max-h-[calc(100vh-120px)]"
-				src={currentImage?.source.url}
-				srcset={currentImage?.srcsetAndSizes?.srcset}
-				sizes={currentImage?.srcsetAndSizes?.sizes}
-				alt=""
-			/>
+			{#key currentGalleryIndex}
+				<img
+					class="max-h-[calc(100vh-120px)]"
+					src={currentImage?.source.url}
+					srcset={currentImage?.srcsetAndSizes?.srcset}
+					sizes={currentImage?.srcsetAndSizes?.sizes}
+					alt=""
+				/>
+			{/key}
 		{:else}
 			{#key currentGalleryIndex}
 				<RedditGifVideo autoplay={true} {submission} video={currentImage.source} />
