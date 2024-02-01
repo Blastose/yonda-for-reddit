@@ -27,7 +27,12 @@
 
 <svelte:head><title>Searching for {q} in r/{subreddit}</title></svelte:head>
 
-<p>Searching {subreddit}</p>
+<p>Showing search results for "{q}"</p>
+<p class="text-sm">
+	Show results from <a href="/search?q={q}&type=link" class="text-[var(--link-color)]"
+		>all of Reddit</a
+	>
+</p>
 
 <div class="flex gap-1">
 	<Sort />
