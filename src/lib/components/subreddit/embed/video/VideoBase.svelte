@@ -81,7 +81,6 @@
 			if (paused || ended || !videoStarted) {
 				videoStarted = true;
 				videoNode.play();
-				console.log('plays');
 			} else videoNode.pause();
 		}}
 		style:aspect-ratio={(width ?? 0) / (height ?? 0)}

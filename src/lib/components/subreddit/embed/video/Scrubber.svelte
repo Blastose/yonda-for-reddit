@@ -72,7 +72,6 @@
 		thumb.focus();
 		const percentage = relPosX / track.offsetWidth;
 		updateCurrent(percentage);
-		console.log(current);
 	}
 </script>
 

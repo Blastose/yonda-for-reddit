@@ -65,7 +65,6 @@
 		newSearchParamValue: string
 	) {
 		const urlClone = new URL(url);
-		console.log(urlClone.search);
 		const toDelete: string[] = [];
 		for (const [key, _] of urlClone.searchParams) {
 			if (key !== 'sort' && key !== 'q') {

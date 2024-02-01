@@ -6,7 +6,7 @@ import type { Widget } from 'jsrwrap/types';
 async function getSidebar(subreddit: string) {
 	try {
 		const res = await fetch(`https://dokusha-for-reddit.vercel.app/api/${subreddit}/sidebar`);
-		const data =  (await res.json()) as Widget[] | {message:'Internal Error'} | null;
+		const data = (await res.json()) as Widget[] | { message: 'Internal Error' } | null;
 		if (Array.isArray(data)) {
 			return data;
 		}
@@ -18,7 +18,6 @@ async function getSidebar(subreddit: string) {
 
 export const load: LayoutLoad = async ({ params }) => {
 	const subreddit = params.subreddit;
-	console.log(subreddit);
 	const jsrwrapSubreddit = jsrwrap.getSubreddit(subreddit);
 	if (subreddit === 'all' || subreddit === 'popular') {
 		return {

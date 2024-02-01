@@ -8,7 +8,6 @@
 	import CommentActions from './CommentActions.svelte';
 
 	export let comment: CommentFull & { type: 'comment' };
-	console.log(comment);
 	$: href = `${formatSubmissionPermalink(comment.permalink)}?context=3`;
 </script>
 

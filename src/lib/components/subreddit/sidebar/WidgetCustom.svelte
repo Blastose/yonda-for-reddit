@@ -13,9 +13,7 @@
 
 		let newCss = `.widget-custom-${widget.id} {${widget.css}}`;
 		newCss = newCss.replaceAll(/url\(%%(.*)%%\)/g, (_match, p1) => {
-			console.log(p1);
 			const newUrl = imageMap.get(p1) ?? p1;
-			console.log(newUrl);
 			return `url("${newUrl}")`;
 		});
 

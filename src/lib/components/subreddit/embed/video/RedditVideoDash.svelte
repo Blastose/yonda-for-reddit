@@ -24,7 +24,6 @@
 		};
 	}
 
-	$: console.log(submission.media);
 	$: redditVideo = submission.media?.reddit_video;
 	$: source = submission.media?.reddit_video?.dash_url ?? '';
 

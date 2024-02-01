@@ -44,10 +44,6 @@
 				(g.resolutions.at(-2)?.height ?? g.source.height)
 		)
 	);
-	$: console.log(gallery?.map((g) => g.source.width));
-	$: console.log(gallery?.map((g) => g.source.height));
-	$: console.log(gallery);
-	console.log(submission);
 
 	$: currentImage = gallery.at(currentGalleryIndex);
 </script>
