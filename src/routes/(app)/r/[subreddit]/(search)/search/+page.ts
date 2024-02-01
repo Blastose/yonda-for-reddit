@@ -36,7 +36,5 @@ export const load: PageLoad = async ({ params, url }) => {
 		include_over_18: safeSearch
 	});
 
-	console.log(await submissions);
-
 	return { submissions, count };
 };

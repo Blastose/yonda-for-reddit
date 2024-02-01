@@ -3,6 +3,11 @@ import { getRedditPagination, jsrwrap } from '$lib/reddit/reddit';
 import { get } from 'svelte/store';
 import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
 import type { SearchParams, SearchParamsSort } from 'jsrwrap/types';
+import { db } from '$lib/idb/idb';
+import { transformUrlForIDBKey } from '$lib/url/url';
+import type { Jsrwrap } from 'jsrwrap';
+
+type SearchedResultsFull = Awaited<ReturnType<ReturnType<Jsrwrap['getSearch']>['search']>>;
 
 export const load: PageLoad = async ({ url }) => {
 	const jsrwrapSearch = jsrwrap.getSearch();
@@ -19,11 +24,13 @@ export const load: PageLoad = async ({ url }) => {
 	const count = options.count;
 
 	if (get(navigationTypeStore) === 'bfbutton') {
-		// const submissionsMaybe = await db.get('submissions', transformUrlForIDBKey(url));
-		// if (submissionsMaybe) {
-		// 	const submissions = submissionsMaybe;
-		// 	return { submissions };
-		// }
+		const searchedMaybe = await db.get('submissions', transformUrlForIDBKey(url));
+		if (searchedMaybe) {
+			// We can do this because we know that the /search url endpoints have this format
+			// Also see corresponding +page.svelte's comment
+			const searched = searchedMaybe as unknown as SearchedResultsFull;
+			return { searched, count };
+		}
 	}
 	const searched = jsrwrapSearch.search({
 		...options,
@@ -32,8 +39,6 @@ export const load: PageLoad = async ({ url }) => {
 		type,
 		include_over_18: safeSearch
 	});
-
-	console.log(await searched);
 
 	return { searched, count };
 };

@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
 	import { db } from '$lib/idb/idb.js';
-	import type { SubredditSort } from '$lib/reddit/reddit.js';
+	import type { SubmissionDataFull } from '$lib/reddit/reddit.js';
 	import SubmissionSkeleton from '$lib/components/subreddit/SubmissionSkeleton.svelte';
 	import Submission from '$lib/components/layout/Submission.svelte';
 	import Pagination from '$lib/components/reddit/Pagination.svelte';
@@ -23,6 +23,20 @@
 		{ type: 'sr', display: 'Subreddits' },
 		{ type: 'user', display: 'Users' }
 	];
+
+	$: {
+		$page;
+		(async () => {
+			const searched = await data.searched;
+			// We can cast as SubmissionDataFull since in the page.ts file we also cast it,
+			// and we know that the data corressponding to the /search urls have this structure
+			await db.put(
+				'submissions',
+				searched as unknown as SubmissionDataFull,
+				transformUrlForIDBKey($page.url)
+			);
+		})();
+	}
 </script>
 
 <svelte:head><title>Searching for {q}</title></svelte:head>
@@ -53,7 +67,9 @@
 		{#key getFullUrl($page.url)}
 			{#await data.searched}
 				{#each { length: 5 } as _}
-					<SubmissionSkeleton />
+					<div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
+						<SubmissionSkeleton />
+					</div>
 				{/each}
 			{:then searched}
 				<div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
