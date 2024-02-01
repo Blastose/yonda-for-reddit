@@ -75,7 +75,7 @@
 
 	let inputIsFocused: boolean = false;
 	$: q = $page.url.searchParams.get('q') ?? '';
-	$: searchTerm = q;
+	$: if (q !== '') searchTerm = q;
 	$: subreddit = $page.params.subreddit;
 
 	beforeNavigate(() => {

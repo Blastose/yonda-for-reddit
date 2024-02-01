@@ -17,19 +17,29 @@
 	$: sort = $page.url.searchParams.get('sort');
 	$: q = $page.url.searchParams.get('q');
 	$: type = $page.url.searchParams.get('type');
+
+	const searchTypes = [
+		{ type: 'link', display: 'Posts' },
+		{ type: 'sr', display: 'Subreddits' },
+		{ type: 'user', display: 'Users' }
+	];
 </script>
 
 <svelte:head><title>Searching for {q}</title></svelte:head>
 
-<div class="flex flex-col gap-4 pt-4">
-	<div class="flex gap-2 py-4">
-		<p>Search results</p>
-		<a href="/search?q={q}&type=link">Posts</a>
-		<a href="/search?q={q}&type=sr">Subreddits</a>
-		<a href="/search?q={q}&type=user">Users</a>
+<div class="flex flex-col gap-2 pt-4">
+	<div class="flex items-center gap-2 py-4">
+		<p class="mr-4">Search results</p>
+		{#each searchTypes as searchType}
+			<a
+				class="rounded-3xl px-4 py-2 {type === searchType.type
+					? 'bg-[var(--accent-l1-hover)]'
+					: 'hover:bg-[var(--accent-l1)]'}"
+				href="/search?q={q}&type={searchType.type}">{searchType.display}</a
+			>
+		{/each}
 	</div>
 
-	<Hr />
 	<div class="flex flex-col gap-2">
 		{#if type === 'link'}
 			<div class="flex gap-1">

@@ -15,6 +15,10 @@ export const load: PageLoad = async ({ params, url }) => {
 		{ defaultSort: 'relevance', defaultT: 'all' }
 	);
 	const q = url.searchParams.get('q') ?? undefined;
+	let safeSearch = url.searchParams.get('include_over_18') ?? undefined;
+	if (safeSearch !== 'on') {
+		safeSearch = undefined;
+	}
 	const count = options.count;
 
 	if (get(navigationTypeStore) === 'bfbutton') {
@@ -28,7 +32,8 @@ export const load: PageLoad = async ({ params, url }) => {
 		...options,
 		q,
 		count,
-		restrict_sr: true
+		restrict_sr: true,
+		include_over_18: safeSearch
 	});
 
 	console.log(await submissions);

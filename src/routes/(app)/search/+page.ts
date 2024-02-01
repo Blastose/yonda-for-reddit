@@ -12,6 +12,10 @@ export const load: PageLoad = async ({ url }) => {
 	});
 	const q = url.searchParams.get('q') ?? undefined;
 	const type = url.searchParams.get('type') ?? undefined;
+	let safeSearch = url.searchParams.get('include_over_18') ?? undefined;
+	if (safeSearch !== 'on') {
+		safeSearch = undefined;
+	}
 	const count = options.count;
 
 	if (get(navigationTypeStore) === 'bfbutton') {
@@ -25,7 +29,8 @@ export const load: PageLoad = async ({ url }) => {
 		...options,
 		q,
 		count,
-		type
+		type,
+		include_over_18: safeSearch
 	});
 
 	console.log(await searched);
