@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import { getFullUrl, transformUrlForIDBKey } from '$lib/url/url.js';
 	import { db } from '$lib/idb/idb.js';
-	import type { SubredditSort } from '$lib/reddit/reddit.js';
 	import SubmissionSkeleton from '$lib/components/subreddit/SubmissionSkeleton.svelte';
 	import Submission from '$lib/components/layout/Submission.svelte';
 	import Pagination from '$lib/components/reddit/Pagination.svelte';
@@ -15,9 +14,9 @@
 	$: {
 		$page;
 		(async () => {
-			// const submissions = await data.submissions;
-			// console.log(submissions);
-			// await db.put('submissions', submissions, transformUrlForIDBKey($page.url));
+			const submissions = await data.submissions;
+			console.log(submissions);
+			await db.put('submissions', submissions, transformUrlForIDBKey($page.url));
 		})();
 	}
 

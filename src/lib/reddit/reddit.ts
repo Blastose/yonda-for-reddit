@@ -153,6 +153,7 @@ export type PinnedSubreddit = Pick<SubredditData, 'display_name_prefixed'> &
 	};
 export type UserCreation = Awaited<ReturnType<User['getOverview']>>['data'][number];
 export type UserCreationFull = Awaited<ReturnType<User['getOverview']>>;
+export type SubmissionDataFull = Awaited<ReturnType<Subreddit['getSubmissions']>>;
 
 export function getRedditPagination<SortT, T>(
 	url: URL,

@@ -22,11 +22,11 @@ export const load: PageLoad = async ({ params, url }) => {
 	const count = options.count;
 
 	if (get(navigationTypeStore) === 'bfbutton') {
-		// const submissionsMaybe = await db.get('submissions', transformUrlForIDBKey(url));
-		// if (submissionsMaybe) {
-		// 	const submissions = submissionsMaybe;
-		// 	return { submissions };
-		// }
+		const submissionsMaybe = await db.get('submissions', transformUrlForIDBKey(url));
+		if (submissionsMaybe) {
+			const submissions = submissionsMaybe;
+			return { submissions };
+		}
 	}
 	const submissions = jsrwrapSubreddit.search({
 		...options,
