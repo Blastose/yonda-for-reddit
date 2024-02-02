@@ -1,5 +1,6 @@
 import { db } from '$lib/idb/idb';
 import { jsrwrap } from '$lib/reddit/reddit';
+import { loggedInStore } from '$lib/stores/loggedInStore';
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async () => {
@@ -14,6 +15,9 @@ export const load: LayoutLoad = async () => {
 		} else {
 			subscribedSubs = jsrwrap.getMe().getSubscribedSubreddits();
 		}
+		loggedInStore.set(true);
+	} else {
+		loggedInStore.set(false);
 	}
 
 	return { loggedIn, subscribedSubs, me };
