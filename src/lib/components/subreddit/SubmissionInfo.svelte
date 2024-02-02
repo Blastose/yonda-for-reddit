@@ -34,6 +34,19 @@
 		<Tag postTag={submission} />
 	</div>
 	<Submitter submitter={submission} type="submission" showSubreddit={showSubreddit2} />
+
+	{#if submission.removed_by_category}
+		<div class="my-2 w-fit rounded-3xl border border-red-500 px-4 py-1">
+			{#if submission.removed_by_category === 'moderator'}
+				<p>Sorry, this post has been removed by the moderators of r/{submission.subreddit}.</p>
+			{:else if submission.removed_by_category === 'deleted' || submission.removed_by_category === 'author'}
+				<p>Sorry, this post was deleted by the person who originally posted it.</p>
+			{:else if submission.removed_by_category === 'reddit'}
+				<p>Sorry, this post was removed by Reddit's spam filters.</p>
+			{/if}
+		</div>
+	{/if}
+
 	{#if !submission.is_self}
 		<div class="reddit-md">
 			<a class="line-clamp-1" href={submission.url} target="_blank" rel="noreferrer"
