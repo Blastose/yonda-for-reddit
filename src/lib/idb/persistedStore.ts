@@ -1,8 +1,14 @@
 import { writable, type Updater } from 'svelte/store';
 
 // Adapted from https://github.com/CaptainCodeman/svelte-web-storage/blob/6d82108a6b40cf7a1f8c2be6b0760482c4aa05f5/src/lib/index.ts
-export function persistedStore<T>(name: string, defaultValue: T, notify?: boolean) {
-	const persisted = localStorage.getItem(name);
+export function persistedStore<T>(
+	name: string,
+	defaultValue: T,
+	type: 'local' | 'session',
+	notify?: boolean
+) {
+	const storage = type === 'local' ? localStorage : sessionStorage;
+	const persisted = storage.getItem(name);
 	const parsed = persisted ? JSON.parse(persisted) : null;
 
 	let value: T =
@@ -30,7 +36,7 @@ export function persistedStore<T>(name: string, defaultValue: T, notify?: boolea
 
 	function set(v: T) {
 		_set((value = v));
-		localStorage.setItem(name, JSON.stringify(value));
+		storage.setItem(name, JSON.stringify(value));
 	}
 
 	function update(updater: Updater<T>) {

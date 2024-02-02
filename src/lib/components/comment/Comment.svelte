@@ -3,14 +3,11 @@
 	import type { CommentFull, Sort } from 'jsrwrap/types';
 	import CommentBar from './CommentBar.svelte';
 	import { tick } from 'svelte';
-	import Icon from '../icon/Icon.svelte';
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import Submitter from '../subreddit/Submitter.svelte';
-	import { formatter } from '$lib/reddit/number';
 	import { jsrwrap } from '$lib/reddit/reddit';
 	import { buildCommentThreadPermalink } from '$lib/url/url';
 	import { page } from '$app/stores';
-	import CommentMoreOptions from './CommentMoreOptions.svelte';
 	import CommentActions from './CommentActions.svelte';
 
 	export let comment: CommentFull;
@@ -93,7 +90,7 @@
 							<RedditHtml rawHTML={commentHtml} />
 						</div>
 
-						<CommentActions {comment} />
+						<CommentActions {comment} {persistSubmission} />
 					</div>
 				{/if}
 			</div>

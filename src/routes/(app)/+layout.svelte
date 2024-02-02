@@ -8,6 +8,9 @@
 	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
 	import { onMount } from 'svelte';
 	import { db } from '$lib/idb/idb.js';
+	import { loggedInStore } from '$lib/stores/loggedInStore.js';
+	import { transformUrlForIDBKey } from '$lib/url/url.js';
+	import { historyStore } from '$lib/stores/historyStore.js';
 
 	export let data;
 	let nprogressTimeoutId: ReturnType<typeof setTimeout>;
@@ -38,8 +41,34 @@
 		}
 	});
 
-	afterNavigate(() => {
+	afterNavigate((nav) => {
+		console.log(nav);
+		console.log($historyStore);
+		if (nav.to) {
+			const url = transformUrlForIDBKey(nav.to?.url);
+			if (nav.type === 'popstate' && nav.delta) {
+				const delta = nav.delta;
+				historyStore.update((v) => {
+					return { urls: v.urls, index: v.index + delta };
+				});
+			} else if (nav.type === 'goto' || nav.type === 'link') {
+				if (nav.from?.url === null) {
+					historyStore.set({ urls: [], index: -1 });
+				}
+				historyStore.update((v) => {
+					if (v.index < 0) {
+						v.urls = [];
+						v.index = -1;
+					}
+					v.urls = v.urls.slice(0, v.index + 1);
+					v.urls.push(url);
+					v.index++;
+					return v;
+				});
+			}
+		}
 		navigationTypeStore.set(null);
+		console.log($historyStore);
 	});
 
 	onNavigate((navigation) => {

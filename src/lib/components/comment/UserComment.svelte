@@ -42,7 +42,7 @@
 			rawHTML={markdownToHtml(comment.body, { media_metadata: comment.media_metadata })}
 		/>
 
-		<CommentActions {comment} />
+		<CommentActions {comment} persistSubmission={() => {}} />
 	</article>
 </ClickableDivWrapper>
 

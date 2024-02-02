@@ -2,6 +2,7 @@ import { browser, dev } from '$app/environment';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
 import { db } from '$lib/idb/idb';
 import { lsdb } from '$lib/idb/ls';
+import { loggedInStore } from '$lib/stores/loggedInStore';
 import { Jsrwrap, Submission, Subreddit, User } from 'jsrwrap';
 import type { SubredditData } from 'jsrwrap/types';
 
@@ -26,6 +27,7 @@ async function createJsrwrap() {
 			accessToken: oauth.accessToken,
 			expiresIn: oauth.expires ?? new Date().getTime() / 1000 + 3600
 		});
+		loggedInStore.set(true);
 	} else {
 		if (oauth && oauth.expires && oauth.expires > new Date().getTime() / 1000) {
 			jsrwrap = await Jsrwrap.fromApplicationOnlyAuth({
@@ -39,6 +41,7 @@ async function createJsrwrap() {
 					expires: oauth.expires
 				}
 			});
+			loggedInStore.set(true);
 		} else {
 			jsrwrap = await Jsrwrap.fromApplicationOnlyAuth({
 				clientId: PUBLIC_CLIENT_ID,
@@ -96,6 +99,7 @@ if (browser) {
 }
 async function logout() {
 	// await clearIdb();
+	loggedInStore.set(false);
 	await jsrwrap.revokeToken({
 		token: jsrwrap.refreshToken ?? '',
 		type: 'refresh_token'

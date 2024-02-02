@@ -65,13 +65,21 @@
 			box: 24,
 			svg: `<path d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M6,7H18V9H6V7M6,11H15V13H6V11Z" />`
 		},
-		arrowUpOutline: {
+		arrowUpBold: {
 			box: 24,
 			svg: `<path d="M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z" />`
 		},
-		arrowDownOutline: {
+		arrowDownBold: {
 			box: 24,
 			svg: `<path d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" />`
+		},
+		arrowUpOutline: {
+			box: 24,
+			svg: `<path d="M16,13V21H8V13H2L12,3L22,13H16M7,11H10V19H14V11H17L12,6L7,11Z" />`
+		},
+		arrowDownOutline: {
+			box: 24,
+			svg: `<path d="M22,11L12,21L2,11H8V3H16V11H22M12,18L17,13H14V5H10V13H7L12,18Z" />`
 		},
 		lock: {
 			box: 24,

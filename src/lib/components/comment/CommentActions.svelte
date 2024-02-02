@@ -1,20 +1,15 @@
 <script lang="ts">
 	import Icon from '$lib/components/icon/Icon.svelte';
-	import { formatter } from '$lib/reddit/number';
 	import type { Comment } from 'jsrwrap/types';
 	import CommentMoreOptions from './CommentMoreOptions.svelte';
+	import VoteActions from '../actions/VoteActions.svelte';
 
 	export let comment: Comment & { type: 'comment' };
+	export let persistSubmission: () => void;
 </script>
 
 <div class="flex flex-wrap gap-1 text-sm font-semibold">
-	<div class="flex w-fit items-center gap-1 rounded-2xl px-2 py-1 hover:bg-[#2c2c2c]">
-		<button><Icon name="arrowUpOutline" /></button>
-		<span title={comment.score.toString()}
-			>{comment.score_hidden ? '•' : formatter.format(comment.score)}</span
-		>
-		<button><Icon name="arrowDownOutline" /></button>
-	</div>
+	<VoteActions votable={comment} type="comment" persistVote={persistSubmission} />
 
 	<button class="flex h-full w-fit items-center gap-1 rounded-2xl px-2 py-1 hover:bg-[#2c2c2c]">
 		<span class="flex h-[24px] items-center">
