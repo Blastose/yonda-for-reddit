@@ -36,7 +36,12 @@
 </script>
 
 <div class="mt-4 flex items-center gap-2 font-semibold">
-	<VoteActions votable={submission} type="submission" {persistVote} />
+	<VoteActions
+		preventVotes={submission.archived}
+		votable={submission}
+		type="submission"
+		{persistVote}
+	/>
 
 	{#if type === 'subreddit'}
 		<a

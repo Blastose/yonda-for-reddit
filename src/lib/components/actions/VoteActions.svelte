@@ -10,6 +10,7 @@
 		score: number;
 	};
 	export let votable: Votable;
+	export let preventVotes: boolean;
 	export let persistVote: (v?: { score: number; likes: boolean | null }) => void;
 	export let type: 'submission' | 'comment';
 
@@ -62,53 +63,90 @@
 	$: voteStatus = getVoteStatus(votable);
 </script>
 
-<div
-	class="flex w-fit items-center gap-1 overflow-hidden rounded-2xl text-sm
+{#if preventVotes}
+	<div
+		class="flex w-fit items-center gap-1 overflow-hidden rounded-2xl text-sm
 {voteStatus === 'upvoted' && type === 'submission' ? 'bg-[var(--upvote-color)]' : ''}
 {voteStatus === 'downvoted' && type === 'submission' ? 'bg-[var(--downvote-color)]' : ''}
 {voteStatus === 'none' && type === 'submission' ? 'bg-[var(--accent-l1)]' : ''}"
->
-	<button
-		class="rounded-r-full px-1 py-1
+	>
+		<button
+			disabled={true}
+			class="rounded-r-full px-1 py-1
+		{voteStatus === 'upvoted' && type === 'comment' ? 'text-[var(--upvote-color)]' : ''}
+		{voteStatus === 'none' ? 'opacity-30' : ''}"
+			type="button"
+		>
+			{#if voteStatus === 'upvoted'}
+				<Icon name="arrowUpBold" />
+			{:else}
+				<Icon name="arrowUpOutline" />
+			{/if}
+		</button>
+		<span class="" title={votable.score.toString()}>{formatter.format(votable.score)}</span>
+		<button
+			disabled={true}
+			class="rounded-l-full px-1 py-1
+		{voteStatus === 'downvoted' && type === 'comment' ? 'text-[var(--downvote-color)]' : ''}
+		{voteStatus === 'none' ? 'opacity-30' : ''}"
+			type="button"
+		>
+			{#if voteStatus === 'downvoted'}
+				<Icon name="arrowDownBold" />
+			{:else}
+				<Icon name="arrowDownOutline" />
+			{/if}
+		</button>
+	</div>
+{:else}
+	<div
+		class="flex w-fit items-center gap-1 overflow-hidden rounded-2xl text-sm
+{voteStatus === 'upvoted' && type === 'submission' ? 'bg-[var(--upvote-color)]' : ''}
+{voteStatus === 'downvoted' && type === 'submission' ? 'bg-[var(--downvote-color)]' : ''}
+{voteStatus === 'none' && type === 'submission' ? 'bg-[var(--accent-l1)]' : ''}"
+	>
+		<button
+			class="rounded-r-full px-1 py-1
 		{voteStatus === 'upvoted' && type === 'comment' ? 'text-[var(--upvote-color)]' : ''}
 		{type === 'submission' ? 'hover:bg-black/40' : 'hover:bg-white/10'}
 		{voteStatus === 'none' ? 'hover:text-[var(--upvote-color)]' : ''}"
-		type="button"
-		aria-label="upvote"
-		on:click={() => {
-			if (voteStatus === 'upvoted') {
-				resetVote();
-			} else {
-				upvote();
-			}
-		}}
-	>
-		{#if voteStatus === 'upvoted'}
-			<Icon name="arrowUpBold" />
-		{:else}
-			<Icon name="arrowUpOutline" />
-		{/if}
-	</button>
-	<span class="" title={votable.score.toString()}>{formatter.format(votable.score)}</span>
-	<button
-		class="rounded-l-full px-1 py-1
+			type="button"
+			aria-label="upvote"
+			on:click={() => {
+				if (voteStatus === 'upvoted') {
+					resetVote();
+				} else {
+					upvote();
+				}
+			}}
+		>
+			{#if voteStatus === 'upvoted'}
+				<Icon name="arrowUpBold" />
+			{:else}
+				<Icon name="arrowUpOutline" />
+			{/if}
+		</button>
+		<span class="" title={votable.score.toString()}>{formatter.format(votable.score)}</span>
+		<button
+			class="rounded-l-full px-1 py-1
 		{voteStatus === 'downvoted' && type === 'comment' ? 'text-[var(--downvote-color)]' : ''}
 		{type === 'submission' ? 'hover:bg-black/40' : 'hover:bg-white/10'}
 		{voteStatus === 'none' ? 'hover:text-[var(--downvote-color)]' : ''}"
-		type="button"
-		aria-label="downvote"
-		on:click={() => {
-			if (voteStatus === 'downvoted') {
-				resetVote();
-			} else {
-				downvote();
-			}
-		}}
-	>
-		{#if voteStatus === 'downvoted'}
-			<Icon name="arrowDownBold" />
-		{:else}
-			<Icon name="arrowDownOutline" />
-		{/if}
-	</button>
-</div>
+			type="button"
+			aria-label="downvote"
+			on:click={() => {
+				if (voteStatus === 'downvoted') {
+					resetVote();
+				} else {
+					downvote();
+				}
+			}}
+		>
+			{#if voteStatus === 'downvoted'}
+				<Icon name="arrowDownBold" />
+			{:else}
+				<Icon name="arrowDownOutline" />
+			{/if}
+		</button>
+	</div>
+{/if}

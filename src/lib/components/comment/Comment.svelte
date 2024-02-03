@@ -10,6 +10,8 @@
 	import { page } from '$app/stores';
 	import CommentActions from './CommentActions.svelte';
 
+	export let preventReplies: boolean;
+	export let preventVotes: boolean;
 	export let comment: CommentFull;
 	export let pageSort: Sort | undefined;
 	export let suggestedSort: Sort | null;
@@ -98,7 +100,13 @@
 							<RedditHtml rawHTML={commentHtml} />
 						</div>
 
-						<CommentActions {comment} {persistSubmission} {addReplyFromUser} />
+						<CommentActions
+							{preventVotes}
+							preventReplies={preventReplies || comment.locked}
+							{comment}
+							{persistSubmission}
+							{addReplyFromUser}
+						/>
 					</div>
 				{/if}
 			</div>
@@ -108,6 +116,8 @@
 					{#each comment.replies as reply (reply.id)}
 						<svelte:self
 							comment={reply}
+							{preventReplies}
+							{preventVotes}
 							{pageSort}
 							{suggestedSort}
 							{submissionId}

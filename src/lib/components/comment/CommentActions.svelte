@@ -8,10 +8,14 @@
 
 	export let comment: Comment & { type: 'comment' };
 	export let persistSubmission: () => void;
-	export let addReplyFromUser: (c: CommentFull) => void;
+	export let addReplyFromUser: ((c: CommentFull) => void) | undefined;
+	export let preventReplies: boolean;
+	export let preventVotes: boolean;
 
 	function handleComment(c: Comment & { type: 'comment' }) {
-		addReplyFromUser(c);
+		if (addReplyFromUser) {
+			addReplyFromUser(c);
+		}
 		showReplyComment = false;
 	}
 	let showReplyComment = false;
@@ -19,9 +23,9 @@
 
 <div class="flex flex-col gap-2">
 	<div class="flex flex-wrap gap-1 text-sm font-semibold">
-		<VoteActions votable={comment} type="comment" persistVote={persistSubmission} />
+		<VoteActions {preventVotes} votable={comment} type="comment" persistVote={persistSubmission} />
 
-		{#if $loggedInStore}
+		{#if $loggedInStore && !preventReplies && addReplyFromUser}
 			<button
 				on:click={() => {
 					showReplyComment = !showReplyComment;

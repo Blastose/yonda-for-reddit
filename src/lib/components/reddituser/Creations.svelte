@@ -23,7 +23,7 @@
 					<SubmissionClassic submission={creation} />
 				{/if}
 			{:else}
-				<UserComment comment={creation} />
+				<UserComment comment={creation} preventReplies={true} preventVotes={creation.archived} />
 			{/if}
 			<Hr />
 		{/each}
@@ -38,7 +38,7 @@
 		{/each}
 	{:else if creations.type === 'comment'}
 		{#each creations.data as creation}
-			<UserComment comment={creation} />
+			<UserComment comment={creation} preventReplies={true} preventVotes={creation.archived} />
 			<Hr />
 		{/each}
 	{/if}

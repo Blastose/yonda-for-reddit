@@ -40,13 +40,15 @@
 			<SingleCommentThread {submission} />
 		{/if}
 
-		{#if !singleCommentThread && $loggedInStore}
+		{#if !singleCommentThread && $loggedInStore && !submission.archived && !submission.locked}
 			<CommentInput thingId={submission.name} afterComment={handleComment} />
 		{/if}
 	</div>
 
 	{#each submission.comments as comment, index}
 		<Comment
+			preventReplies={submission.locked || submission.archived}
+			preventVotes={submission.archived}
 			{comment}
 			pageSort={sort}
 			suggestedSort={submission.suggested_sort}

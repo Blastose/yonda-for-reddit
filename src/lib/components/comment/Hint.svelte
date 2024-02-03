@@ -3,6 +3,7 @@
 		distinguished: 'moderator' | 'admin' | null;
 		stickied: boolean;
 		locked: boolean;
+		archived?: boolean;
 		pinned?: boolean;
 		is_submitter?: boolean;
 	};
@@ -37,6 +38,11 @@
 		><Icon height={'12'} width={'12'} name="lock" /></span
 	>
 {/if}
+{#if hint.archived && type === 'submission'}
+	<span role="img" aria-label="archived" class="archived"
+		><Icon height={'12'} width={'12'} name="treasureChest" /></span
+	>
+{/if}
 
 <style>
 	span {
@@ -59,5 +65,9 @@
 
 	.lock {
 		color: #e7c129;
+	}
+
+	.archived {
+		color: #f3d766;
 	}
 </style>

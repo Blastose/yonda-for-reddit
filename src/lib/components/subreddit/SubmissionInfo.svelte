@@ -10,6 +10,7 @@
 	import Tag from './Tag.svelte';
 	import Embed from './embed/Embed.svelte';
 	import { page } from '$app/stores';
+	import Icon from '../icon/Icon.svelte';
 
 	export let submission: SubmissionData;
 	export let type: 'subreddit' | 'submission';
@@ -35,18 +36,6 @@
 	</div>
 	<Submitter submitter={submission} type="submission" showSubreddit={showSubreddit2} />
 
-	{#if submission.removed_by_category}
-		<div class="my-2 w-fit rounded-3xl border border-red-500 px-4 py-1">
-			{#if submission.removed_by_category === 'moderator'}
-				<p>Sorry, this post has been removed by the moderators of r/{submission.subreddit}.</p>
-			{:else if submission.removed_by_category === 'deleted' || submission.removed_by_category === 'author'}
-				<p>Sorry, this post was deleted by the person who originally posted it.</p>
-			{:else if submission.removed_by_category === 'reddit'}
-				<p>Sorry, this post was removed by Reddit's spam filters.</p>
-			{/if}
-		</div>
-	{/if}
-
 	{#if !submission.is_self}
 		<div class="reddit-md">
 			<a class="line-clamp-1" href={submission.url} target="_blank" rel="noreferrer"
@@ -68,6 +57,32 @@
 				})}
 			/>
 		</div>
+
+		{#if submission.removed_by_category}
+			<div class="flex items-center gap-2 rounded-md border border-red-500 px-2 py-1">
+				<Icon name="delete" />
+				{#if submission.removed_by_category === 'moderator'}
+					<p>Sorry, this post has been removed by the moderators of r/{submission.subreddit}.</p>
+				{:else if submission.removed_by_category === 'deleted' || submission.removed_by_category === 'author'}
+					<p>Sorry, this post was deleted by the person who originally posted it.</p>
+				{:else if submission.removed_by_category === 'reddit'}
+					<p>Sorry, this post was removed by Reddit's spam filters.</p>
+				{/if}
+			</div>
+		{/if}
+		{#if submission.locked}
+			<div class="flex items-center gap-2 rounded-md border border-[#e7c129] px-2 py-1">
+				<Icon name="lock" />
+				<p>Locked post. New comments cannot be posted.</p>
+			</div>
+		{/if}
+		{#if submission.archived}
+			<div class="flex items-center gap-2 rounded-md border border-[#e7c129] px-2 py-1">
+				<Icon name="treasureChest" />
+				<p>Archived post. New comments cannot be posted and votes cannot be cast.</p>
+			</div>
+		{/if}
+
 		<SubmissionActions {submission} {numNewComments} type="submission" />
 	{/if}
 </div>
