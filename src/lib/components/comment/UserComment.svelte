@@ -45,6 +45,7 @@
 		/>
 
 		<CommentActions
+			showAllOptions={false}
 			editingComment={false}
 			addReplyFromUser={undefined}
 			{comment}

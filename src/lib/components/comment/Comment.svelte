@@ -110,6 +110,7 @@
 							{comment}
 							{persistSubmission}
 							{addReplyFromUser}
+							showAllOptions={true}
 						/>
 					</div>
 				{/if}

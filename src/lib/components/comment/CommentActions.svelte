@@ -12,6 +12,7 @@
 	export let preventReplies: boolean;
 	export let preventVotes: boolean;
 	export let editingComment: boolean;
+	export let showAllOptions: boolean;
 
 	function handleComment(c: Comment & { type: 'comment' }) {
 		if (addReplyFromUser) {
@@ -41,7 +42,7 @@
 			</button>
 		{/if}
 
-		<CommentMoreOptions bind:editingComment {comment} />
+		<CommentMoreOptions bind:editingComment {comment} {showAllOptions} />
 	</div>
 
 	{#if showReplyComment}
