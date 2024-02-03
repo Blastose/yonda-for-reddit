@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CommentSort from '../comment/CommentSort.svelte';
 	import Comment from '../comment/Comment.svelte';
+	import type { Comment as CommentT } from 'jsrwrap/types';
 	import type { SubmissionFull } from '$lib/reddit/reddit';
 	import type { Sort } from 'jsrwrap/types';
 	import { setSubmissionStore } from '$lib/stores/submissionStore';
@@ -10,6 +11,8 @@
 	import CommentRefresh from '../comment/CommentRefresh.svelte';
 	import SingleCommentThread from '../comment/SingleCommentThread.svelte';
 	import Hr from '../layout/Hr.svelte';
+	import CommentInput from '../actions/CommentInput.svelte';
+	import { loggedInStore } from '$lib/stores/loggedInStore';
 
 	export let submission: SubmissionFull;
 	export let sort: Sort | undefined;
@@ -19,6 +22,12 @@
 		setSubmissionStore(transformUrlForIDBKey($page.url), submission);
 		db.put('submission', submission, transformUrlForIDBKey($page.url));
 	};
+
+	function handleComment(c: CommentT & { type: 'comment' }) {
+		submission.comments.unshift(c);
+		submission = submission;
+		persistSubmission();
+	}
 </script>
 
 <div class="flex flex-col gap-8">
@@ -31,12 +40,8 @@
 			<SingleCommentThread {submission} />
 		{/if}
 
-		{#if !singleCommentThread}
-			<input
-				class="w-full rounded-3xl bg-[var(--search-input-bg)] px-4 py-2"
-				type="text"
-				placeholder="Add a comment"
-			/>
+		{#if !singleCommentThread && $loggedInStore}
+			<CommentInput thingId={submission.name} afterComment={handleComment} />
 		{/if}
 	</div>
 

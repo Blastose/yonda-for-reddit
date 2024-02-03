@@ -63,6 +63,14 @@
 			persistSubmission();
 		}
 	}
+
+	function addReplyFromUser(c: CommentFull) {
+		if (comment.type === 'comment') {
+			comment.replies.unshift(c);
+			comment.replies = comment.replies;
+			persistSubmission();
+		}
+	}
 </script>
 
 {#if comment.type === 'comment'}
@@ -90,7 +98,7 @@
 							<RedditHtml rawHTML={commentHtml} />
 						</div>
 
-						<CommentActions {comment} {persistSubmission} />
+						<CommentActions {comment} {persistSubmission} {addReplyFromUser} />
 					</div>
 				{/if}
 			</div>
