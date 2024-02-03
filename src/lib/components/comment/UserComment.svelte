@@ -45,6 +45,7 @@
 		/>
 
 		<CommentActions
+			editingComment={false}
 			addReplyFromUser={undefined}
 			{comment}
 			persistSubmission={() => {}}

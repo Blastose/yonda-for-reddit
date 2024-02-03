@@ -6,18 +6,34 @@
 	export let thingId: string;
 	export let focus = false;
 	export let afterComment: (c: Comment & { type: 'comment' }) => void;
+	export let type: 'comment' | 'editComment';
+	export let cancelComment: () => void = () => {};
+	export let filledText: string | undefined = undefined;
 
-	let text: string = '';
+	let text: string = filledText ?? '';
 	let postingComment = false;
 	async function comment() {
 		try {
 			postingComment = true;
-			const c = await jsrwrap.getActions().comment({
-				api_type: 'json',
-				return_rtjson: true,
-				text: text,
-				thing_id: thingId
-			});
+			let c;
+			if (type === 'comment') {
+				c = await jsrwrap.getActions().comment({
+					api_type: 'json',
+					return_rtjson: true,
+					text: text,
+					thing_id: thingId
+				});
+			} else {
+				c = (await jsrwrap.getActions().editUserText(
+					{
+						api_type: 'json',
+						return_rtjson: true,
+						text: text,
+						thing_id: thingId
+					},
+					'comment'
+				)) as Comment;
+			}
 			postingComment = false;
 			text = '';
 			afterComment({ ...c, type: 'comment' });
@@ -40,7 +56,10 @@
 		use:focusOnShow
 		bind:value={text}
 	/>
-	<div class="flex justify-end">
+	<div class="flex justify-end gap-2">
+		{#if type === 'editComment'}
+			<button disabled={postingComment} on:click={cancelComment}>Cancel</button>
+		{/if}
 		<button
 			on:click={comment}
 			disabled={text.length === 0 || postingComment}

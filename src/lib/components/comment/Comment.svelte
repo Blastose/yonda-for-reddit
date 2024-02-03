@@ -9,6 +9,7 @@
 	import { buildCommentThreadPermalink } from '$lib/url/url';
 	import { page } from '$app/stores';
 	import CommentActions from './CommentActions.svelte';
+	import CommentInput from '../actions/CommentInput.svelte';
 
 	export let preventReplies: boolean;
 	export let preventVotes: boolean;
@@ -73,6 +74,8 @@
 			persistSubmission();
 		}
 	}
+
+	let editingComment = false;
 </script>
 
 {#if comment.type === 'comment'}
@@ -94,18 +97,38 @@
 					{/if}
 				</div>
 
-				{#if !comment.collapsed}
+				{#if !comment.collapsed && !editingComment}
 					<div class="flex flex-col">
 						<div class="comment-body-container image-left grid grid-cols-1">
 							<RedditHtml rawHTML={commentHtml} />
 						</div>
 
 						<CommentActions
+							bind:editingComment
 							{preventVotes}
 							preventReplies={preventReplies || comment.locked}
 							{comment}
 							{persistSubmission}
 							{addReplyFromUser}
+						/>
+					</div>
+				{/if}
+				{#if editingComment}
+					<div class="my-2">
+						<CommentInput
+							cancelComment={() => {
+								editingComment = false;
+							}}
+							filledText={comment.body}
+							afterComment={(c) => {
+								if (comment.type !== 'comment') return;
+								comment.body = c.body;
+								comment.edited = c.edited;
+								editingComment = false;
+							}}
+							thingId={comment.name}
+							focus={true}
+							type="editComment"
 						/>
 					</div>
 				{/if}

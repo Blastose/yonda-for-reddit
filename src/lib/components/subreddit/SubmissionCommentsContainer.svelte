@@ -41,7 +41,7 @@
 		{/if}
 
 		{#if !singleCommentThread && $loggedInStore && !submission.archived && !submission.locked}
-			<CommentInput thingId={submission.name} afterComment={handleComment} />
+			<CommentInput thingId={submission.name} afterComment={handleComment} type="comment" />
 		{/if}
 	</div>
 

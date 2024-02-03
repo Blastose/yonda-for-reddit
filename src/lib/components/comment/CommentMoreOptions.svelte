@@ -4,10 +4,12 @@
 	import Icon from '$lib/components/icon/Icon.svelte';
 	import type { Comment } from 'jsrwrap/types';
 	import { formatSubmissionPermalink } from '$lib/url/url';
+	import { loggedInStore } from '$lib/stores/loggedInStore';
 
 	export let comment: Comment & {
 		type: 'comment';
 	};
+	export let editingComment: boolean;
 
 	const {
 		elements: { trigger, menu, item },
@@ -44,6 +46,15 @@
 		<button use:melt={$item} class="item"
 			><Icon name="bookmark" height={iconDimension} width={iconDimension} />Save</button
 		>
+		{#if $loggedInStore === comment.author}
+			<button
+				use:melt={$item}
+				class="item"
+				on:click={() => {
+					editingComment = true;
+				}}><Icon name="pencil" height={iconDimension} width={iconDimension} />Edit</button
+			>
+		{/if}
 	</section>
 {/if}
 

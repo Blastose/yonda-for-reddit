@@ -11,6 +11,7 @@
 	export let addReplyFromUser: ((c: CommentFull) => void) | undefined;
 	export let preventReplies: boolean;
 	export let preventVotes: boolean;
+	export let editingComment: boolean;
 
 	function handleComment(c: Comment & { type: 'comment' }) {
 		if (addReplyFromUser) {
@@ -40,10 +41,10 @@
 			</button>
 		{/if}
 
-		<CommentMoreOptions {comment} />
+		<CommentMoreOptions bind:editingComment {comment} />
 	</div>
 
 	{#if showReplyComment}
-		<CommentInput thingId={comment.name} afterComment={handleComment} focus={true} />
+		<CommentInput thingId={comment.name} afterComment={handleComment} focus={true} type="comment" />
 	{/if}
 </div>

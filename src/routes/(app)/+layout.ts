@@ -15,9 +15,12 @@ export const load: LayoutLoad = async () => {
 		} else {
 			subscribedSubs = jsrwrap.getMe().getSubscribedSubreddits();
 		}
-		loggedInStore.set(true);
+
+		if (me) {
+			loggedInStore.set(me.name);
+		}
 	} else {
-		loggedInStore.set(false);
+		loggedInStore.set(null);
 	}
 
 	return { loggedIn, subscribedSubs, me };

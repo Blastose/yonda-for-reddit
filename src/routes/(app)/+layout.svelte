@@ -8,7 +8,6 @@
 	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
 	import { onMount } from 'svelte';
 	import { db } from '$lib/idb/idb.js';
-	import { loggedInStore } from '$lib/stores/loggedInStore.js';
 	import { transformUrlForIDBKey } from '$lib/url/url.js';
 	import { historyStore } from '$lib/stores/historyStore.js';
 
