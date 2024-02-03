@@ -56,7 +56,7 @@
 		use:focusOnShow
 		bind:value={text}
 	/>
-	<div class="flex justify-end gap-2">
+	<div class="flex justify-end gap-4">
 		{#if type === 'editComment'}
 			<button disabled={postingComment} on:click={cancelComment}>Cancel</button>
 		{/if}

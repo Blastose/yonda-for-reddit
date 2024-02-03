@@ -10,6 +10,7 @@
 	import { page } from '$app/stores';
 	import CommentActions from './CommentActions.svelte';
 	import CommentInput from '../actions/CommentInput.svelte';
+	import { addToast } from '../toast/Toaster.svelte';
 
 	export let preventReplies: boolean;
 	export let preventVotes: boolean;
@@ -69,6 +70,9 @@
 
 	function addReplyFromUser(c: CommentFull) {
 		if (comment.type === 'comment') {
+			if ((comment.replies as unknown as any) === '') {
+				comment.replies = [];
+			}
 			comment.replies.unshift(c);
 			comment.replies = comment.replies;
 			persistSubmission();
@@ -126,6 +130,8 @@
 								comment.body = c.body;
 								comment.edited = c.edited;
 								editingComment = false;
+								addToast({ data: { title: 'Edited!', type: 'success' } });
+								persistSubmission();
 							}}
 							thingId={comment.name}
 							focus={true}

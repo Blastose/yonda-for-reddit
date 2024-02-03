@@ -6,6 +6,7 @@
 	import { formatSubmissionPermalink } from '$lib/url/url';
 	import { loggedInStore } from '$lib/stores/loggedInStore';
 	import { jsrwrap } from '$lib/reddit/reddit';
+	import { addToast } from '../toast/Toaster.svelte';
 
 	export let comment: Comment & {
 		type: 'comment';
@@ -27,8 +28,10 @@
 		if (comment.saved) {
 			jsrwrap.getActions().unsave({ id: comment.name });
 			comment.saved = false;
+			addToast({ data: { title: 'Unsaved!', type: 'success' } });
 		} else {
 			jsrwrap.getActions().save({ id: comment.name });
+			addToast({ data: { title: 'Saved!', type: 'success' } });
 			comment.saved = true;
 		}
 	}

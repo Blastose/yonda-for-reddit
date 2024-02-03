@@ -3,11 +3,14 @@
 	import Header from './Header.svelte';
 	import Sidebar from './sidebar/Sidebar.svelte';
 	import type { MaybePromise } from '@sveltejs/kit';
+	import Toaster from '../toast/Toaster.svelte';
 
 	export let loggedIn: boolean;
 	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
 	export let me: RedditUser | undefined;
 </script>
+
+<Toaster />
 
 <div class="flex flex-col">
 	<Header {loggedIn} {subscribedSubs} {me} />
