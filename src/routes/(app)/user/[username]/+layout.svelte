@@ -27,7 +27,7 @@
 				</div>
 
 				<div class="flex flex-col gap-2">
-					<CreationsSort username={data.username} />
+					<CreationsSort username={data.username} currentUser={data.currentUser} />
 					<Hr />
 				</div>
 			</div>

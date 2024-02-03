@@ -34,8 +34,9 @@ export const load: PageLoad = async ({ params, url }) => {
 		creations = jsrwrapUser.getComments(options);
 	} else if (where === 'submitted') {
 		creations = jsrwrapUser.getSubmitted(options);
+	} else if (where === 'saved' || where === 'hidden' || where==="upvoted" || where==="downvoted") {
+		creations = jsrwrapUser.getWhere(where, options);
 	} else {
-		// TODO implement saved/hidden/upvoted/downvoted
 		creations = jsrwrapUser.getOverview(options);
 	}
 
