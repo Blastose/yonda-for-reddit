@@ -15,7 +15,7 @@
 
 	// We show the hot, new, rising, etc. buttons if the page isn't a comment thread
 	$: showSubredditOptions =
-		!/^https?:\/\/[A-z0-9:.-]+\/r\/[A-z_0-9]+\/(?:comments|search).*?$/.test(
+		!/^https?:\/\/[A-z0-9:.-]+\/r\/[A-z_0-9]+\/(?:comments|search|submit).*?$/.test(
 			$page.url.toString()
 		) ||
 		$page.url.pathname === '/' ||
