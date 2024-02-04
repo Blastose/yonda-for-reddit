@@ -6,18 +6,17 @@
 	import Toaster from '../toast/Toaster.svelte';
 
 	export let loggedIn: boolean;
-	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
 	export let me: RedditUser | undefined;
 </script>
 
 <Toaster />
 
 <div class="flex flex-col">
-	<Header {loggedIn} {subscribedSubs} {me} />
+	<Header {loggedIn} {me} />
 
 	<div class="mt-14 flex gap-4">
 		<aside class="sidebar-wrapper sidebar-animation sticky top-14 border-r border-[#3a3a3a]">
-			<Sidebar type="sidebar" {subscribedSubs} />
+			<Sidebar type="sidebar" />
 		</aside>
 
 		<main class="container-doku">

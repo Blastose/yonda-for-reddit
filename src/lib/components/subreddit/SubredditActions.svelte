@@ -6,13 +6,13 @@
 	import { db } from '$lib/idb/idb';
 	import { page } from '$app/stores';
 	import Icon from '../icon/Icon.svelte';
+	import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore';
 
 	export let about: SubredditData;
+
 	$: subreddit = $page.params.subreddit;
 
-	console.log(about);
-
-	function handleJoin() {
+	async function handleJoin() {
 		if (!about.user_is_subscriber) {
 			jsrwrap
 				.getActions()
@@ -21,11 +21,27 @@
 			addToast({
 				data: { title: `Subscribed to ${about.display_name_prefixed}!`, type: 'success' }
 			});
+
+			subscribedSubsStore.update((v) => {
+				v.value.push(about);
+				v.value.sort((a, b) =>
+					a.display_name.localeCompare(b.display_name, 'en', { sensitivity: 'base' })
+				);
+				return v;
+			});
 		} else {
 			jsrwrap.getActions().subscribe({ action: 'unsub', sr: about.name });
 			about.user_is_subscriber = false;
 			addToast({
 				data: { title: `Unsubscribed from ${about.display_name_prefixed}!`, type: 'success' }
+			});
+
+			subscribedSubsStore.update((v) => {
+				v.value = v.value.filter((d) => d.display_name !== about.display_name);
+				v.value.sort((a, b) =>
+					a.display_name.localeCompare(b.display_name, 'en', { sensitivity: 'base' })
+				);
+				return v;
 			});
 		}
 

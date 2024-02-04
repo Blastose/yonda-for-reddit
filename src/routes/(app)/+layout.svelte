@@ -10,6 +10,7 @@
 	import { db } from '$lib/idb/idb.js';
 	import { transformUrlForIDBKey } from '$lib/url/url.js';
 	import { historyStore } from '$lib/stores/historyStore.js';
+	import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore.js';
 
 	export let data;
 	let nprogressTimeoutId: ReturnType<typeof setTimeout>;
@@ -105,18 +106,17 @@
 	onMount(async () => {
 		if (data.subscribedSubs) {
 			const subscribedSubs = await data.subscribedSubs;
-			db.put(
-				'subscribedSubreddits',
-				{ value: subscribedSubs, cached: new Date().getTime() },
-				'reddit'
+			subscribedSubs.sort((a, b) =>
+				a.display_name.localeCompare(b.display_name, 'en', { sensitivity: 'base' })
 			);
+			subscribedSubsStore.set({ value: subscribedSubs, cached: new Date().getTime() });
 		}
 	});
 </script>
 
 <svelte:document on:keydown={handleKeydown} />
 
-<Layout loggedIn={data.loggedIn} me={data.me} subscribedSubs={data.subscribedSubs}>
+<Layout loggedIn={data.loggedIn} me={data.me}>
 	<slot />
 </Layout>
 

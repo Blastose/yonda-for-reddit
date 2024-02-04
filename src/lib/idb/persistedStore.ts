@@ -1,4 +1,10 @@
+import { browser } from '$app/environment';
 import { writable, type Updater } from 'svelte/store';
+
+const noopStorage = {
+	getItem: () => null,
+	setItem: () => {}
+};
 
 // Adapted from https://github.com/CaptainCodeman/svelte-web-storage/blob/6d82108a6b40cf7a1f8c2be6b0760482c4aa05f5/src/lib/index.ts
 export function persistedStore<T>(
@@ -7,7 +13,7 @@ export function persistedStore<T>(
 	type: 'local' | 'session',
 	notify?: boolean
 ) {
-	const storage = type === 'local' ? localStorage : sessionStorage;
+	const storage = browser ? (type === 'local' ? localStorage : sessionStorage) : noopStorage;
 	const persisted = storage.getItem(name);
 	const parsed = persisted ? JSON.parse(persisted) : null;
 

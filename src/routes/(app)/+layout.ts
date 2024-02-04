@@ -1,6 +1,8 @@
 import { db } from '$lib/idb/idb';
 import { jsrwrap } from '$lib/reddit/reddit';
 import { loggedInStore } from '$lib/stores/loggedInStore';
+import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore';
+import { get } from 'svelte/store';
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async () => {
@@ -9,9 +11,10 @@ export const load: LayoutLoad = async () => {
 	let subscribedSubs;
 	if (loggedIn) {
 		const now = new Date().getTime();
-		const subscribedSubsMaybe = await db.get('subscribedSubreddits', 'reddit');
-		if (subscribedSubsMaybe && now < subscribedSubsMaybe.cached + 360000) {
-			subscribedSubs = subscribedSubsMaybe.value;
+
+		const st = get(subscribedSubsStore);
+		if (st && now < st.cached + 360000) {
+			subscribedSubs = st.value;
 		} else {
 			subscribedSubs = jsrwrap.getMe().getSubscribedSubreddits();
 		}

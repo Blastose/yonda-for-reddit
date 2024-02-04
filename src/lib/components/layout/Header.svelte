@@ -2,20 +2,18 @@
 	import Drawer from './Drawer.svelte';
 	import YondaIcon from './YondaIcon.svelte';
 	import { createAuthUrl } from '$lib/reddit/reddit';
-	import type { RedditUser, SubredditData } from 'jsrwrap/types';
+	import type { RedditUser } from 'jsrwrap/types';
 	import UserMenu from './UserMenu.svelte';
-	import type { MaybePromise } from '@sveltejs/kit';
 	import Search from './Search.svelte';
 
 	export let loggedIn: boolean;
-	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
 	export let me: RedditUser | undefined;
 </script>
 
 <header class="header">
 	<div class="flex gap-2">
 		<div class="block lg:hidden">
-			<Drawer {subscribedSubs} />
+			<Drawer />
 		</div>
 		<div class="flex items-center lg:hidden">
 			<a class="block text-2xl font-bold" aria-label="Yonda homepage" href="/"><YondaIcon /></a>

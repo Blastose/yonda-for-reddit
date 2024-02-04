@@ -63,8 +63,8 @@ async function createJsrwrap() {
 			},
 			'reddit'
 		);
+		await db.clear('submission');
 	}
-
 	return jsrwrap;
 }
 
@@ -103,8 +103,8 @@ async function logout() {
 		type: 'refresh_token'
 	});
 	await db.clear('redditOauth');
-	await db.clear('subscribedSubreddits');
 	await db.clear('redditOauthMe');
+	lsdb.remove('subscribedSubs');
 	window.location.href = '/';
 }
 
