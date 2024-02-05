@@ -8,6 +8,9 @@
 	import { submissionDisplayStore } from '$lib/stores/submissionDisplayStore';
 	import { onMount } from 'svelte';
 	import { db } from '$lib/idb/idb.js';
+	import { transformUrlForIDBKey } from '$lib/url/url.js';
+	import { historyStore } from '$lib/stores/historyStore.js';
+	import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore.js';
 
 	export let data;
 	let nprogressTimeoutId: ReturnType<typeof setTimeout>;
@@ -38,8 +41,34 @@
 		}
 	});
 
-	afterNavigate(() => {
+	afterNavigate((nav) => {
+		console.log(nav);
+		console.log($historyStore);
+		if (nav.to) {
+			const url = transformUrlForIDBKey(nav.to?.url);
+			if (nav.type === 'popstate' && nav.delta) {
+				const delta = nav.delta;
+				historyStore.update((v) => {
+					return { urls: v.urls, index: v.index + delta };
+				});
+			} else if (nav.type === 'goto' || nav.type === 'link') {
+				if (nav.from?.url === null) {
+					historyStore.set({ urls: [], index: -1 });
+				}
+				historyStore.update((v) => {
+					if (v.index < 0) {
+						v.urls = [];
+						v.index = -1;
+					}
+					v.urls = v.urls.slice(0, v.index + 1);
+					v.urls.push(url);
+					v.index++;
+					return v;
+				});
+			}
+		}
 		navigationTypeStore.set(null);
+		console.log($historyStore);
 	});
 
 	onNavigate((navigation) => {
@@ -77,18 +106,17 @@
 	onMount(async () => {
 		if (data.subscribedSubs) {
 			const subscribedSubs = await data.subscribedSubs;
-			db.put(
-				'subscribedSubreddits',
-				{ value: subscribedSubs, cached: new Date().getTime() },
-				'reddit'
+			subscribedSubs.sort((a, b) =>
+				a.display_name.localeCompare(b.display_name, 'en', { sensitivity: 'base' })
 			);
+			subscribedSubsStore.set({ value: subscribedSubs, cached: new Date().getTime() });
 		}
 	});
 </script>
 
 <svelte:document on:keydown={handleKeydown} />
 
-<Layout loggedIn={data.loggedIn} me={data.me} subscribedSubs={data.subscribedSubs}>
+<Layout loggedIn={data.loggedIn} me={data.me}>
 	<slot />
 </Layout>
 

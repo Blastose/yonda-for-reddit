@@ -8,6 +8,8 @@
 	import CommentActions from './CommentActions.svelte';
 
 	export let comment: CommentFull & { type: 'comment' };
+	export let preventReplies: boolean;
+	export let preventVotes: boolean;
 	$: href = `${formatSubmissionPermalink(comment.permalink)}?context=3`;
 </script>
 
@@ -42,7 +44,15 @@
 			rawHTML={markdownToHtml(comment.body, { media_metadata: comment.media_metadata })}
 		/>
 
-		<CommentActions {comment} />
+		<CommentActions
+			showAllOptions={false}
+			editingComment={false}
+			addReplyFromUser={undefined}
+			{comment}
+			persistSubmission={() => {}}
+			{preventReplies}
+			{preventVotes}
+		/>
 	</article>
 </ClickableDivWrapper>
 

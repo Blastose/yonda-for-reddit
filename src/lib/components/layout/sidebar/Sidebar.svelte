@@ -1,13 +1,12 @@
 <script lang="ts">
 	import Icon from '$lib/components/icon/Icon.svelte';
-	import type { SubredditData } from 'jsrwrap/types';
 	import Hr from '../Hr.svelte';
 	import SidebarSection from './SidebarSection.svelte';
 	import SidebarSub from './SidebarSub.svelte';
-	import type { MaybePromise } from '@sveltejs/kit';
+	import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore';
+	import { loggedInStore } from '$lib/stores/loggedInStore';
 
 	export let type: 'sidebar' | 'drawer';
-	export let subscribedSubs: MaybePromise<SubredditData[]> | undefined;
 </script>
 
 <div
@@ -42,19 +41,18 @@
 		{/each}
 	</SidebarSection>
 
-	{#if subscribedSubs}
-		<Hr />
+	<Hr />
+
+	{#if $loggedInStore}
 		<SidebarSection heading="Subscribed">
-			{#await subscribedSubs then subs}
-				{#each subs as sub}
-					{@const icon = sub?.community_icon || sub?.icon_img}
-					<SidebarSub
-						url="/{sub.display_name_prefixed.toLowerCase()}"
-						display={sub.display_name_prefixed}
-						{icon}
-					/>
-				{/each}
-			{/await}
+			{#each $subscribedSubsStore.value as sub}
+				{@const icon = sub?.community_icon || sub?.icon_img}
+				<SidebarSub
+					url="/{sub.display_name_prefixed.toLowerCase()}"
+					display={sub.display_name_prefixed}
+					{icon}
+				/>
+			{/each}
 		</SidebarSection>
 	{/if}
 </div>

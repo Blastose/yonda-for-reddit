@@ -2,23 +2,46 @@
 	import type { SubmissionData } from 'jsrwrap/types';
 	import Icon from '../icon/Icon.svelte';
 	import { submissionStoreClick } from '$lib/stores/submissionStore';
-	import { formatSubmissionPermalink } from '$lib/url/url';
+	import { formatSubmissionPermalink, transformUrlForIDBKey } from '$lib/url/url';
 	import { formatter } from '$lib/reddit/number';
 	import SubmissionMoreOptions from './SubmissionMoreOptions.svelte';
+	import VoteActions from '../actions/VoteActions.svelte';
+	import { historyStore } from '$lib/stores/historyStore';
+	import { db } from '$lib/idb/idb';
+	import { page } from '$app/stores';
+	import type { MaybePromise } from '@sveltejs/kit';
 
 	export let submission: SubmissionData;
 	export let numNewComments: number;
 	export let type: 'subreddit' | 'submission';
 
 	$: href = formatSubmissionPermalink(submission.permalink);
+
+	function persistVote(votable?: { score: number; likes: boolean | null }) {
+		const index = $historyStore.index;
+		const backUrl = $historyStore.urls.at(index - 1);
+		const forwardUrls = $historyStore.urls.at(index + 1);
+
+		if (votable) {
+		}
+		// Check if back/forward url type for subreddit or comments
+		// Get submissionsStore for back and forward?
+		// Find if array index the submission / the comment
+		// vote it
+		// Set submissionStores
+		// the end
+
+		// db.put('submissions', s, transformUrlForIDBKey($page.url));
+	}
 </script>
 
 <div class="mt-4 flex items-center gap-2 font-semibold">
-	<div class="flex w-fit items-center gap-1 rounded-2xl bg-[var(--accent-l1)] px-2 py-1 text-sm">
-		<button><Icon name="arrowUpOutline" /></button>
-		<span title={submission.score.toString()}>{formatter.format(submission.score)}</span>
-		<button><Icon name="arrowDownOutline" /></button>
-	</div>
+	<VoteActions
+		preventVotes={submission.archived}
+		votable={submission}
+		type="submission"
+		{persistVote}
+	/>
 
 	{#if type === 'subreddit'}
 		<a

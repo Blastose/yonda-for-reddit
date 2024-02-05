@@ -3,16 +3,17 @@
 	import type { CommentFull, Sort } from 'jsrwrap/types';
 	import CommentBar from './CommentBar.svelte';
 	import { tick } from 'svelte';
-	import Icon from '../icon/Icon.svelte';
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import Submitter from '../subreddit/Submitter.svelte';
-	import { formatter } from '$lib/reddit/number';
 	import { jsrwrap } from '$lib/reddit/reddit';
 	import { buildCommentThreadPermalink } from '$lib/url/url';
 	import { page } from '$app/stores';
-	import CommentMoreOptions from './CommentMoreOptions.svelte';
 	import CommentActions from './CommentActions.svelte';
+	import CommentInput from '../actions/CommentInput.svelte';
+	import { addToast } from '../toast/Toaster.svelte';
 
+	export let preventReplies: boolean;
+	export let preventVotes: boolean;
 	export let comment: CommentFull;
 	export let pageSort: Sort | undefined;
 	export let suggestedSort: Sort | null;
@@ -66,6 +67,19 @@
 			persistSubmission();
 		}
 	}
+
+	function addReplyFromUser(c: CommentFull) {
+		if (comment.type === 'comment') {
+			if ((comment.replies as unknown as any) === '') {
+				comment.replies = [];
+			}
+			comment.replies.unshift(c);
+			comment.replies = comment.replies;
+			persistSubmission();
+		}
+	}
+
+	let editingComment = false;
 </script>
 
 {#if comment.type === 'comment'}
@@ -87,13 +101,42 @@
 					{/if}
 				</div>
 
-				{#if !comment.collapsed}
+				{#if !comment.collapsed && !editingComment}
 					<div class="flex flex-col">
 						<div class="comment-body-container image-left grid grid-cols-1">
 							<RedditHtml rawHTML={commentHtml} />
 						</div>
 
-						<CommentActions {comment} />
+						<CommentActions
+							bind:editingComment
+							{preventVotes}
+							preventReplies={preventReplies || comment.locked}
+							{comment}
+							{persistSubmission}
+							{addReplyFromUser}
+							showAllOptions={true}
+						/>
+					</div>
+				{/if}
+				{#if editingComment}
+					<div class="my-2">
+						<CommentInput
+							cancelComment={() => {
+								editingComment = false;
+							}}
+							filledText={comment.body}
+							afterComment={(c) => {
+								if (comment.type !== 'comment') return;
+								comment.body = c.body;
+								comment.edited = c.edited;
+								editingComment = false;
+								addToast({ data: { title: 'Edited!', type: 'success' } });
+								persistSubmission();
+							}}
+							thingId={comment.name}
+							focus={true}
+							type="editComment"
+						/>
 					</div>
 				{/if}
 			</div>
@@ -103,6 +146,8 @@
 					{#each comment.replies as reply (reply.id)}
 						<svelte:self
 							comment={reply}
+							{preventReplies}
+							{preventVotes}
 							{pageSort}
 							{suggestedSort}
 							{submissionId}

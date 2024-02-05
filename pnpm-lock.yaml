@@ -15,14 +15,14 @@ dependencies:
     specifier: ^8.0.0
     version: 8.0.0
   jsrwrap:
-    specifier: 0.1.16-beta.25
-    version: 0.1.16-beta.25
+    specifier: 0.1.16-beta.28
+    version: 0.1.16-beta.28
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
   reddit-md-to-html:
-    specifier: ^0.1.72
-    version: 0.1.72
+    specifier: ^0.1.73
+    version: 0.1.73
 
 devDependencies:
   '@melt-ui/pp':
@@ -2702,8 +2702,8 @@ packages:
       graceful-fs: 4.2.11
     dev: false
 
-  /jsrwrap@0.1.16-beta.25:
-    resolution: {integrity: sha512-peb9DKBAVVJmTOKrp59QOYtGYW3JH2ZfINox5nTS8qaHe18tAzbqike1djIFko3sm7S/SNyNKUHLxEA9p33Dqw==}
+  /jsrwrap@0.1.16-beta.28:
+    resolution: {integrity: sha512-9Vdd/NwWzgeVyQJTLM0LAAnc+UkLf9SAm/GOqYGS+TfGs5pw4+qDsb9NQfov1y7sab9harXkRaWBUp8d0Hn1WA==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -3657,8 +3657,8 @@ packages:
       resolve: 1.22.8
     dev: false
 
-  /reddit-md-to-html@0.1.72:
-    resolution: {integrity: sha512-JxHmGITctV3nZL7pIP/G6FftJ6zW7oTcDiMtzUATRtrXPJWJRs5VTrn/xPHIVZjhbr8VLwwt4G+WUjWSr3CKXw==}
+  /reddit-md-to-html@0.1.73:
+    resolution: {integrity: sha512-OzkQjBKGLM8eV5QZurycIwgTt2tE68H1CFuB3TZZhebSlYUKYNFEItgqTm6uI48t4btNWDziuv3k7Aq0/+ZlEw==}
     engines: {node: '>=14.16'}
     dependencies:
       simple-markdown: 0.7.3

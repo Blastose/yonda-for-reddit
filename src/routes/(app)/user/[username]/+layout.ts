@@ -18,8 +18,11 @@ export const load: LayoutLoad = async ({ params }) => {
 		db.put('redditUser', { cached: new Date().getTime(), value: about }, username);
 	}
 
+	const currentUser = await db.get('redditOauthMe', 'reddit');
+
 	return {
 		about,
-		username
+		username,
+		currentUser
 	};
 };

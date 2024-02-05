@@ -1,6 +1,7 @@
 type LSSchema = {
 	videoVolume: string;
 	state: string;
+	subscribedSubs: { toString: () => string };
 };
 
 type Keys = keyof LSSchema;

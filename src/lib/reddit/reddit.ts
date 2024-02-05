@@ -2,6 +2,7 @@ import { browser, dev } from '$app/environment';
 import { PUBLIC_CLIENT_ID } from '$env/static/public';
 import { db } from '$lib/idb/idb';
 import { lsdb } from '$lib/idb/ls';
+import { loggedInStore } from '$lib/stores/loggedInStore';
 import { Jsrwrap, Submission, Subreddit, User } from 'jsrwrap';
 import type { SubredditData } from 'jsrwrap/types';
 
@@ -62,8 +63,8 @@ async function createJsrwrap() {
 			},
 			'reddit'
 		);
+		await db.clear('submission');
 	}
-
 	return jsrwrap;
 }
 
@@ -96,13 +97,14 @@ if (browser) {
 }
 async function logout() {
 	// await clearIdb();
+	loggedInStore.set(null);
 	await jsrwrap.revokeToken({
 		token: jsrwrap.refreshToken ?? '',
 		type: 'refresh_token'
 	});
 	await db.clear('redditOauth');
-	await db.clear('subscribedSubreddits');
 	await db.clear('redditOauthMe');
+	lsdb.remove('subscribedSubs');
 	window.location.href = '/';
 }
 
