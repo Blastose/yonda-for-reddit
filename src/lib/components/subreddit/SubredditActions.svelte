@@ -7,6 +7,7 @@
 	import { page } from '$app/stores';
 	import Icon from '../icon/Icon.svelte';
 	import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore';
+	import SubredditMoreOptions from './SubredditMoreOptions.svelte';
 
 	export let about: SubredditData;
 
@@ -67,3 +68,4 @@
 		>{about.user_is_subscriber ? 'Joined' : 'Join'}</button
 	>
 {/if}
+<SubredditMoreOptions {about} />
