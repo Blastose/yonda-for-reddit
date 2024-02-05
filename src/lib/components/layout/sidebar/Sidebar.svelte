@@ -5,6 +5,7 @@
 	import SidebarSub from './SidebarSub.svelte';
 	import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore';
 	import { loggedInStore } from '$lib/stores/loggedInStore';
+	import { pinnedSubsOpenStore, subscribedSubsOpenStore } from '$lib/stores/sidebarSubsOpenStore';
 
 	export let type: 'sidebar' | 'drawer';
 </script>
@@ -24,14 +25,16 @@
 		<SidebarSub url="/r/all" useSlot={true} display="All">
 			<Icon name="alphaABox" /></SidebarSub
 		>
-		<SidebarSub url={'/r/genshin_impact'} display="Genshin" />
-		<SidebarSub url={'/r/webdev'} display="Webdev" />
-		<SidebarSub url={'/r/games'} display="games" />
-		<SidebarSub url={'/r/games'} display="gamesgamesgamesgamesgamesgamesgames" />
 	</div>
 
 	<Hr />
-	<SidebarSection heading="Pinned">
+	<SidebarSection
+		heading="Pinned"
+		open={$pinnedSubsOpenStore}
+		toggleOpen={() => {
+			pinnedSubsOpenStore.update((v) => !v);
+		}}
+	>
 		{#each { length: 1 } as _}
 			<SidebarSub
 				url={'/r/arknights'}
@@ -44,7 +47,13 @@
 	<Hr />
 
 	{#if $loggedInStore}
-		<SidebarSection heading="Subscribed">
+		<SidebarSection
+			heading="Subscribed"
+			open={$subscribedSubsOpenStore}
+			toggleOpen={() => {
+				subscribedSubsOpenStore.update((v) => !v);
+			}}
+		>
 			{#each $subscribedSubsStore.value as sub}
 				{@const icon = sub?.community_icon || sub?.icon_img}
 				<SidebarSub
