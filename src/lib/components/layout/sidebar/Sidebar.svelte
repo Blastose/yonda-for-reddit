@@ -3,9 +3,10 @@
 	import Hr from '../Hr.svelte';
 	import SidebarSection from './SidebarSection.svelte';
 	import SidebarSub from './SidebarSub.svelte';
-	import { subscribedSubsStore } from '$lib/stores/subscribedSubsStore';
+	import { subscribedSubsStore, pinnedSubsStore } from '$lib/stores/subscribedSubsStore';
 	import { loggedInStore } from '$lib/stores/loggedInStore';
 	import { pinnedSubsOpenStore, subscribedSubsOpenStore } from '$lib/stores/sidebarSubsOpenStore';
+	import AddPinnedSub from './AddPinnedSub.svelte';
 
 	export let type: 'sidebar' | 'drawer';
 </script>
@@ -35,11 +36,12 @@
 			pinnedSubsOpenStore.update((v) => !v);
 		}}
 	>
-		{#each { length: 1 } as _}
+		<AddPinnedSub />
+		{#each $pinnedSubsStore as sub}
 			<SidebarSub
-				url={'/r/arknights'}
-				display="r/Arknights"
-				icon="https://styles.redditmedia.com/t5_3ptom/styles/communityIcon_ozhi2qzq64v71.png"
+				url="/r/{sub.displayName.toLowerCase()}"
+				display="r/{sub.displayName}"
+				icon={sub.iconUrl}
 			/>
 		{/each}
 	</SidebarSection>

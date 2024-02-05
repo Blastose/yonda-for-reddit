@@ -12,3 +12,7 @@ export const subscribedSubsStore = persistedStore<{
 	},
 	'local'
 );
+
+export const pinnedSubsStore = persistedStore<
+	{ iconUrl: string | undefined; displayName: string }[]
+>('pinnedSubs', [], 'local');
