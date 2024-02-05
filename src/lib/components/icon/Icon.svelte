@@ -216,6 +216,10 @@
 		alertCircle: {
 			box: 24,
 			svg: `<path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />`
+		},
+		swapVertical: {
+			box: 24,
+			svg: `<path d="M9,3L5,7H8V14H10V7H13M16,17V10H14V17H11L15,21L19,17H16Z" />`
 		}
 	};
 </script>

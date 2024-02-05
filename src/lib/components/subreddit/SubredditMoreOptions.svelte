@@ -29,7 +29,7 @@
 			pinnedSubsStore.update((v) => {
 				const icon = about?.community_icon || about?.icon_img || undefined;
 				v.push({ displayName: about.display_name, iconUrl: icon });
-				v.sort((a, b) => a.displayName.localeCompare(b.displayName, 'en', { sensitivity: 'base' }));
+				// v.sort((a, b) => a.displayName.localeCompare(b.displayName, 'en', { sensitivity: 'base' }));
 				return v;
 			});
 			addToast({ data: { title: 'Pinned subreddit!', type: 'success' } });

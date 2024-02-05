@@ -9,6 +9,20 @@
 	import AddPinnedSub from './AddPinnedSub.svelte';
 
 	export let type: 'sidebar' | 'drawer';
+
+	function swap(targetIndex: number) {
+		return () => {
+			if (targetIndex < 0) return;
+			if (targetIndex + 1 === $pinnedSubsStore.length) return;
+
+			pinnedSubsStore.update((v) => {
+				[v[targetIndex], v[targetIndex + 1]] = [v[targetIndex + 1], v[targetIndex]];
+
+				return v;
+			});
+		};
+	}
+	let reorderingPinned = false;
 </script>
 
 <div
@@ -17,13 +31,13 @@
 		: 'drawer'} "
 >
 	<div>
-		<SidebarSub url="/" useSlot={true} display="Home">
+		<SidebarSub url="/" useSlot={true} display="Home" reorder={undefined}>
 			<Icon name="home" /></SidebarSub
 		>
-		<SidebarSub url="/r/popular" useSlot={true} display="Popular">
+		<SidebarSub url="/r/popular" useSlot={true} display="Popular" reorder={undefined}>
 			<Icon name="trendingUp" /></SidebarSub
 		>
-		<SidebarSub url="/r/all" useSlot={true} display="All">
+		<SidebarSub url="/r/all" useSlot={true} display="All" reorder={undefined}>
 			<Icon name="alphaABox" /></SidebarSub
 		>
 	</div>
@@ -37,11 +51,22 @@
 		}}
 	>
 		<AddPinnedSub />
-		{#each $pinnedSubsStore as sub}
+		<button
+			class="flex w-full items-center gap-2 rounded-2xl px-4 py-2 hover:bg-[var(--bg-hover)]"
+			on:click={() => {
+				reorderingPinned = !reorderingPinned;
+			}}><Icon name="swapVertical" />{!reorderingPinned ? 'Reorder' : 'Cancel'}</button
+		>
+		{#each $pinnedSubsStore as sub, index}
 			<SidebarSub
 				url="/r/{sub.displayName.toLowerCase()}"
 				display="r/{sub.displayName}"
 				icon={sub.iconUrl}
+				reorder={{
+					moveDown: swap(index),
+					moveUp: swap(index - 1),
+					reordering: reorderingPinned
+				}}
 			/>
 		{/each}
 	</SidebarSection>
@@ -62,6 +87,7 @@
 					url="/{sub.display_name_prefixed.toLowerCase()}"
 					display={sub.display_name_prefixed}
 					{icon}
+					reorder={undefined}
 				/>
 			{/each}
 		</SidebarSection>
