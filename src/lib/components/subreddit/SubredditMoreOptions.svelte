@@ -48,7 +48,7 @@
 		transition:fly={{ duration: 150, y: -10 }}
 	>
 		<button use:melt={$item} class="item" on:click={handlePin}
-			><Icon name="pin" />{isPinned ? 'Unpin' : 'Pin'}</button
+			><Icon name="pin" />{isPinned ? 'Unpin subreddit' : 'Pin subreddit'}</button
 		>
 		<a
 			class="item"

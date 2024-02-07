@@ -7,6 +7,7 @@
 	import Pagination from '$lib/components/reddit/Pagination.svelte';
 	import Sort from '$lib/components/search/Sort.svelte';
 	import SortTime from '$lib/components/subreddit/SortTime.svelte';
+	import SubmissionTypeOptions from '$lib/components/subreddit/SubmissionTypeOptions.svelte';
 
 	export let data;
 
@@ -32,11 +33,14 @@
 	>
 </p>
 
-<div class="flex gap-1">
-	<Sort />
-	{#if sort === 'top' || sort === 'relevance' || sort === 'comments'}
-		<SortTime defaultSort="all" />
-	{/if}
+<div class="flex justify-between">
+	<div class="flex gap-1">
+		<Sort />
+		{#if sort === 'top' || sort === 'relevance' || sort === 'comments'}
+			<SortTime defaultSort="all" />
+		{/if}
+	</div>
+	<SubmissionTypeOptions />
 </div>
 
 {#key getFullUrl($page.url)}

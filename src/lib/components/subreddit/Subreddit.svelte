@@ -8,6 +8,7 @@
 	import type { MaybePromise } from '@sveltejs/kit';
 	import type { SubredditData, Widget } from 'jsrwrap/types';
 	import { fade } from 'svelte/transition';
+	import SubmissionTypeOptions from './SubmissionTypeOptions.svelte';
 
 	export let about: SubredditData | null;
 	export let sidebarPromise: MaybePromise<Widget[] | null> | null;
@@ -32,11 +33,15 @@
 	<div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
 		<div class="flex max-w-[750px] flex-col gap-2">
 			{#if showSubredditOptions}
-				<div class="flex">
-					<SubredditSort />
-					{#if currentSort === 'top' || currentSort === 'controversial'}
-						<SortTime />
-					{/if}
+				<div class="flex items-center justify-between">
+					<div class="flex">
+						<SubredditSort />
+						{#if currentSort === 'top' || currentSort === 'controversial'}
+							<SortTime />
+						{/if}
+					</div>
+
+					<SubmissionTypeOptions />
 				</div>
 			{/if}
 

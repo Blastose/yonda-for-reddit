@@ -11,6 +11,7 @@
 	import SearchUser from '$lib/components/search/SearchUser.svelte';
 	import Hr from '$lib/components/layout/Hr.svelte';
 	import SearchSubreddit from '$lib/components/search/SearchSubreddit.svelte';
+	import SubmissionTypeOptions from '$lib/components/subreddit/SubmissionTypeOptions.svelte';
 
 	export let data;
 
@@ -56,11 +57,16 @@
 
 	<div class="flex flex-col gap-2">
 		{#if type === 'link'}
-			<div class="flex gap-1">
-				<Sort />
-				{#if sort === 'top' || sort === 'relevance' || sort === 'comments'}
-					<SortTime defaultSort="all" />
-				{/if}
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_256px] lg:grid-cols-[1fr_312px]">
+				<div class="flex justify-between">
+					<div class="flex gap-1">
+						<Sort />
+						{#if sort === 'top' || sort === 'relevance' || sort === 'comments'}
+							<SortTime defaultSort="all" />
+						{/if}
+					</div>
+					<SubmissionTypeOptions />
+				</div>
 			</div>
 		{/if}
 

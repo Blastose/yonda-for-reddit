@@ -32,7 +32,7 @@
 		</span>
 
 		<div class="grid grid-cols-[1fr_min-content]">
-			<span class="line-clamp-1">{display}</span>
+			<span class="overflow-hidden text-ellipsis whitespace-nowrap">{display}</span>
 
 			<div class="flex items-center whitespace-nowrap">
 				<button on:click={reorder.moveUp}><Icon name="chevronDown" class="rotate-180" /></button>
@@ -55,7 +55,7 @@
 			{/if}
 		</span>
 
-		<span class="line-clamp-1">{display}</span>
+		<span class="overflow-hidden text-ellipsis whitespace-nowrap">{display}</span>
 	</a>
 {/if}
 

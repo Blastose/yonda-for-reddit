@@ -220,6 +220,18 @@
 		swapVertical: {
 			box: 24,
 			svg: `<path d="M9,3L5,7H8V14H10V7H13M16,17V10H14V17H11L15,21L19,17H16Z" />`
+		},
+		tableOfContents: {
+			box: 24,
+			svg: `<path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" />`
+		},
+		card: {
+			box: 24,
+			svg: `<path d="M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20Z" />`
+		},
+		cardOutline: {
+			box: 24,
+			svg: `<path d="M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20M4,6V18H20V6H4Z" />`
 		}
 	};
 </script>

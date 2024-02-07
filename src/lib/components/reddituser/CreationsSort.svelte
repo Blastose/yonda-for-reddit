@@ -4,6 +4,7 @@
 	import SortTime from '../subreddit/SortTime.svelte';
 	import Sort from './Sort.svelte';
 	import SortItem from './SortItem.svelte';
+	import SubmissionTypeOptions from '../subreddit/SubmissionTypeOptions.svelte';
 
 	export let username: string;
 	export let currentUser: RedditUser | undefined;
@@ -42,11 +43,15 @@
 	</div>
 
 	{#if userWhere === undefined || userWhere === 'submitted' || userWhere === 'comments'}
-		<div class="flex">
-			<Sort />
-			{#if t === 'top' || t === 'hot' || t === 'controversial'}
-				<SortTime defaultSort="all" />
-			{/if}
+		<div class="flex justify-between">
+			<div class="flex">
+				<Sort />
+				{#if t === 'top' || t === 'hot' || t === 'controversial'}
+					<SortTime defaultSort="all" />
+				{/if}
+			</div>
+
+			<SubmissionTypeOptions />
 		</div>
 	{/if}
 </div>
