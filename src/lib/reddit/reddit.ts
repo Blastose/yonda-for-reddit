@@ -63,7 +63,6 @@ async function createJsrwrap() {
 			},
 			'reddit'
 		);
-		await db.clear('submission');
 	}
 	return jsrwrap;
 }
