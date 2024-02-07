@@ -34,9 +34,11 @@
 		<div class="grid grid-cols-[1fr_min-content]">
 			<span class="overflow-hidden text-ellipsis whitespace-nowrap">{display}</span>
 
-			<div class="flex items-center whitespace-nowrap">
-				<button on:click={reorder.moveUp}><Icon name="chevronDown" class="rotate-180" /></button>
-				<button on:click={reorder.moveDown}><Icon name="chevronDown" /></button>
+			<div class="sidebar-sub-buttons flex items-center whitespace-nowrap">
+				<button data-up on:click={reorder.moveUp}
+					><Icon name="chevronDown" class="rotate-180" /></button
+				>
+				<button data-down on:click={reorder.moveDown}><Icon name="chevronDown" /></button>
 			</div>
 		</div>
 	</div>
