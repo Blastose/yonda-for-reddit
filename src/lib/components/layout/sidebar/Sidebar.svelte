@@ -10,7 +10,8 @@
 
 	export let type: 'sidebar' | 'drawer';
 
-	function swap(targetIndex: number) {
+	let pinnedSubsSection: HTMLDivElement;
+	function swap(targetIndex: number, direction: 'up' | 'down') {
 		return () => {
 			if (targetIndex < 0) return;
 			if (targetIndex + 1 === $pinnedSubsStore.length) return;
@@ -20,6 +21,15 @@
 
 				return v;
 			});
+
+			const items = pinnedSubsSection.querySelectorAll('div.sidebar-sub-buttons');
+			const indexFromDirection = direction === 'up' ? targetIndex : targetIndex + 1;
+			const button = items[indexFromDirection].querySelector<HTMLButtonElement>(
+				`button[data-${direction === 'up' ? 'up' : 'down'}]`
+			);
+			if (button) {
+				button.focus();
+			}
 		};
 	}
 	let reorderingPinned = false;
@@ -44,6 +54,7 @@
 
 	<Hr />
 	<SidebarSection
+		bind:container={pinnedSubsSection}
 		heading="Pinned"
 		open={$pinnedSubsOpenStore}
 		toggleOpen={() => {
@@ -55,7 +66,7 @@
 			class="flex w-full items-center gap-2 rounded-2xl px-4 py-2 hover:bg-[var(--bg-hover)]"
 			on:click={() => {
 				reorderingPinned = !reorderingPinned;
-			}}><Icon name="swapVertical" />{!reorderingPinned ? 'Reorder' : 'Cancel'}</button
+			}}><Icon name="swapVertical" />{!reorderingPinned ? 'Reorder' : 'Exit reordering'}</button
 		>
 		{#each $pinnedSubsStore as sub, index}
 			<SidebarSub
@@ -63,8 +74,8 @@
 				display="r/{sub.displayName}"
 				icon={sub.iconUrl}
 				reorder={{
-					moveDown: swap(index),
-					moveUp: swap(index - 1),
+					moveDown: swap(index, 'down'),
+					moveUp: swap(index - 1, 'up'),
 					reordering: reorderingPinned
 				}}
 			/>

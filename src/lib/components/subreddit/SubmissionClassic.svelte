@@ -12,10 +12,17 @@
 	import RedditHtml from '../reddit-html/RedditHtml.svelte';
 	import { markdownToHtml } from '$lib/reddit/markdownToHtml';
 	import { page } from '$app/stores';
+	import { db } from '$lib/idb/idb';
 
 	export let submission: SubmissionData;
 	$: href = formatSubmissionPermalink(submission.permalink);
 	let numNewComments: number = 0;
+	async function getCommentCount() {
+		return (await db.get('submissionCommentCount', submission.id)) ?? submission.num_comments;
+	}
+	$: (async () => {
+		numNewComments = submission.num_comments - (await getCommentCount());
+	})();
 
 	const nonThumbnailSrcs = ['self', 'spoiler', 'default', 'nsfw', 'image', ''];
 	$: hasThumbnail = !nonThumbnailSrcs.includes(submission.thumbnail);
