@@ -31,7 +31,7 @@
 </script>
 
 <div class="flex flex-col gap-8">
-	<div class="flex flex-col gap-2">
+	<div class="flex max-w-4xl flex-col gap-2">
 		<CommentSort {submission} />
 
 		{#if !singleCommentThread}

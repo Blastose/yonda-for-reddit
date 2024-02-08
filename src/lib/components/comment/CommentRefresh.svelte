@@ -17,6 +17,9 @@
 	async function refreshComments() {
 		loading = true;
 		autoRefreshTimeLeft = 10;
+		if (autoRefresh) {
+			clearRefreshCommentsTimer();
+		}
 		if (sort) {
 			submission = await jsrwrap.getSubmission(submissionId).fetch({ sort });
 		} else {
@@ -24,6 +27,9 @@
 		}
 		persistSubmission();
 		loading = false;
+		if (autoRefresh) {
+			setAutoRefreshCommentsTimer();
+		}
 	}
 
 	function setAutoRefreshCommentsTimer() {
@@ -53,7 +59,19 @@
 			clearRefreshCommentsTimer();
 		}
 	}
+
+	function autoRefreshWithKey(e: KeyboardEvent) {
+		if (e.key === 'r') {
+			if (document.activeElement?.nodeName !== 'INPUT')
+				if (!loading) {
+					e.preventDefault();
+					refreshComments();
+				}
+		}
+	}
 </script>
+
+<svelte:window on:keydown={autoRefreshWithKey} />
 
 <div class="flex items-center justify-between gap-2 whitespace-nowrap text-sm">
 	<div class="flex gap-2">

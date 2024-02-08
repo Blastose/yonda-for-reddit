@@ -29,6 +29,8 @@
 		--hr-md-color: #9897a1;
 		--upvote-color: #d34a18;
 		--downvote-color: #6a5cff;
+		--max-width: 2400px;
+		/* --max-width: none; */
 	}
 }
 
@@ -74,28 +76,7 @@ html {
 	padding: 0 1rem 2rem 1rem;
 	width: 100%;
 	transition: max-width 450ms;
-}
-@media (min-width: 640px) {
-	.container-doku {
-		max-width: 640px;
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
-	}
-}
-@media (min-width: 768px) {
-	.container-doku {
-		max-width: 768px;
-	}
-}
-@media (min-width: 1024px) {
-	.container-doku {
-		max-width: 1024px;
-	}
-}
-@media (min-width: 1180px) {
-	.container-doku {
-		max-width: 1180px;
-	}
+	max-width: var(--max-width);
 }
 
 .thin-scrollbar {
