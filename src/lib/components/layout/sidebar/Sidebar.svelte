@@ -108,7 +108,7 @@
 <style>
 	.sidebar-container {
 		overflow-y: auto;
-		width: 100%;
+		width: var(--sidebar-width);
 	}
 
 	.sidebar-container.sidebar {

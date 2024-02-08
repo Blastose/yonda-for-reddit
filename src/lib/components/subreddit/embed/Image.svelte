@@ -9,7 +9,7 @@
 
 <div
 	class="item background-stuff relative z-0 flex max-h-[512px] flex-col overflow-hidden rounded-2xl border border-[#303030]"
-	style="background-image: linear-gradient(rgba(27, 27, 27, 0.8), rgba(27, 27, 27, 0.8)), url({bgImageUrl});"
+	style="background-image: linear-gradient(rgba(27, 27, 27, 0.9), rgba(27, 27, 27, 0.9)), url({bgImageUrl});"
 >
 	<div class="background-filter"></div>
 	<img
