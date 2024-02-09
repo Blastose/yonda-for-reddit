@@ -61,7 +61,7 @@
 	}
 
 	function autoRefreshWithKey(e: KeyboardEvent) {
-		if (e.key === 'r') {
+		if (e.key === 'r' && !e.ctrlKey) {
 			if (document.activeElement?.nodeName !== 'INPUT')
 				if (!loading) {
 					e.preventDefault();
