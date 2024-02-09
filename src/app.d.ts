@@ -3,8 +3,9 @@
 declare global {
 	namespace App {
 		interface Error {
-			type: 'user' | 'subreddit';
+			type: 'user' | 'subreddit' | 'other';
 			code: number;
+			reason?: string;
 		}
 		// interface Locals {}
 		// interface PageData {}

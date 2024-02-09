@@ -1,6 +1,7 @@
 import type { LayoutLoad } from './$types';
-import { jsrwrap } from '$lib/reddit/reddit';
+import { jsrwrap, type RedditError } from '$lib/reddit/reddit';
 import { db } from '$lib/idb/idb';
+import { error } from '@sveltejs/kit';
 
 export const load: LayoutLoad = async ({ params }) => {
 	const subreddit = params.subreddit;
@@ -21,7 +22,15 @@ export const load: LayoutLoad = async ({ params }) => {
 	if (aboutMaybe && now < aboutMaybe.cached + 86400000) {
 		about = aboutMaybe.value;
 	} else {
-		about = await jsrwrapSubreddit.getAbout();
+		try {
+			about = await jsrwrapSubreddit.getAbout();
+		} catch (e) {
+			const err = e as RedditError;
+			if (err.reason === 'banned') {
+				error(404, { code: 404, message: 'SR not found', type: 'subreddit', reason: 'banned' });
+			}
+			error(404, { code: 404, message: 'SR not found', type: 'subreddit' });
+		}
 		db.put(
 			'subredditAbout',
 			{ value: about, cached: new Date().getTime() },
