@@ -34,11 +34,13 @@
 					</div>
 				{/if}
 				{#if about?.display_name_prefixed || fallbackSubreddit}
-					<a
-						href="/{about?.display_name_prefixed.toLowerCase() ?? fallbackSubreddit}"
+					<div
 						class="mb-2 self-end overflow-hidden text-ellipsis whitespace-nowrap text-3xl font-bold"
-						><span class="w-fit">{about?.display_name_prefixed ?? fallbackSubreddit}</span></a
 					>
+						<a href="/{about?.display_name_prefixed.toLowerCase() ?? fallbackSubreddit}"
+							>{about?.display_name_prefixed ?? fallbackSubreddit}</a
+						>
+					</div>
 				{:else}
 					<p class="flex self-end pb-2 text-3xl font-bold">Home</p>
 				{/if}
