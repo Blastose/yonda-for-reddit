@@ -36,8 +36,8 @@
 				{#if about?.display_name_prefixed || fallbackSubreddit}
 					<a
 						href="/{about?.display_name_prefixed.toLowerCase() ?? fallbackSubreddit}"
-						class="mb-2 line-clamp-1 self-end text-3xl font-bold"
-						>{about?.display_name_prefixed ?? fallbackSubreddit}</a
+						class="mb-2 self-end overflow-hidden text-ellipsis whitespace-nowrap text-3xl font-bold"
+						><span class="w-fit">{about?.display_name_prefixed ?? fallbackSubreddit}</span></a
 					>
 				{:else}
 					<p class="flex self-end pb-2 text-3xl font-bold">Home</p>
