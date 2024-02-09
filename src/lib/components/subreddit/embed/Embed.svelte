@@ -26,9 +26,16 @@
 	<!-- <div class="reddit-md">
 		{@html submission.secure_media_embed.content}
 	</div> -->
-{:else if submission.secure_media}
+{:else if submission.media?.type === 'twitter.com'}
 	<div class="reddit-md">
-		<!-- TODO -->
-		<!-- {@html submission.secure_media_embed.content} -->
+		{@html submission.secure_media_embed.content?.replace(
+			`<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`,
+			''
+		)}
 	</div>
+{:else if submission.secure_media}
+	<!-- TODO -->
+	<!-- <div class="reddit-md"> -->
+	<!-- {@html submission.secure_media_embed.content} -->
+	<!-- </div> -->
 {/if}

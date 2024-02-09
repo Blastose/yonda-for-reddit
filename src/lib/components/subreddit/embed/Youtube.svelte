@@ -14,6 +14,7 @@
 		</div>
 	{:else}
 		<button
+			aria-label="Play youtube embed"
 			class="relative h-full w-full"
 			on:click={() => {
 				show = true;
@@ -37,10 +38,12 @@
 		height: 100%;
 		aspect-ratio: 16 / 9;
 		object-fit: cover;
+		max-height: 512px;
 	}
 	.youtube-embed > :global(iframe) {
 		width: 100%;
 		height: 100%;
 		aspect-ratio: 16 / 9;
+		max-height: 512px;
 	}
 </style>
