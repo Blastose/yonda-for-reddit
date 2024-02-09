@@ -1,5 +1,6 @@
 import { db } from '$lib/idb/idb';
 import { jsrwrap } from '$lib/reddit/reddit';
+import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async ({ params }) => {
@@ -13,7 +14,11 @@ export const load: LayoutLoad = async ({ params }) => {
 	if (userMaybe && now < userMaybe.cached + 86400000) {
 		about = userMaybe.value;
 	} else {
-		about = await user.getAbout();
+		try {
+			about = await user.getAbout();
+		} catch (e) {
+			error(404, { type: 'user', message: 'User not found', code: 404 });
+		}
 
 		db.put('redditUser', { cached: new Date().getTime(), value: about }, username);
 	}

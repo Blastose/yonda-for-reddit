@@ -11,4 +11,7 @@
 		<p>This can be fixed by refreshing the page.</p>
 		<p>Please refresh the page manually to log in.</p>
 	</div>
+{:else}
+	<h1>Oh no, an error has occurred!</h1>
+	<p>{$page.error?.message}</p>
 {/if}
