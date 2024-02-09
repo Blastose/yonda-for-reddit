@@ -4,7 +4,6 @@ import { navigationTypeStore } from '$lib/stores/navigationTypeStore';
 import { transformUrlForIDBKey } from '$lib/url/url';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
-
 import type { UserSortOptions, UserTOptions } from 'jsrwrap';
 
 export const load: PageLoad = async ({ params, url }) => {

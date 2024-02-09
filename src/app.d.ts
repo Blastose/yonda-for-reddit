@@ -2,7 +2,11 @@
 // for information about these interfaces
 declare global {
 	namespace App {
-		// interface Error {}
+		interface Error {
+			type: 'user' | 'subreddit' | 'other';
+			code: number;
+			reason?: string;
+		}
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}

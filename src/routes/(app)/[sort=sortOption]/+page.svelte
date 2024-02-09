@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import GenericError from '$lib/components/error/GenericError.svelte';
 	import SubmissionContainer from '$lib/components/layout/SubmissionContainer.svelte';
 	import SubmissionSkeleton from '$lib/components/subreddit/SubmissionSkeleton.svelte';
 	import Subreddit from '$lib/components/subreddit/Subreddit.svelte';
@@ -27,6 +28,8 @@
 			{/each}
 		{:then submissions}
 			<SubmissionContainer {submissions} count={data.count} />
+		{:catch}
+			<GenericError />
 		{/await}
 	{/key}
 </Subreddit>

@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Missing404Template from '$lib/components/error/Missing404Template.svelte';
+	import GenericError from '$lib/components/error/GenericError.svelte';
 </script>
 
-{#if $page.url.searchParams.get('code')}
-	<div class="container-doku">
-		<p>
-			Firefox (or your current browser) cannot receive an access token from Reddit after redirecting
-			back.
-		</p>
-		<p>This can be fixed by refreshing the page.</p>
-		<p>Please refresh the page manually to log in.</p>
-	</div>
-{/if}
+<div class="container-doku mt-4">
+	{#if $page.error?.code === 404}
+		<Missing404Template text="Page not found" subtext="The page you requested does not exist." />
+	{:else}
+		<GenericError />
+	{/if}
+</div>
