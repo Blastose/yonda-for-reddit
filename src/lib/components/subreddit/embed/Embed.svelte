@@ -27,12 +27,14 @@
 		{@html submission.secure_media_embed.content}
 	</div> -->
 {:else if submission.media?.type === 'twitter.com'}
-	<div class="reddit-md">
-		{@html submission.secure_media_embed.content?.replace(
-			`<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`,
-			''
-		)}
-	</div>
+	{#if submission.secure_media_embed.content}
+		<div class="reddit-md">
+			{@html submission.secure_media_embed.content?.replace(
+				`<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`,
+				''
+			)}
+		</div>
+	{/if}
 {:else if submission.secure_media}
 	<!-- TODO -->
 	<!-- <div class="reddit-md"> -->
