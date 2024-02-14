@@ -62,11 +62,13 @@
 
 	function autoRefreshWithKey(e: KeyboardEvent) {
 		if (e.key === 'r' && !e.ctrlKey) {
-			if (document.activeElement?.nodeName !== 'INPUT')
+			const nodeName = document.activeElement?.nodeName;
+			if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA') {
 				if (!loading) {
 					e.preventDefault();
 					refreshComments();
 				}
+			}
 		}
 	}
 </script>

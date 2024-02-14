@@ -93,7 +93,8 @@
 	});
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (document.activeElement?.nodeName !== 'INPUT')
+		const nodeName = document.activeElement?.nodeName;
+		if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA') {
 			if (e.key === 't') {
 				if ($submissionDisplayStore === 'classic') {
 					$submissionDisplayStore = 'card';
@@ -101,6 +102,7 @@
 					$submissionDisplayStore = 'classic';
 				}
 			}
+		}
 	}
 
 	onMount(async () => {

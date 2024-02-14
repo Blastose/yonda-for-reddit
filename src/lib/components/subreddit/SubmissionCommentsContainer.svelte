@@ -32,7 +32,8 @@
 	let commentsContainer: HTMLDivElement;
 	function jumpToComments(e: KeyboardEvent) {
 		if (e.key === 'c') {
-			if (document.activeElement?.nodeName !== 'INPUT') {
+			const nodeName = document.activeElement?.nodeName;
+			if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA') {
 				commentsContainer.scrollIntoView();
 			}
 		}
