@@ -28,21 +28,9 @@
 		submission = submission;
 		persistSubmission();
 	}
-
-	let commentsContainer: HTMLDivElement;
-	function jumpToComments(e: KeyboardEvent) {
-		if (e.key === 'c' && !e.ctrlKey) {
-			const nodeName = document.activeElement?.nodeName;
-			if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA') {
-				commentsContainer.scrollIntoView();
-			}
-		}
-	}
 </script>
 
-<svelte:window on:keydown={jumpToComments} />
-
-<div bind:this={commentsContainer} class="comments-container flex flex-col gap-8">
+<div class="flex flex-col gap-8">
 	<div class="flex max-w-4xl flex-col gap-2">
 		<CommentSort {submission} />
 
@@ -79,9 +67,3 @@
 		{/if}
 	{/each}
 </div>
-
-<style>
-	.comments-container {
-		scroll-margin-top: var(--header-height);
-	}
-</style>

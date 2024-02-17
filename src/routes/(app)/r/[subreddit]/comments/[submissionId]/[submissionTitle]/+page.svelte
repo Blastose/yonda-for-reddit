@@ -7,6 +7,7 @@
 	import { transformUrlForIDBKey } from '$lib/url/url';
 	import SubmissionAndComment from '$lib/components/subreddit/SubmissionAndComment.svelte';
 	import SubmissionTitle from '$lib/components/subreddit/SubmissionTitle.svelte';
+	import JumpToComments from '$lib/components/comment/JumpToComments.svelte';
 
 	export let data;
 
@@ -23,6 +24,7 @@
 
 <SubmissionAndComment submissionPromise={data.submission}>
 	<div>
+		<JumpToComments />
 		{#await data.submission}
 			<div class="flex flex-col gap-8">
 				{#each { length: 5 } as _}
