@@ -7,7 +7,13 @@
 		loading = true;
 		const clear1 = db.clear('submission');
 		const clear2 = db.clear('submissions');
-		await Promise.all([clear1, clear2]);
+		const clear3 = db.clear('redditUser');
+		const clear4 = db.clear('redditUserCreations');
+		const clear5 = db.clear('submissionCommentCount');
+		const clear6 = db.clear('subredditAbout');
+		const clear7 = db.clear('subredditModerators');
+		const clear8 = db.clear('subredditSidebar');
+		await Promise.all([clear1, clear2, clear3, clear4, clear5, clear6, clear7, clear8]);
 		loading = false;
 		addToast({ data: { title: 'Cleared cache!', type: 'success' } });
 	}
