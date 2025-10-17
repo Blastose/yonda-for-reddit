@@ -71,27 +71,6 @@
 		console.log($historyStore);
 	});
 
-	onNavigate((navigation) => {
-		if (!document.startViewTransition) return;
-
-		return new Promise(async (resolve) => {
-			if (navigation.delta && navigation.delta < 0) {
-				document.documentElement.classList.add('back-transition');
-			}
-
-			const transition = document.startViewTransition(async () => {
-				resolve();
-				await navigation.complete;
-			});
-
-			try {
-				await transition.finished;
-			} finally {
-				document.documentElement.classList.remove('back-transition');
-			}
-		});
-	});
-
 	function handleKeydown(e: KeyboardEvent) {
 		const nodeName = document.activeElement?.nodeName;
 		if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA') {
